@@ -14,12 +14,12 @@ document.addEventListener("DOMContentLoaded", function () {
                 <div style="text-align:center; margin-top:50px;">
                     <h2>Ошибка!</h2>
                     <p>Это приложение можно запускать только из Telegram.</p>
-                    <button onclick="goToBot()">Вернуться в бот</button>
+                    <button class="telegram-button" onclick="goToBot()">Перейти в бот</button>
                 </div>
             `;
             document.body.style.visibility = "visible";
         }
-    }, 500); // Задержка в 500 миллисекунд
+    }, 1000); // Увеличим задержку до 1 секунды
 });
 
 // Функция для проверки, запущено ли приложение через Telegram
