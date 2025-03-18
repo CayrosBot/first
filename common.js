@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
             `;
             document.body.style.visibility = "visible";
         }
-    }, 1000); // Увеличим задержку до 1 секунды
+    }, 3000); // Увеличили задержку до 3 секунд для надежности
 });
 
 // Функция для проверки, запущено ли приложение через Telegram
@@ -30,12 +30,16 @@ function isInTelegramWebApp() {
 // Функция для возврата в бот
 function goToBot() {
     if (window.Telegram && window.Telegram.WebApp) {
+        // Закрываем Web App, если оно было запущено через Telegram
         window.Telegram.WebApp.close();
     } else {
-        const telegramLink = "https://t.me/CayrosExchangeP2PBot"; // Замените YourBotName на имя вашего бота
+        // Переходим в бот через ссылку
+        const telegramLink = "https://t.me/CayrosExchangeP2PBot"; // Замените на имя вашего бота
         if (isMobileDevice()) {
+            // На мобильных устройствах используем специальную ссылку
             window.location.href = "tg://resolve?domain=CayrosExchangeP2PBot";
         } else {
+            // На десктопах используем обычную ссылку
             window.location.href = telegramLink;
         }
     }
