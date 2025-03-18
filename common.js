@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
         `;
         // Функция для перенаправления в бот
         function goToBot() {
-            window.location.href = "https://t.me/YourBotName"; // Замените YourBotName на имя вашего бота
+            window.location.href = "https://t.me/CayrosExchangeP2PBot"; // Замените YourBotName на имя вашего бота
         }
     } else {
         console.log("Приложение успешно запущено из Telegram.");
