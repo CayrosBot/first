@@ -1,6 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     // Проверяем, запущено ли приложение через Telegram
     if (isInTelegramWebApp()) {
+        // Если всё в порядке, показываем содержимое страницы
+        document.body.style.visibility = "visible"; // Показываем содержимое
         console.log("Приложение успешно запущено из Telegram.");
     } else {
         // Если проверка не прошла, показываем сообщение об ошибке
@@ -11,6 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 <button onclick="goToBot()">Вернуться в бот</button>
             </div>
         `;
+        document.body.style.visibility = "visible"; // Показываем сообщение об ошибке
     }
 });
 
