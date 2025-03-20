@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
-    <link rel="stylesheet" href="style_input.css">
+    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
     <script>
+        // Проверяем доступность объекта Telegram.WebApp
         if (window.Telegram?.WebApp) {
             // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.ready();
@@ -87,9 +88,9 @@
 
         // Проверка пароля
         function validatePassword(password) {
-            const minLength = 8;
-            const maxLength = 12;
-            const hasUppercase = /[A-Z]/.test(password);
+            const minLength = 8; // Минимальная длина пароля
+            const maxLength = 12; // Максимальная длина пароля
+            const hasUppercase = /[A-Z]/.test(password); // Проверка на наличие заглавной буквы
             if (password.length < minLength) {
                 return "Пароль должен содержать не менее 8 символов.";
             }
@@ -99,12 +100,12 @@
             if (!hasUppercase) {
                 return "Пароль должен содержать хотя бы одну заглавную букву.";
             }
-            return null;
+            return null; // Нет ошибок
         }
 
         // Форма проверки данных
         function validateForm(event) {
-            event.preventDefault();
+            event.preventDefault(); // Предотвращаем отправку формы
 
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
@@ -127,6 +128,7 @@
                 return false;
             }
 
+            // Если все проверки пройдены, можно отправить форму
             console.log("Отправленные данные:", { username, password });
             alert("Данные успешно отправлены!");
             return true;
