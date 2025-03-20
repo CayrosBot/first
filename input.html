@@ -9,11 +9,13 @@
     <script>
         // Инициализация Telegram Web App
         if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.ready(); // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.expand(); // Развернуть приложение на весь экран
 
-            // Замена стандартного крестика на кнопку "Назад"
-            window.Telegram.WebApp.BackButton.show(); // Показать кнопку "Назад"
+            // Показываем кнопку "Назад"
+            window.Telegram.WebApp.BackButton.show();
+
+            // Обрабатываем нажатие на кнопку "Назад"
             window.Telegram.WebApp.BackButton.onClick(() => {
                 // Здесь можно указать действие при нажатии на кнопку "Назад"
                 // Например, перенаправление на главную страницу
