@@ -100,3 +100,14 @@ a {
 a:hover {
     text-decoration: underline; /* Подчеркивание при наведении */
 }
+
+/* Дополнительные стили для формы */
+.field {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
