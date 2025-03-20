@@ -6,31 +6,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем новый CSS-файл -->
+    <script>
+        // Инициализация Telegram Web App
+        if (window.Telegram?.WebApp) {
+            window.Telegram.WebApp.ready();
+            window.Telegram.WebApp.expand(); // Развернуть приложение на весь экран
+
+            // Замена стандартного крестика на кнопку "Назад"
+            window.Telegram.WebApp.BackButton.show();
+            window.Telegram.WebApp.BackButton.onClick(() => {
+                window.Telegram.WebApp.close(); // Закрыть мини-приложение
+            });
+        }
+    </script>
 </head>
 <body>
-    <!-- Кнопка "Назад" для Telegram Mini App -->
-    <div class="back-button" onclick="history.back()">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
-        </svg>
-    </div>
+    <!-- Заголовок вне рамки -->
+    <h1 class="page-title">Вход для трейдеров</h1>
 
+    <!-- Основной контейнер формы -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Заголовок -->
-            <h1>Вход для трейдеров</h1>
-
             <!-- Форма входа -->
             <form onsubmit="return validateForm(event)">
                 <!-- Поле для ввода логина -->
                 <div class="field">
-                    <span>Логин:</span>
+                    <label for="username">Логин:</label>
                     <input type="text" id="username" name="username" placeholder="Введите логин" required>
                 </div>
 
                 <!-- Поле для ввода пароля -->
                 <div class="field">
-                    <span>Пароль:</span>
+                    <label for="password">Пароль:</label>
                     <input type="password" id="password" name="password" placeholder="Введите пароль" required>
                     <div class="error-message" id="password-error"></div>
                 </div>
