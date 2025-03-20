@@ -45,8 +45,8 @@ body {
 .button {
     display: inline-block;
     width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
-    font-size: 14px;
-    padding: 10px 0;
+    font-size: 12px;
+    padding: 5px 0;
     border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
     color: black; /* Черный текст */
     border-radius: 10px;
@@ -62,6 +62,6 @@ body {
 
 /* Заголовки */
 h1 {
-    font-size: 24px; /* Размер шрифта для заголовков */
+    font-size: 20px; /* Размер шрифта для заголовков */
     color: #333; /* Темно-серый цвет текста */
 }
