@@ -4,21 +4,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Input Page</title>
-    <link rel="stylesheet" href="style.css"> <!-- Подключаем стили -->
+    <title>Вход для трейдеров</title>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Форма входа</h1>
-        <form>
-            <label for="username">Имя пользователя:</label><br>
-            <input type="text" id="username" name="username" required><br><br>
+    <div class="container-wrap">
+        <div class="container">
+            <!-- Заголовок -->
+            <h1>Вход для трейдеров</h1>
 
-            <label for="password">Пароль:</label><br>
-            <input type="password" id="password" name="password" required><br><br>
+            <!-- Отступ после заголовка -->
+            <div style="height: 10px;"></div>
 
-            <input type="submit" value="Отправить">
-        </form>
+            <!-- Форма входа -->
+            <form>
+                <!-- Поле для ввода логина -->
+                <div class="field">
+                    <label for="username">Логин:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+
+                <!-- Поле для ввода пароля -->
+                <div class="field">
+                    <label for="password">Пароль:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+
+                <!-- Кнопка отправки формы -->
+                <div class="field">
+                    <button type="submit" class="button">Войти</button>
+                </div>
+            </form>
+        </div>
     </div>
 </body>
 </html>
