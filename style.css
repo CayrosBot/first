@@ -1,62 +1,93 @@
-/* style.css */
-
 /* Общие настройки */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+}
+
+/* Обертка контейнера */
+.container-wrap {
+    width: 100%;
+    padding: 0 3%; /* Отступы слева и справа */
     box-sizing: border-box;
-    background-color: #f4f4f4; /* Легкий серый фон */
+    display: flex;
+    justify-content: center;
 }
 
-/* Отступы от краев экрана */
+/* Основной контейнер */
 .container {
-    padding: 0 3%; /* 3% отступов слева и справа */
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    border: 2px solid #00bfff; /* Голубая рамка */
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
 }
 
-/* Стили для заголовков */
+/* Заголовки */
 h1, h2, h3 {
     font-size: 16px; /* Размер шрифта для заголовков */
     color: #333; /* Темно-серый цвет текста */
 }
 
-/* Стили для обычных текстов */
+/* Обычный текст */
 p, span, div {
     font-size: 14px; /* Размер шрифта для обычных текстов */
     color: #555; /* Серый цвет текста */
 }
 
-/* Стили для полей ввода */
-input[type="text"],
-input[type="email"],
-input[type="password"],
-textarea {
-    font-size: 12px; /* Размер шрифта для полей ввода */
-    padding: 8px; /* Внутренний отступ */
-    margin: 5px 0; /* Отступы между полями */
-    border: 1px solid #00bfff; /* Голубая рамка */
-    border-radius: 4px; /* Сlightly rounded corners */
-    width: 100%; /* Полная ширина контейнера */
-    box-sizing: border-box; /* Учет padding и border в ширине */
-}
-
-/* Стили для кнопок */
-button,
-input[type="submit"] {
-    font-size: 14px; /* Размер шрифта для кнопок */
-    padding: 8px 12px; /* Внутренний отступ */
-    margin: 5px 0; /* Отступы между кнопками */
+/* Стиль для кнопки "Войти" */
+.button {
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 5px 0;
     border: 1px solid #00bfff; /* Голубая рамка */
     background-color: #00bfff; /* Голубой фон */
     color: white; /* Белый текст */
-    border-radius: 4px; /* Сlightly rounded corners */
-    cursor: pointer; /* Изменение курсора при наведении */
-    width: 100%; /* Полная ширина контейнера */
-    box-sizing: border-box; /* Учет padding и border в ширине */
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    width: 150px; /* Фиксированная ширина */
+    text-align: center;
 }
 
-button:hover,
-input[type="submit"]:hover {
+.button:hover {
+    background-color: #0097c7; /* Темнее голубой при наведении */
+}
+
+/* Поле ввода */
+input[type="text"], input[type="email"], input[type="password"] {
+    font-size: 12px; /* Размер шрифта для полей ввода */
+    padding: 8px;
+    margin: 5px 0;
+    border: 1px solid #00bfff; /* Голубая рамка */
+    border-radius: 4px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Кнопки */
+button, input[type="submit"] {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 5px 0;
+    border: 1px solid #00bfff; /* Голубая рамка */
+    background-color: #00bfff; /* Голубой фон */
+    color: white; /* Белый текст */
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:hover, input[type="submit"]:hover {
     background-color: #0097c7; /* Темнее голубой при наведении */
 }
 
