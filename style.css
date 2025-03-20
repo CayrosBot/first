@@ -1,0 +1,71 @@
+/* style.css */
+
+/* Общие настройки */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    background-color: #f4f4f4; /* Легкий серый фон */
+}
+
+/* Отступы от краев экрана */
+.container {
+    padding: 0 3%; /* 3% отступов слева и справа */
+}
+
+/* Стили для заголовков */
+h1, h2, h3 {
+    font-size: 16px; /* Размер шрифта для заголовков */
+    color: #333; /* Темно-серый цвет текста */
+}
+
+/* Стили для обычных текстов */
+p, span, div {
+    font-size: 14px; /* Размер шрифта для обычных текстов */
+    color: #555; /* Серый цвет текста */
+}
+
+/* Стили для полей ввода */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+    font-size: 12px; /* Размер шрифта для полей ввода */
+    padding: 8px; /* Внутренний отступ */
+    margin: 5px 0; /* Отступы между полями */
+    border: 1px solid #00bfff; /* Голубая рамка */
+    border-radius: 4px; /* Сlightly rounded corners */
+    width: 100%; /* Полная ширина контейнера */
+    box-sizing: border-box; /* Учет padding и border в ширине */
+}
+
+/* Стили для кнопок */
+button,
+input[type="submit"] {
+    font-size: 14px; /* Размер шрифта для кнопок */
+    padding: 8px 12px; /* Внутренний отступ */
+    margin: 5px 0; /* Отступы между кнопками */
+    border: 1px solid #00bfff; /* Голубая рамка */
+    background-color: #00bfff; /* Голубой фон */
+    color: white; /* Белый текст */
+    border-radius: 4px; /* Сlightly rounded corners */
+    cursor: pointer; /* Изменение курсора при наведении */
+    width: 100%; /* Полная ширина контейнера */
+    box-sizing: border-box; /* Учет padding и border в ширине */
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background-color: #0097c7; /* Темнее голубой при наведении */
+}
+
+/* Цвет ссылок */
+a {
+    color: #00bfff; /* Голубой цвет для ссылок */
+    text-decoration: none; /* Без подчеркивания */
+}
+
+a:hover {
+    text-decoration: underline; /* Подчеркивание при наведении */
+}
