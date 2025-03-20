@@ -7,7 +7,7 @@
     <title>Вход для трейдеров</title>
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
     <script>
-        // Проверяем доступность объекта Telegram.WebApp
+        // Инициализация Telegram Web App
         if (window.Telegram?.WebApp) {
             // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.ready();
@@ -49,8 +49,8 @@
     </script>
 </head>
 <body>
-    <!-- Заголовок формы -->
-    <h1>Форма входа</h1>
+    <!-- Заголовок вне рамки -->
+    <h1 class="page-title" style="margin-top: 3%;">Вход для трейдеров</h1>
 
     <!-- Основной контейнер формы -->
     <div class="container-wrap">
