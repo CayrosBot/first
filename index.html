@@ -5,49 +5,36 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="style.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            margin-top: 50px;
-        }
-        .button {
-            display: inline-block;
-            font-size: 14px;
-            padding: 10px 20px;
-            margin: 20px 0;
-            border: 1px solid #00bfff;
-            background-color: #00bfff;
-            color: white;
-            border-radius: 5px;
-            text-decoration: none;
-            cursor: pointer;
-        }
-        .button:hover {
-            background-color: #0097c7;
-        }
-    </style>
+    <title>Главная страница</title>
 </head>
 <body>
-    <h1>Добро пожаловать в Mini App!</h1>
-    <p id="page-info">Загрузка...</p>
+    <div class="container-wrap">
+        <div class="container">
+            <!-- Заголовок в верху страницы -->
+            <h1>P2P сервис обмена</h1>
 
-    <!-- Кнопка "Войти" -->
-    <a href="input.html" class="button">Войти</a>
+            <!-- Информационный текст -->
+            <p id="page-info">Загрузка...</p>
 
-    <script>
-        // Обработка параметров из URL
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pageId = urlParams.get('page_id');
+            <!-- Скрипт для обработки параметров -->
+            <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const pageId = urlParams.get('page_id');
 
-            if (pageId) {
-                document.getElementById('page-info').textContent = `Открыта страница с ID: ${pageId}`;
-            } else {
-                document.getElementById('page-info').textContent = 'Это главная страница';
-            }
-        });
-    </script>
+                    if (pageId) {
+                        document.getElementById('page-info').textContent = `Открыта страница с ID: ${pageId}`;
+                    } else {
+                        document.getElementById('page-info').textContent = 'Это главная страница';
+                    }
+                });
+            </script>
+        </div>
+
+        <!-- Кнопка "Войти" внизу страницы -->
+        <div style="margin-top: 50px; text-align: center;">
+            <a href="input.html" class="button">Войти</a>
+        </div>
+    </div>
 </body>
 </html>
