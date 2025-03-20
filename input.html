@@ -13,9 +13,11 @@
             window.Telegram.WebApp.expand(); // Развернуть приложение на весь экран
 
             // Замена стандартного крестика на кнопку "Назад"
-            window.Telegram.WebApp.BackButton.show();
+            window.Telegram.WebApp.BackButton.show(); // Показать кнопку "Назад"
             window.Telegram.WebApp.BackButton.onClick(() => {
-                window.Telegram.WebApp.close(); // Закрыть мини-приложение
+                // Здесь можно указать действие при нажатии на кнопку "Назад"
+                // Например, перенаправление на главную страницу
+                window.location.href = "index.html"; // Переход на главную страницу
             });
         }
     </script>
