@@ -16,7 +16,25 @@
             window.Telegram.WebApp.expand();
 
             // Показываем кнопку "Назад"
-            window.Telegram.WebApp.BackButton.show();
+            const backButtonData = JSON.stringify({ is_visible: true });
+            if (window.TelegramWebviewProxy) {
+                // Для мобильных и десктоп-версий Telegram
+                window.TelegramWebviewProxy.postEvent('web_app_setup_back_button', backButtonData);
+            } else if (window.parent && window.parent.postMessage) {
+                // Для веб-версии Telegram
+                const webEventData = JSON.stringify({
+                    eventType: 'web_app_setup_back_button',
+                    eventData: { is_visible: true },
+                });
+                window.parent.postMessage(webEventData, 'https://web.telegram.org');
+            } else if (window.external && window.external.notify) {
+                // Для Windows Phone
+                const winPhoneData = JSON.stringify({
+                    eventType: 'web_app_setup_back_button',
+                    eventData: { is_visible: true },
+                });
+                window.external.notify(winPhoneData);
+            }
 
             // Обработка нажатия на кнопку "Назад"
             window.Telegram.WebApp.BackButton.onClick(() => {
