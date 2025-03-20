@@ -3,13 +3,21 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     display: flex;
-    justify-content: center;
+    flex-direction: column; /* Вертикальное расположение элементов */
+    justify-content: space-between; /* Распределение пространства между элементами */
     align-items: center;
     height: 100vh;
     background-color: #f9f9f9;
 }
 
-/* Обертка контейнера */
+/* Заголовок в верхней части страницы */
+.header {
+    width: 100%;
+    text-align: center;
+    margin-top: 3%; /* Отступ от верха 3% */
+}
+
+/* Основной контейнер */
 .container-wrap {
     width: 100%;
     padding: 0 3%; /* Отступы слева и справа */
@@ -18,7 +26,6 @@ body {
     justify-content: center;
 }
 
-/* Основной контейнер */
 .container {
     width: 100%;
     max-width: 400px;
@@ -42,22 +49,32 @@ p, span, div {
     color: #555; /* Серый цвет текста */
 }
 
+/* Кнопка "Войти" в нижней части страницы */
+.footer-button {
+    width: 100%;
+    text-align: center;
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 3%; /* Отступ от нижнего края 3% */
+    left: 0;
+    right: 0;
+}
+
 /* Стиль для кнопки "Войти" */
 .button {
     display: inline-block;
     font-size: 14px;
-    padding: 8px 12px;
-    margin: 5px 0;
+    padding: 10px 20px;
     border: 1px solid #00bfff; /* Голубая рамка */
     background-color: #00bfff; /* Голубой фон */
     color: white; /* Белый текст */
-    border-radius: 4px;
-    cursor: pointer;
+    border-radius: 5px;
     text-decoration: none; /* Убираем подчеркивание у ссылки */
+    cursor: pointer;
     width: 150px; /* Фиксированная ширина */
     text-align: center;
 }
 
+/* Эффект при наведении на кнопку */
 .button:hover {
     background-color: #0097c7; /* Темнее голубой при наведении */
 }
@@ -87,6 +104,7 @@ button, input[type="submit"] {
     box-sizing: border-box;
 }
 
+/* Эффект при наведении на кнопки */
 button:hover, input[type="submit"]:hover {
     background-color: #0097c7; /* Темнее голубой при наведении */
 }
@@ -97,17 +115,7 @@ a {
     text-decoration: none; /* Без подчеркивания */
 }
 
+/* Эффект при наведении на ссылки */
 a:hover {
     text-decoration: underline; /* Подчеркивание при наведении */
-}
-
-/* Дополнительные стили для формы */
-.field {
-    margin-bottom: 20px;
-}
-
-label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
 }
