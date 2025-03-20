@@ -5,29 +5,34 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем новый CSS-файл -->
 </head>
 <body>
+    <!-- Кнопка "Назад" для Telegram Mini App -->
+    <div class="back-button" onclick="history.back()">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+        </svg>
+    </div>
+
     <div class="container-wrap">
         <div class="container">
             <!-- Заголовок -->
             <h1>Вход для трейдеров</h1>
 
-            <!-- Отступ после заголовка -->
-            <div style="height: 10px;"></div>
-
             <!-- Форма входа -->
-            <form>
+            <form onsubmit="return validateForm(event)">
                 <!-- Поле для ввода логина -->
                 <div class="field">
-                    <label for="username">Логин:</label>
-                    <input type="text" id="username" name="username" required>
+                    <span>Логин:</span>
+                    <input type="text" id="username" name="username" placeholder="Введите логин" required>
                 </div>
 
                 <!-- Поле для ввода пароля -->
                 <div class="field">
-                    <label for="password">Пароль:</label>
-                    <input type="password" id="password" name="password" required>
+                    <span>Пароль:</span>
+                    <input type="password" id="password" name="password" placeholder="Введите пароль" required>
+                    <div class="error-message" id="password-error"></div>
                 </div>
 
                 <!-- Кнопка отправки формы -->
@@ -37,5 +42,63 @@
             </form>
         </div>
     </div>
+
+    <script>
+        // Функция для очистки сообщений об ошибках
+        function clearErrorMessage() {
+            const errorMessage = document.getElementById("password-error");
+            if (errorMessage) {
+                errorMessage.textContent = "";
+            }
+        }
+
+        // Проверка пароля
+        function validatePassword(password) {
+            const minLength = 8; // Минимальная длина пароля
+            const maxLength = 12; // Максимальная длина пароля
+            const hasUppercase = /[A-Z]/.test(password); // Проверка на наличие заглавной буквы
+            if (password.length < minLength) {
+                return "Пароль должен содержать не менее 8 символов.";
+            }
+            if (password.length > maxLength) {
+                return "Пароль не должен превышать 12 символов.";
+            }
+            if (!hasUppercase) {
+                return "Пароль должен содержать хотя бы одну заглавную букву.";
+            }
+            return null; // Нет ошибок
+        }
+
+        // Форма проверки данных
+        function validateForm(event) {
+            event.preventDefault(); // Предотвращаем отправку формы
+
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value.trim();
+            const errorMessage = document.getElementById("password-error");
+
+            clearErrorMessage();
+
+            if (!username || !password) {
+                if (errorMessage) {
+                    errorMessage.textContent = "Пожалуйста, заполните все поля.";
+                }
+                return false;
+            }
+
+            const passwordError = validatePassword(password);
+            if (passwordError) {
+                if (errorMessage) {
+                    errorMessage.textContent = passwordError;
+                }
+                return false;
+            }
+
+            // Если все проверки пройдены, можно отправить форму
+            console.log("Отправленные данные:", { username, password });
+            alert("Данные успешно отправлены!");
+            return true;
+        }
+    </script>
 </body>
 </html>
