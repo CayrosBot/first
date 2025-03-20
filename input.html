@@ -5,9 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
-    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем новый CSS-файл -->
+    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
     <script>
-        // Проверяем, доступен ли объект Telegram.WebApp
+        // Проверяем доступность объекта Telegram.WebApp
         if (window.Telegram?.WebApp) {
             // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.ready();
@@ -38,7 +38,7 @@
 
             // Обработка нажатия на кнопку "Назад"
             window.Telegram.WebApp.BackButton.onClick(() => {
-                // Переходим на главную страницу
+                // Переходим на главную страницу (index.html)
                 window.location.href = "index.html";
             });
         }
