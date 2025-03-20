@@ -1,38 +1,36 @@
-/* Общие стили */
+/* Общие настройки */
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
+    margin: 0;
+    background-color: #f9f9f9;
+}
+
+/* Заголовок страницы */
+.page-title {
+    font-size: 18px;
+    text-align: center;
+    margin-top: 3%; /* Отступ от верха */
+    margin-bottom: 20px; /* Отступ до формы */
 }
 
 /* Стили контейнера */
 .container-wrap {
     width: 100%;
-    padding: 20px;
+    padding: 0 3%; /* Отступы слева и справа */
     box-sizing: border-box;
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    background-color: #f2f2f2;
+    justify-content: center;
 }
 
 .container {
     width: 100%;
     max-width: 400px;
-    margin: 10px auto;
     padding: 20px;
-    border: 1px solid #87CEEB;
+    border: 2px solid #00bfff; /* Голубая рамка */
     border-radius: 15px;
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-}
-
-/* Заголовок */
-h1 {
-    font-size: 18px;
-    text-align: center;
-    margin-bottom: 30px; /* Отступ после заголовка */
 }
 
 /* Поля ввода */
@@ -40,10 +38,10 @@ h1 {
     margin-bottom: 15px;
 }
 
-.field > span {
-    margin-bottom: 5px;
-    font-size: 14px;
+label {
     display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
 }
 
 input[type="text"], input[type="password"] {
@@ -56,7 +54,7 @@ input[type="text"], input[type="password"] {
 }
 
 /* Кнопка "Войти" */
-button {
+.button {
     width: 100%;
     padding: 10px;
     background-color: #4CAF50;
@@ -67,7 +65,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+.button:hover {
     background-color: #45a049;
 }
 
@@ -76,21 +74,4 @@ button:hover {
     color: red;
     font-size: 12px;
     margin-top: 5px;
-}
-
-/* Кнопка "Назад" для Telegram Mini App */
-.back-button {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    padding: 5px 10px;
-    background-color: #f2f2f2;
-    border: none;
-    cursor: pointer;
-}
-
-.back-button svg {
-    width: 24px;
-    height: 24px;
-    fill: #333;
 }
