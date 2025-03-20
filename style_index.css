@@ -48,9 +48,8 @@ body {
     font-size: 16px;
     padding: 10px 0;
     border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
-    background-color: #00bfff; /* Голубой фон */
     color: white; /* Белый текст */
-    border-radius: 5px;
+    border-radius: 10px;
     text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer;
     text-align: center;
