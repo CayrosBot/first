@@ -35,7 +35,7 @@ body {
 
 /* Кнопка "Войти" в нижней части страницы */
 .footer-button {
-    width: 50%; /* Ширина кнопки с отступами 15% от краев */
+    width: 30%; /* Ширина кнопки с отступами 15% от краев */
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 3%; /* Отступ от нижней границы 3% */
@@ -45,10 +45,10 @@ body {
 .button {
     display: inline-block;
     width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
-    font-size: 16px;
+    font-size: 14px;
     padding: 10px 0;
-    border: 5px solid #00bfff; /* Голубая рамка 2 пикселя */
-    color: white; /* Белый текст */
+    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    color: black; /* Черный текст */
     border-radius: 10px;
     text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer;
@@ -57,7 +57,7 @@ body {
 
 /* Эффект при наведении на кнопку */
 .button:hover {
-    background-color: #0097c7; /* Темнее голубой при наведении */
+    background-color: #00bfff; /* Темнее голубой при наведении */
 }
 
 /* Заголовки */
