@@ -6,7 +6,7 @@ body {
     flex-direction: column; /* Вертикальное расположение элементов */
     justify-content: space-between; /* Распределение пространства между элементами */
     align-items: center;
-    height: 100vh;
+    height: 100vh; /* Полная высота экрана */
     background-color: #f9f9f9;
 }
 
@@ -35,18 +35,6 @@ body {
     background-color: #ffffff;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-}
-
-/* Заголовки */
-h1, h2, h3 {
-    font-size: 16px; /* Размер шрифта для заголовков */
-    color: #333; /* Темно-серый цвет текста */
-}
-
-/* Обычный текст */
-p, span, div {
-    font-size: 14px; /* Размер шрифта для обычных текстов */
-    color: #555; /* Серый цвет текста */
 }
 
 /* Кнопка "Войти" в нижней части страницы */
@@ -79,43 +67,15 @@ p, span, div {
     background-color: #0097c7; /* Темнее голубой при наведении */
 }
 
-/* Поле ввода */
-input[type="text"], input[type="email"], input[type="password"] {
-    font-size: 12px; /* Размер шрифта для полей ввода */
-    padding: 8px;
-    margin: 5px 0;
-    border: 1px solid #00bfff; /* Голубая рамка */
-    border-radius: 4px;
-    width: 100%;
-    box-sizing: border-box;
+/* Заголовки */
+h1, h2, h3 {
+    font-size: 24px; /* Размер шрифта для заголовков */
+    color: #333; /* Темно-серый цвет текста */
+    margin-bottom: 10px; /* Отступ после заголовка */
 }
 
-/* Кнопки */
-button, input[type="submit"] {
-    font-size: 14px;
-    padding: 8px 12px;
-    margin: 5px 0;
-    border: 1px solid #00bfff; /* Голубая рамка */
-    background-color: #00bfff; /* Голубой фон */
-    color: white; /* Белый текст */
-    border-radius: 4px;
-    cursor: pointer;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-/* Эффект при наведении на кнопки */
-button:hover, input[type="submit"]:hover {
-    background-color: #0097c7; /* Темнее голубой при наведении */
-}
-
-/* Цвет ссылок */
-a {
-    color: #00bfff; /* Голубой цвет для ссылок */
-    text-decoration: none; /* Без подчеркивания */
-}
-
-/* Эффект при наведении на ссылки */
-a:hover {
-    text-decoration: underline; /* Подчеркивание при наведении */
+/* Обычный текст */
+p, span, div {
+    font-size: 14px; /* Размер шрифта для обычных текстов */
+    color: #555; /* Серый цвет текста */
 }
