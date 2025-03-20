@@ -7,19 +7,21 @@
     <title>Вход для трейдеров</title>
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем новый CSS-файл -->
     <script>
-        // Инициализация Telegram Web App
+        // Проверяем, доступен ли объект Telegram.WebApp
         if (window.Telegram?.WebApp) {
-            window.Telegram.WebApp.ready(); // Уведомляем Telegram о готовности приложения
-            window.Telegram.WebApp.expand(); // Развернуть приложение на весь экран
+            // Уведомляем Telegram о готовности приложения
+            window.Telegram.WebApp.ready();
+
+            // Разворачиваем приложение на весь экран
+            window.Telegram.WebApp.expand();
 
             // Показываем кнопку "Назад"
             window.Telegram.WebApp.BackButton.show();
 
-            // Обрабатываем нажатие на кнопку "Назад"
+            // Обработка нажатия на кнопку "Назад"
             window.Telegram.WebApp.BackButton.onClick(() => {
-                // Здесь можно указать действие при нажатии на кнопку "Назад"
-                // Например, перенаправление на главную страницу
-                window.location.href = "index.html"; // Переход на главную страницу
+                // Переходим на главную страницу
+                window.location.href = "index.html";
             });
         }
     </script>
