@@ -8,33 +8,32 @@
     <title>Главная страница</title>
 </head>
 <body>
+    <!-- Заголовок в верхней части страницы -->
+    <div class="header">
+        <h1>P2P сервис обмена</h1>
+    </div>
+
+    <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Заголовок в верху страницы -->
-            <h1>P2P сервис обмена</h1>
-
-            <!-- Информационный текст -->
-            <p id="page-info">Загрузка...</p>
-
-            <!-- Скрипт для обработки параметров -->
-            <script>
-                document.addEventListener('DOMContentLoaded', function() {
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const pageId = urlParams.get('page_id');
-
-                    if (pageId) {
-                        document.getElementById('page-info').textContent = `Открыта страница с ID: ${pageId}`;
-                    } else {
-                        document.getElementById('page-info').textContent = 'Это главная страница';
-                    }
-                });
-            </script>
-        </div>
-
-        <!-- Кнопка "Войти" внизу страницы -->
-        <div style="margin-top: 50px; text-align: center;">
-            <a href="input.html" class="button">Войти</a>
+            <!-- Здесь можно добавить дополнительный контент, если требуется -->
         </div>
     </div>
+
+    <!-- Кнопка "Войти" в нижней части страницы -->
+    <div class="footer-button">
+        <a href="input.html" class="button">Войти</a>
+    </div>
+
+    <script>
+        // Обработка параметров из URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const pageId = urlParams.get('page_id');
+            if (pageId) {
+                console.log(`Открыта страница с ID: ${pageId}`);
+            }
+        });
+    </script>
 </body>
 </html>
