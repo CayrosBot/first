@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
-    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
+    <link rel="stylesheet" href="style_input.css">
     <script>
-        // Проверяем доступность объекта Telegram.WebApp
         if (window.Telegram?.WebApp) {
             // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.ready();
@@ -17,23 +16,27 @@
 
             // Показываем кнопку "Назад"
             const backButtonData = JSON.stringify({ is_visible: true });
-            if (window.TelegramWebviewProxy) {
-                // Для мобильных и десктоп-версий Telegram
-                window.TelegramWebviewProxy.postEvent('web_app_setup_back_button', backButtonData);
-            } else if (window.parent && window.parent.postMessage) {
-                // Для веб-версии Telegram
-                const webEventData = JSON.stringify({
-                    eventType: 'web_app_setup_back_button',
-                    eventData: { is_visible: true },
-                });
-                window.parent.postMessage(webEventData, 'https://web.telegram.org');
-            } else if (window.external && window.external.notify) {
-                // Для Windows Phone
-                const winPhoneData = JSON.stringify({
-                    eventType: 'web_app_setup_back_button',
-                    eventData: { is_visible: true },
-                });
-                window.external.notify(winPhoneData);
+            try {
+                if (window.TelegramWebviewProxy) {
+                    // Для мобильных и десктоп-версий Telegram
+                    window.TelegramWebviewProxy.postEvent('web_app_setup_back_button', backButtonData);
+                } else if (window.parent && window.parent.postMessage) {
+                    // Для веб-версии Telegram
+                    const webEventData = JSON.stringify({
+                        eventType: 'web_app_setup_back_button',
+                        eventData: { is_visible: true },
+                    });
+                    window.parent.postMessage(webEventData, 'https://web.telegram.org');
+                } else if (window.external && window.external.notify) {
+                    // Для Windows Phone
+                    const winPhoneData = JSON.stringify({
+                        eventType: 'web_app_setup_back_button',
+                        eventData: { is_visible: true },
+                    });
+                    window.external.notify(winPhoneData);
+                }
+            } catch (error) {
+                console.error("Ошибка при показе кнопки 'Назад':", error);
             }
 
             // Обработка нажатия на кнопку "Назад"
@@ -45,13 +48,12 @@
     </script>
 </head>
 <body>
-    <!-- Заголовок вне рамки -->
-    <h1 class="page-title">Вход для трейдеров</h1>
+    <!-- Заголовок формы -->
+    <h1>Форма входа</h1>
 
     <!-- Основной контейнер формы -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Форма входа -->
             <form onsubmit="return validateForm(event)">
                 <!-- Поле для ввода логина -->
                 <div class="field">
@@ -85,9 +87,9 @@
 
         // Проверка пароля
         function validatePassword(password) {
-            const minLength = 8; // Минимальная длина пароля
-            const maxLength = 12; // Максимальная длина пароля
-            const hasUppercase = /[A-Z]/.test(password); // Проверка на наличие заглавной буквы
+            const minLength = 8;
+            const maxLength = 12;
+            const hasUppercase = /[A-Z]/.test(password);
             if (password.length < minLength) {
                 return "Пароль должен содержать не менее 8 символов.";
             }
@@ -97,12 +99,12 @@
             if (!hasUppercase) {
                 return "Пароль должен содержать хотя бы одну заглавную букву.";
             }
-            return null; // Нет ошибок
+            return null;
         }
 
         // Форма проверки данных
         function validateForm(event) {
-            event.preventDefault(); // Предотвращаем отправку формы
+            event.preventDefault();
 
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
@@ -125,7 +127,6 @@
                 return false;
             }
 
-            // Если все проверки пройдены, можно отправить форму
             console.log("Отправленные данные:", { username, password });
             alert("Данные успешно отправлены!");
             return true;
