@@ -47,7 +47,7 @@ body {
     width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
     font-size: 16px;
     padding: 10px 0;
-    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    border: 5px solid #00bfff; /* Голубая рамка 2 пикселя */
     color: white; /* Белый текст */
     border-radius: 10px;
     text-decoration: none; /* Убираем подчеркивание у ссылки */
