@@ -4,17 +4,17 @@ body {
     margin: 0;
     display: flex;
     flex-direction: column; /* Вертикальное расположение элементов */
-    justify-content: space-between; /* Распределение пространства между элементами */
     align-items: center;
-    height: 100vh; /* Полная высота экрана */
+    height: 100vh;
     background-color: #f9f9f9;
 }
 
-/* Заголовок в верхней части страницы */
-.header {
-    width: 100%;
+/* Заголовок страницы */
+.page-title {
+    font-size: 18px;
     text-align: center;
-    margin-top: 3%; /* Отступ от верха 3% */
+    margin-top: 3%; /* Отступ от верха */
+    margin-bottom: 10px; /* Отступ до блока ввода */
 }
 
 /* Основной контейнер */
@@ -30,6 +30,10 @@ body {
     width: 100%;
     max-width: 400px;
     padding: 20px;
+    border: 2px solid #00bfff; /* Голубая рамка */
+    border-radius: 15px;
+    background-color: #ffffff;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
 }
 
@@ -87,7 +91,7 @@ input[type="text"], input[type="password"] {
     display: inline-block;
     font-size: 12px;
     padding: 5px 10px;
-    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    border: 2px solid #00bfff; /* Голубая рамка */
     background-color: white; /* Белый фон */
     color: black; /* Черный текст */
     border-radius: 10px;
@@ -97,6 +101,6 @@ input[type="text"], input[type="password"] {
 }
 
 .back-button:hover {
-    background-color: #00bfff; /* Темнее голубой при наведении */
+    background-color: #00bfff; /* Голубой фон при наведении */
     color: white; /* Белый текст при наведении */
 }
