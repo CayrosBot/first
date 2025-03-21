@@ -16,6 +16,7 @@ body {
     width: 100%;
     text-align: center;
     margin-top: 3%; /* Отступ от верха 3% */
+    box-sizing: border-box;
 }
 
 /* Основной контейнер */
@@ -29,7 +30,7 @@ body {
 
 .container {
     width: 100%;
-    max-width: 400px;
+    max-width: 400px; /* Максимальная ширина для контейнера */
     padding: 20px;
     box-sizing: border-box;
 }
@@ -76,4 +77,31 @@ body {
 h1 {
     font-size: 18px; /* Размер шрифта для заголовков */
     color: #333; /* Темно-серый цвет текста */
+    margin-bottom: 20px; /* Отступ снизу */
+}
+
+/* Медиа-запрос для ПК (ширина больше 768px) */
+@media (min-width: 768px) {
+    .header {
+        margin-top: 10px; /* Уменьшаем отступ от верха */
+    }
+
+    .container-wrap {
+        padding: 0 10%; /* Увеличиваем отступы слева и справа */
+    }
+
+    .footer-button, .rules-link {
+        bottom: 10px; /* Фиксируем положение снизу */
+    }
+}
+
+/* Медиа-запрос для мобильных устройств (ширина меньше 768px) */
+@media (max-width: 768px) {
+    .header {
+        margin-top: 5%; /* Отступ от верха для мобильных */
+    }
+
+    .footer-button, .rules-link {
+        bottom: 5px; /* Фиксируем положение снизу */
+    }
 }
