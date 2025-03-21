@@ -16,7 +16,7 @@
 
         .sol-container {
             display: flex;
-            align-items: center;
+            align-items: flex-start; /* Выравниваем элементы по верхнему краю */
             margin-left: 3%; /* Отступ слева от границы экрана */
             margin-top: 20px; /* Небольшой отступ сверху */
         }
@@ -30,7 +30,9 @@
 
         .button-container {
             display: flex;
+            flex-direction: column; /* Кнопки располагаются вертикально */
             gap: 10px; /* Пространство между кнопками */
+            align-self: flex-start; /* Выравниваем кнопки по верхнему краю */
         }
 
         /* Стили кнопок взяты из style_index.css */
@@ -48,25 +50,17 @@
             background-color: transparent; /* Прозрачный фон */
         }
 
-        .buy-button {
-            background-color: #2ecc71; /* Зеленый цвет для "Купить" */
-            color: white;
-        }
-
-        .sell-button {
-            background-color: #e74c3c; /* Красный цвет для "Продать" */
-            color: white;
-        }
-
         /* Эффект при наведении на кнопку */
         .action-button:hover {
             background-color: #00bfff; /* Темнее голубой при наведении */
+            color: white; /* Белый текст при наведении */
         }
 
         .exchange-rate {
-            margin-top: 10px;
+            margin-top: 10px; /* Расположение под кнопками */
             font-size: 14px;
             color: #333;
+            align-self: flex-end; /* Выравниваем текст по нижнему краю */
         }
 
         .separator {
@@ -85,8 +79,8 @@
 
         <!-- Кнопки "Купить" и "Продать" -->
         <div class="button-container">
-            <button class="action-button buy-button">Купить</button>
-            <button class="action-button sell-button">Продать</button>
+            <button class="action-button">Купить</button>
+            <button class="action-button">Продать</button>
         </div>
 
         <!-- Текст курса -->
