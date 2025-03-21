@@ -3,6 +3,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     background-color: #f9f9f9;
+    position: relative; /* Для абсолютного позиционирования кнопки */
 }
 
 /* Заголовок страницы */
@@ -74,4 +75,25 @@ input[type="text"], input[type="password"] {
     color: red;
     font-size: 12px;
     margin-top: 5px;
+}
+
+/* Кнопка "Назад" */
+.back-button {
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 3%; /* Отступ снизу */
+    left: 3%; /* Отступ слева */
+    display: inline-block;
+    font-size: 14px;
+    padding: 8px 12px;
+    border: 1px solid #00bfff; /* Голубая рамка */
+    background-color: #00bfff; /* Голубой фон */
+    color: white; /* Белый текст */
+    border-radius: 4px;
+    cursor: pointer;
+    text-decoration: none; /* Убираем подчеркивание */
+    z-index: 10; /* Чтобы кнопка была поверх других элементов */
+}
+
+.back-button:hover {
+    background-color: #0097c7; /* Темнее голубой при наведении */
 }
