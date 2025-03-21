@@ -13,10 +13,9 @@ body {
 
 /* Заголовок в верхней части страницы */
 .header {
-    position: absolute; /* Привязываем заголовок к верхней части экрана */
-    top: 2%; /* Отступ от верхней границы 2% */
     width: 100%;
     text-align: center;
+    margin-top: 3%; /* Отступ от верха 3% */
 }
 
 /* Основной контейнер */
@@ -35,32 +34,42 @@ body {
     box-sizing: border-box;
 }
 
-/* Кнопка "Войти" в нижней части страницы */
+/* Стиль для ссылки на правила */
+.rules-link {
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 2%; /* Отступ от нижней границы 2% */
+    left: 3%; /* Отступ от левой границы 3% */
+    font-size: 12px;
+    color: #00bfff; /* Голубой цвет текста */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+}
+
+/* Кнопка "Войти" в правом нижнем углу */
 .footer-button {
     position: absolute; /* Абсолютное позиционирование */
-    bottom: 2%; /* Отступ от нижней границы 3% */
-    left: 50%; /* Центрируем кнопку по горизонтали */
-    transform: translateX(-50%); /* Смещаем кнопку на половину её ширины */
-    width: 20%; /* Ширина кнопки */
+    bottom: 2%; /* Отступ от нижней границы 2% */
+    right: 3%; /* Отступ от правой границы 3% */
+    width: auto; /* Ширина кнопки */
 }
 
 /* Стиль для кнопки "Войти" */
 .button {
     display: inline-block;
-    width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
     font-size: 12px;
-    padding: 5px 0;
+    padding: 5px 10px;
     border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
     color: black; /* Черный текст */
     border-radius: 10px;
     text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer;
     text-align: center;
+    background-color: transparent; /* Прозрачный фон */
 }
 
 /* Эффект при наведении на кнопку */
 .button:hover {
     background-color: #00bfff; /* Темнее голубой при наведении */
+    color: white; /* Белый текст при наведении */
 }
 
 /* Заголовки */
