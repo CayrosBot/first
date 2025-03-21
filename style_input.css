@@ -2,6 +2,10 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
     background-color: #f9f9f9;
     position: relative; /* Для абсолютного позиционирования кнопки */
 }
@@ -77,23 +81,33 @@ input[type="text"], input[type="password"] {
     margin-top: 5px;
 }
 
-/* Кнопка "Назад" */
-.back-button {
+/* Кнопка "Назад" в нижней части страницы */
+.footer-button {
+    width: 20%; /* Ширина кнопки с отступами 15% от краев */
+    margin-left: 3%; /* Отступ слева 3% */
+    margin-bottom: 3%; /* Отступ от нижней границы 3% */
     position: absolute; /* Абсолютное позиционирование */
-    bottom: 3%; /* Отступ снизу */
-    left: 3%; /* Отступ слева */
-    display: inline-block;
-    font-size: 14px;
-    padding: 8px 12px;
-    border: 1px solid #00bfff; /* Голубая рамка */
-    background-color: #00bfff; /* Голубой фон */
-    color: white; /* Белый текст */
-    border-radius: 4px;
-    cursor: pointer;
-    text-decoration: none; /* Убираем подчеркивание */
-    z-index: 10; /* Чтобы кнопка была поверх других элементов */
+    bottom: 0; /* Прикрепляем к нижней части экрана */
+    left: 0; /* Располагаем слева */
 }
 
-.back-button:hover {
-    background-color: #0097c7; /* Темнее голубой при наведении */
+/* Стиль для кнопки "Назад" */
+.button-back {
+    display: inline-block;
+    width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
+    font-size: 12px;
+    padding: 5px 0;
+    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    color: black; /* Черный текст */
+    background-color: white; /* Белый фон */
+    border-radius: 10px;
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    cursor: pointer;
+    text-align: center;
+}
+
+/* Эффект при наведении на кнопку "Назад" */
+.button-back:hover {
+    background-color: #00bfff; /* Голубой фон при наведении */
+    color: white; /* Белый текст при наведении */
 }
