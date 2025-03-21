@@ -11,7 +11,7 @@ body {
 
 /* Заголовок страницы */
 .page-title {
-    font-size: 18px;
+    font-size: 16px;
     text-align: center;
     margin-top: 3%; /* Отступ от верха */
     margin-bottom: 10px; /* Отступ до блока ввода */
@@ -83,7 +83,7 @@ input[type="text"], input[type="password"] {
 /* Кнопка "Назад" в нижнем левом углу */
 .back-button-wrap {
     position: absolute; /* Абсолютное позиционирование */
-    bottom: 3%; /* Отступ от нижней границы 3% */
+    bottom: 2%; /* Отступ от нижней границы 3% */
     left: 3%; /* Отступ от левой границы 3% */
 }
 
