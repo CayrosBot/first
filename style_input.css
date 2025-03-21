@@ -11,7 +11,7 @@ body {
 
 /* Заголовок страницы */
 .page-title {
-    font-size: 14px;
+    font-size: 16px;
     text-align: center;
     margin-top: 3%; /* Отступ от верха */
     margin-bottom: 10px; /* Отступ до блока ввода */
