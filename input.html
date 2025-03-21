@@ -1,75 +1,51 @@
-<!-- input.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Вход для трейдеров</title>
-    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
+    <link rel="stylesheet" href="style_input.css">
     <script>
         // Инициализация Telegram Web App
         if (window.Telegram?.WebApp) {
-            // Уведомляем Telegram о готовности приложения
             window.Telegram.WebApp.ready();
-
-            // Разворачиваем приложение на весь экран
             window.Telegram.WebApp.expand();
 
-            // Показываем кнопку "Назад"
-            const backButtonData = JSON.stringify({ is_visible: true });
-            try {
-                if (window.TelegramWebviewProxy) {
-                    // Для мобильных и десктоп-версий Telegram
-                    window.TelegramWebviewProxy.postEvent('web_app_setup_back_button', backButtonData);
-                } else if (window.parent && window.parent.postMessage) {
-                    // Для веб-версии Telegram
-                    const webEventData = JSON.stringify({
-                        eventType: 'web_app_setup_back_button',
-                        eventData: { is_visible: true },
-                    });
-                    window.parent.postMessage(webEventData, 'https://web.telegram.org');
-                } else if (window.external && window.external.notify) {
-                    // Для Windows Phone
-                    const winPhoneData = JSON.stringify({
-                        eventType: 'web_app_setup_back_button',
-                        eventData: { is_visible: true },
-                    });
-                    window.external.notify(winPhoneData);
-                }
-            } catch (error) {
-                console.error("Ошибка при показе кнопки 'Назад':", error);
+            // Показываем кнопку "Назад", если она поддерживается
+            if (window.Telegram.WebApp.BackButton?.isVisible) {
+                window.Telegram.WebApp.BackButton.show();
+                window.Telegram.WebApp.BackButton.onClick(() => {
+                    window.location.href = "index.html";
+                });
             }
 
-            // Обработка нажатия на кнопку "Назад"
-            window.Telegram.WebApp.BackButton.onClick(() => {
-                // Переходим на главную страницу (index.html)
-                window.location.href = "index.html";
-            });
+            // Показываем кнопку "Закрыть" для Desktop и Web версий
+            const platform = window.Telegram.WebApp.platform;
+            if (platform === 'tdesktop' || platform === 'web') {
+                document.getElementById('close-button').style.display = 'block';
+            }
         }
     </script>
 </head>
 <body>
-    <!-- Заголовок вне рамки -->
     <h1 class="page-title" style="margin-top: 3%;">Вход для трейдеров</h1>
+
+    <!-- Кнопка "Закрыть" для Desktop и Web версий -->
+    <button id="close-button" onclick="window.Telegram.WebApp.close()" style="display: none;">Закрыть</button>
 
     <!-- Основной контейнер формы -->
     <div class="container-wrap">
         <div class="container">
             <form onsubmit="return validateForm(event)">
-                <!-- Поле для ввода логина -->
                 <div class="field">
                     <label for="username">Логин:</label>
                     <input type="text" id="username" name="username" placeholder="Введите логин" required>
                 </div>
-
-                <!-- Поле для ввода пароля -->
                 <div class="field">
                     <label for="password">Пароль:</label>
                     <input type="password" id="password" name="password" placeholder="Введите пароль" required>
                     <div class="error-message" id="password-error"></div>
                 </div>
-
-                <!-- Кнопка отправки формы -->
                 <div class="field">
                     <button type="submit" class="button">Войти</button>
                 </div>
@@ -78,7 +54,7 @@
     </div>
 
     <script>
-        // Функция для очистки сообщений об ошибках
+        // Функции для валидации формы
         function clearErrorMessage() {
             const errorMessage = document.getElementById("password-error");
             if (errorMessage) {
@@ -86,11 +62,10 @@
             }
         }
 
-        // Проверка пароля
         function validatePassword(password) {
-            const minLength = 8; // Минимальная длина пароля
-            const maxLength = 12; // Максимальная длина пароля
-            const hasUppercase = /[A-Z]/.test(password); // Проверка на наличие заглавной буквы
+            const minLength = 8;
+            const maxLength = 12;
+            const hasUppercase = /[A-Z]/.test(password);
             if (password.length < minLength) {
                 return "Пароль должен содержать не менее 8 символов.";
             }
@@ -100,13 +75,11 @@
             if (!hasUppercase) {
                 return "Пароль должен содержать хотя бы одну заглавную букву.";
             }
-            return null; // Нет ошибок
+            return null;
         }
 
-        // Форма проверки данных
         function validateForm(event) {
-            event.preventDefault(); // Предотвращаем отправку формы
-
+            event.preventDefault();
             const username = document.getElementById("username").value.trim();
             const password = document.getElementById("password").value.trim();
             const errorMessage = document.getElementById("password-error");
@@ -128,7 +101,6 @@
                 return false;
             }
 
-            // Если все проверки пройдены, можно отправить форму
             console.log("Отправленные данные:", { username, password });
             alert("Данные успешно отправлены!");
             return true;
