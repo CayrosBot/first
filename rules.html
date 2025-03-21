@@ -1,26 +1,120 @@
-<!-- rules.html -->
+<!-- sol_index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Правила сервиса</title>
+    <title>Solana Exchange</title>
     <style>
+        /* Встроенные стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
+            padding: 0;
             background-color: #f9f9f9;
         }
-        h1 {
-            font-size: 24px;
-            color: #333;
+
+        .sol-container {
+            display: flex;
+            align-items: center;
+            margin-left: 3%; /* Отступ слева от границы экрана */
+            margin-top: 20px; /* Небольшой отступ сверху */
+        }
+
+        .sol-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px; /* Отступ справа от изображения */
+            border-radius: 8px; /* Скругление углов изображения */
+        }
+
+        .button-container {
+            display: flex;
+            gap: 10px; /* Пространство между кнопками */
+        }
+
+        /* Стили кнопок взяты из style_index.css */
+        .action-button {
+            display: inline-block;
+            width: auto; /* Автоматическая ширина */
+            font-size: 12px;
+            padding: 5px 10px; /* Отступы внутри кнопки */
+            border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+            color: black; /* Черный текст */
+            border-radius: 10px; /* Скругленные углы */
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            cursor: pointer;
             text-align: center;
+            background-color: transparent; /* Прозрачный фон */
+        }
+
+        .buy-button {
+            background-color: #2ecc71; /* Зеленый цвет для "Купить" */
+            color: white;
+        }
+
+        .sell-button {
+            background-color: #e74c3c; /* Красный цвет для "Продать" */
+            color: white;
+        }
+
+        /* Эффект при наведении на кнопку */
+        .action-button:hover {
+            background-color: #00bfff; /* Темнее голубой при наведении */
+        }
+
+        .exchange-rate {
+            margin-top: 10px;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .separator {
+            width: 100%;
+            height: 2px;
+            background-color: #00bfff; /* Голубой цвет разделителя */
+            margin-top: 20px;
         }
     </style>
 </head>
 <body>
-    <h1>Правила сервиса</h1>
-    <!-- Здесь можно добавить текст правил -->
+    <!-- Блок с изображением и кнопками -->
+    <div class="sol-container">
+        <!-- Изображение Solana -->
+        <img src="https://github.com/CayrosBot/first/blob/main/SOlana.jpg?raw=true" alt="Solana Logo" class="sol-image">
+
+        <!-- Кнопки "Купить" и "Продать" -->
+        <div class="button-container">
+            <button class="action-button buy-button">Купить</button>
+            <button class="action-button sell-button">Продать</button>
+        </div>
+
+        <!-- Текст курса -->
+        <div class="exchange-rate">
+            Курс: 1 SOL = <span id="sol-price">...</span> RUB
+        </div>
+    </div>
+
+    <!-- Разделитель -->
+    <div class="separator"></div>
+
+    <!-- Встроенный JavaScript -->
+    <script>
+        // Получаем текущий курс SOL через публичный API
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const solPrice = data.solana.rub; // Получаем цену SOL в рублях
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену с двумя знаками после запятой
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении курса:', error);
+                    document.getElementById('sol-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                });
+        });
+    </script>
 </body>
 </html>
