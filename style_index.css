@@ -2,10 +2,6 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    display: flex;
-    flex-direction: column; /* Вертикальное расположение элементов */
-    justify-content: center; /* Центрируем контент по вертикали */
-    align-items: center;
     height: 100vh; /* Полная высота экрана */
     background-color: #f9f9f9;
     position: relative; /* Добавляем относительное позиционирование для body */
@@ -16,6 +12,7 @@ body {
     width: 100%;
     text-align: center;
     margin-top: 3%; /* Отступ от верха 3% */
+    box-sizing: border-box;
 }
 
 /* Основной контейнер */
@@ -34,20 +31,26 @@ body {
     box-sizing: border-box;
 }
 
-/* Кнопка "Войти" в нижней части страницы */
-.footer-button {
+/* Кнопка "Правила сервиса" в левом нижнем углу */
+.footer-rules {
     position: absolute; /* Абсолютное позиционирование */
-    bottom: 2%; /* Отступ от нижней границы 2% */
-    right: 3%; /* Отступ от правой границы 3% */
-    width: auto; /* Автоматическая ширина */
+    bottom: 3%; /* Отступ снизу 3% */
+    left: 3%; /* Отступ слева 3% */
 }
 
-/* Стиль для кнопки "Войти" */
+/* Кнопка "Войти" в правом нижнем углу */
+.footer-button {
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 3%; /* Отступ снизу 3% */
+    right: 3%; /* Отступ справа 3% */
+}
+
+/* Стиль для кнопок */
 .button {
     display: inline-block;
-    width: 100%; /* Занимает всю доступную ширину внутри .footer-button */
+    width: auto; /* Ширина кнопки определяется автоматически */
     font-size: 12px;
-    padding: 5px 10px; /* Добавляем внутренние отступы */
+    padding: 5px 10px; /* Внутренние отступы */
     border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
     color: black; /* Черный текст */
     border-radius: 10px;
