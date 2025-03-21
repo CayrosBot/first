@@ -28,10 +28,15 @@
             border-radius: 8px; /* Скругление углов изображения */
         }
 
+        .button-text-container {
+            display: flex;
+            flex-direction: column; /* Группируем кнопки и текст вертикально */
+            align-items: flex-start; /* Выравниваем элементы по левому краю */
+        }
+
         .button-container {
             display: flex; /* Кнопки располагаются в одну строку */
             gap: 10px; /* Пространство между кнопками */
-            align-self: flex-start; /* Выравниваем кнопки по верхнему краю */
         }
 
         /* Стили кнопок взяты из style_index.css */
@@ -56,10 +61,9 @@
         }
 
         .exchange-rate {
-            margin-top: 45px; /* Расположение под кнопками и выравнивание по нижней части изображения */
+            margin-top: 5px; /* Расположение под кнопками */
             font-size: 14px;
             color: #333;
-            align-self: flex-end; /* Выравниваем текст по нижнему краю */
         }
 
         .separator {
@@ -76,15 +80,18 @@
         <!-- Изображение Solana -->
         <img src="https://github.com/CayrosBot/first/blob/main/SOlana.jpg?raw=true" alt="Solana Logo" class="sol-image">
 
-        <!-- Кнопки "Купить" и "Продать" -->
-        <div class="button-container">
-            <button class="action-button">Купить</button>
-            <button class="action-button">Продать</button>
-        </div>
+        <!-- Контейнер для кнопок и текста курса -->
+        <div class="button-text-container">
+            <!-- Кнопки "Купить" и "Продать" -->
+            <div class="button-container">
+                <button class="action-button">Купить</button>
+                <button class="action-button">Продать</button>
+            </div>
 
-        <!-- Текст курса -->
-        <div class="exchange-rate">
-            Курс: 1 SOL = <span id="sol-price">...</span> RUB
+            <!-- Текст курса -->
+            <div class="exchange-rate">
+                Курс: 1 SOL = <span id="sol-price">...</span> RUB
+            </div>
         </div>
     </div>
 
