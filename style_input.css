@@ -7,6 +7,7 @@ body {
     align-items: center;
     height: 100vh;
     background-color: #f9f9f9;
+    overflow-anchor: none; /* Отключаем скролл-якорь */
 }
 
 /* Заголовок страницы */
@@ -82,7 +83,7 @@ input[type="text"], input[type="password"] {
 
 /* Кнопка "Назад" в нижнем левом углу */
 .back-button-wrap {
-    position: fixed; /* Используем fixed вместо absolute */
+    position: fixed; /* Фиксированное позиционирование */
     bottom: 2%; /* Отступ от нижней границы 2% */
     left: 3%; /* Отступ от левой границы 3% */
     z-index: 1000; /* Гарантируем, что кнопка находится поверх других элементов */
@@ -104,4 +105,16 @@ input[type="text"], input[type="password"] {
 .back-button:hover {
     background-color: #00bfff; /* Голубой фон при наведении */
     color: white; /* Белый текст при наведении */
+}
+
+/* Адаптивность для мобильных устройств */
+@media (max-width: 768px) {
+    .container-wrap {
+        padding-bottom: 50px; /* Добавляем отступ снизу, чтобы кнопка не перекрывала поля */
+    }
+
+    .back-button-wrap {
+        bottom: 8px; /* Уменьшаем отступ для маленьких экранов */
+        left: 8px;
+    }
 }
