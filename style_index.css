@@ -22,7 +22,7 @@ body {
     height: 60px;
 }
 
-.sol-image, .cayros-image, .wallet-image {
+.sol-image, .cayros-image {
     width: 60px;
     height: 60px;
     margin-right: 15px;
@@ -71,34 +71,32 @@ body {
     margin-left: 3%;
 }
 
-/* Блок Phantom Wallet */
-.wallet-container {
-    margin-top: 30px;
-}
-
-.wallet-title {
+/* Заголовок "Криптовалютный кошелек:" */
+.crypto-wallet-title {
     font-size: 18px;
     margin-top: 30px;
-    margin-bottom: 20px;
+    margin-left: 3%;
+    color: #333;
 }
 
-.wallet-content {
+/* Блок с изображением и текстом */
+.wallet-info {
+    margin-left: 3%;
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    align-items: center; /* Выравниваем элементы по центру */
 }
 
 .wallet-image {
     width: 60px;
     height: 60px;
-    margin-bottom: 10px;
     border-radius: 8px;
+    margin-right: 15px; /* Отступ справа от изображения */
 }
 
 .wallet-text {
-    font-size: 12px;
+    font-size: 14px;
     color: #333;
-    margin: 0;
 }
 
 .wallet-link {
