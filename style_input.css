@@ -5,6 +5,7 @@ body {
     display: flex;
     flex-direction: column; /* Вертикальное расположение элементов */
     align-items: center;
+    height: 100vh;
     background-color: #f9f9f9;
 }
 
@@ -24,23 +25,28 @@ body {
     border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
 }
 
-/* Кнопка "Назад" в заголовке */
+/* Кнопка "Назад" */
 .back-button {
+    display: inline-block;
     font-size: 14px; /* Размер текста */
-    color: #00bfff; /* Цвет текста */
-    text-decoration: none; /* Убираем подчеркивание у ссылки */
-    cursor: pointer; /* Изменяем курсор при наведении */
-    margin-right: 10px; /* Отступ справа от кнопки до текста заголовка */
-    background-color: #e0f7fa; /* Светло-голубой фон */
     padding: 5px 10px; /* Отступы внутри кнопки */
+    background-color: #00bfff; /* Голубой фон */
+    color: black; /* Черный текст */
+    font-weight: bold; /* Жирное выделение */
+    text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+    border: none; /* Убираем рамку */
     border-radius: 5px; /* Скругление углов */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    cursor: pointer;
+    margin-right: 10px; /* Отступ справа от кнопки до текста заголовка */
 }
 
 .back-button:hover {
-    text-decoration: underline; /* Добавляем подчеркивание при наведении */
+    background-color: #0096c7; /* Темнее голубой при наведении */
+    color: white; /* Белый текст при наведении */
 }
 
-/* Заголовок страницы */
+/* Текст заголовка */
 .page-title {
     font-size: 16px; /* Размер текста */
     color: #333; /* Цвет текста */
@@ -58,6 +64,7 @@ body {
     margin-top: 60px; /* Отступ под заголовком */
 }
 
+/* Форма */
 .container {
     width: 100%;
     max-width: 400px;
