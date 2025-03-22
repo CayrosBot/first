@@ -13,7 +13,7 @@
             padding: 0;
             background-color: #f9f9f9;
         }
-        .sol-container, .cayros-container, .wallet-container {
+        .sol-container, .cayros-container {
             display: flex;
             align-items: flex-start; /* Выравниваем элементы по верхнему краю */
             margin-left: 3%; /* Отступ слева от границы экрана */
@@ -26,7 +26,7 @@
             align-items: flex-start; /* Выравниваем элементы по левому краю */
             height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
         }
-        .sol-image, .cayros-image, .wallet-image {
+        .sol-image, .cayros-image {
             width: 60px;
             height: 60px;
             margin-right: 15px; /* Отступ справа от изображения */
@@ -70,39 +70,6 @@
             background-color: #00bfff; /* Голубой цвет разделителя */
             margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
             margin-left: 3%; /* Отступ слева */
-        }
-        /* Новый блок кошелька */
-        .wallet-container {
-            margin-top: 30px; /* Отступ от предыдущего разделителя */
-        }
-        .wallet-title {
-            font-size: 18px; /* Размер текста заголовка */
-            margin-top: 30px; /* Отступ от блока CAYROS */
-            margin-bottom: 20px; /* Отступ между заголовком и содержимым */
-        }
-        /* Измененная структура wallet-content */
-        .wallet-content {
-            display: flex;
-            flex-direction: column; /* Вертикальное расположение элементов */
-            align-items: flex-start; /* Выравниваем элементы по левому краю */
-        }
-        .wallet-image {
-            width: 60px;
-            height: 60px;
-            margin-bottom: 10px; /* Отступ под изображением */
-            border-radius: 8px; /* Скругление углов изображения */
-        }
-        .wallet-text {
-            font-size: 12px;
-            color: #333;
-            margin: 0; /* Убираем стандартные отступы */
-        }
-        .wallet-link {
-            color: #00bfff; /* Цвет ссылки */
-            text-decoration: none; /* Убираем подчеркивание */
-        }
-        .wallet-link:hover {
-            text-decoration: underline; /* Добавляем подчеркивание при наведении */
         }
         /* Заголовок в верхней части страницы */
         .header {
@@ -153,6 +120,13 @@
             background-color: #00bfff; /* Темнее голубой при наведении */
             color: white; /* Белый текст при наведении */
         }
+        /* Новый стиль для заголовка "Криптовалютный кошелек:" */
+        .crypto-wallet-title {
+            font-size: 18px; /* Размер текста */
+            margin-top: 30px; /* Отступ сверху от последнего разделителя */
+            margin-left: 3%; /* Отступ слева от границы экрана */
+            color: #333; /* Цвет текста */
+        }
     </style>
 </head>
 <body>
@@ -201,20 +175,9 @@
             </div>
             <!-- Второй разделитель -->
             <div class="separator"></div>
-            <!-- Блок Phantom Wallet -->
-            <div class="wallet-container">
-                <!-- Заголовок -->
-                <div class="wallet-title">Криптовалютный кошелек</div>
-                <!-- Контейнер для изображения и текста -->
-                <div class="wallet-content">
-                    <!-- Изображение Phantom Wallet -->
-                    <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
-                    <!-- Текст с ссылкой -->
-                    <div class="wallet-text">
-                        Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
-                        <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
-                    </div>
-                </div>
+            <!-- Новый блок с текстом "Криптовалютный кошелек:" -->
+            <div class="crypto-wallet-title">
+                Криптовалютный кошелек:
             </div>
         </div>
     </div>
