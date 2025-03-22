@@ -1,21 +1,72 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="style_index.css"> <!-- Подключаем новый CSS-файл -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Главная страница</title>
+    <title>Solana Exchange</title>
+    <link rel="stylesheet" href="style_index.css"> <!-- Подключение внешнего файла со стилями -->
 </head>
 <body>
     <!-- Заголовок в верхней части страницы -->
     <div class="header">
-        <h1>P2P сервис обмена1</h1>
+        <h1>P2P сервис обмена</h1>
     </div>
-    <!-- Основной контейнер (пустой, если нет дополнительного содержимого) -->
+    <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Здесь можно разместить дополнительный контент, если требуется -->
+            <!-- Блок Solana -->
+            <div class="sol-container">
+                <!-- Контейнер для изображения и кнопок -->
+                <div class="image-button-container">
+                    <!-- Изображение Solana -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
+                    <!-- Кнопки "Купить" и "Продать" -->
+                    <div class="button-container">
+                        <button class="action-button">Купить</button>
+                        <button class="action-button">Продать</button>
+                    </div>
+                </div>
+                <!-- Текст курса -->
+                <div class="exchange-rate">
+                    1 SOL = <span id="sol-price">...</span> RUB
+                </div>
+            </div>
+            <!-- Первый разделитель -->
+            <div class="separator"></div>
+            <!-- Блок Cayros -->
+            <div class="cayros-container" style="margin-top: 20px;">
+                <!-- Контейнер для изображения и кнопок -->
+                <div class="image-button-container">
+                    <!-- Изображение Cayros -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
+                    <!-- Кнопки "Купить" и "Продать" -->
+                    <div class="button-container">
+                        <button class="action-button">Купить</button>
+                        <button class="action-button">Продать</button>
+                    </div>
+                </div>
+                <!-- Текст курса -->
+                <div class="exchange-rate">
+                    1 CAYROS = <span id="cayros-price">...</span> RUB
+                </div>
+            </div>
+            <!-- Второй разделитель -->
+            <div class="separator"></div>
+            <!-- Блок Phantom Wallet -->
+            <div class="wallet-container">
+                <!-- Заголовок -->
+                <div class="wallet-title">Криптовалютный кошелек</div>
+                <!-- Контейнер для изображения и текста -->
+                <div class="wallet-content">
+                    <!-- Изображение Phantom Wallet -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
+                    <!-- Текст с ссылкой -->
+                    <div class="wallet-text">
+                        Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
+                        <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Кнопка "Правила сервиса" в левом нижнем углу -->
@@ -26,14 +77,25 @@
     <div class="footer-button">
         <a href="input.html" class="button">Войти</a>
     </div>
+    <!-- Встроенный JavaScript -->
     <script>
-        // Обработка параметров из URL
-        document.addEventListener('DOMContentLoaded', function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const pageId = urlParams.get('page_id');
-            if (pageId) {
-                console.log(`Открыта страница с ID: ${pageId}`);
-            }
+        // Получаем текущий курс SOL через публичный API
+        document.addEventListener('DOMContentLoaded', function () {
+            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    const solPrice = data.solana.rub; // Получаем цену SOL в рублях
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
+                    // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
+                    const cayrosPrice = (solPrice * 0.0011).toFixed(2);
+                    document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
+                })
+                .catch(error => {
+                    console.error('Ошибка при получении курса:', error);
+                    document.getElementById('sol-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                    document.getElementById('cayros-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                });
         });
     </script>
 </body>
