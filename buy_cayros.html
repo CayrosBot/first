@@ -4,10 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Оформление покупки CAYROS</title>
+    <title>Заказ CAYROS</title>
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили из style_input.css -->
     <style>
-        /* Дополнительные стили, если они не входят в style_input.css */
+        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -52,22 +52,23 @@
             color: white; /* Белый текст при наведении */
         }
 
-        /* Текст заголовка */
-        .page-title {
+        /* Новый заголовок под первым */
+        .sub-title {
             font-size: 18px; /* Размер текста */
+            line-height: 18px; /* Высота текста */
             text-align: center; /* Текст по центру */
             margin: 0; /* Убираем стандартные отступы */
-            flex: 1; /* Занимает доступное пространство */
+            margin-top: 60px; /* Отступ под фиксированным заголовком */
+            margin-bottom: 20px; /* Отступ до основного контента */
         }
 
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
-            padding: 0 3%; /* Отступы слева и справа */
+            padding: 0 3%;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
-            margin-top: 60px; /* Отступ под фиксированным заголовком */
         }
 
         .container {
@@ -199,8 +200,10 @@
     <!-- Фиксированный заголовок с кнопкой "Назад" -->
     <div class="header-wrap">
         <a href="index.html" class="back-button">< Назад</a>
-        <h1 class="page-title">Оформление покупки:</h1>
     </div>
+
+    <!-- Новый заголовок под первым -->
+    <h1 class="sub-title">Оформление покупки</h1>
 
     <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
