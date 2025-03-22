@@ -1,10 +1,11 @@
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solana Exchange</title>
-    <link rel="stylesheet" href="style_index.css">
+    <link rel="stylesheet" href="style_index.css"> <!-- Ссылка на внешний файл со стилями -->
 </head>
 <body>
     <!-- Заголовок в верхней части страницы -->
@@ -82,20 +83,22 @@
     </div>
     <!-- Встроенный JavaScript -->
     <script>
+        // Получаем текущий курс SOL через публичный API
         document.addEventListener('DOMContentLoaded', function () {
             const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    const solPrice = data.solana.rub;
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2);
+                    const solPrice = data.solana.rub; // Получаем цену SOL в рублях
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
+                    // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
                     const cayrosPrice = (solPrice * 0.0011).toFixed(2);
-                    document.getElementById('cayros-price').textContent = cayrosPrice;
+                    document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
                 })
                 .catch(error => {
                     console.error('Ошибка при получении курса:', error);
-                    document.getElementById('sol-price').textContent = 'N/A';
-                    document.getElementById('cayros-price').textContent = 'N/A';
+                    document.getElementById('sol-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                    document.getElementById('cayros-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
                 });
         });
     </script>
