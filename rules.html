@@ -35,9 +35,18 @@
             height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
         }
 
+        .exchange-rate {
+            font-size: 14px;
+            color: #333;
+            margin: 0; /* Убираем стандартные отступы */
+            margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
+        }
+
         .button-container {
             display: flex; /* Кнопки располагаются в одну строку */
             gap: 10px; /* Пространство между кнопками */
+            position: absolute; /* Абсолютное позиционирование для кнопок */
+            bottom: 0; /* Кнопки прикреплены к нижней границе блока */
         }
 
         /* Стили кнопок взяты из style_index.css */
@@ -61,19 +70,12 @@
             color: white; /* Белый текст при наведении */
         }
 
-        .exchange-rate {
-            position: relative; /* Относительное позиционирование */
-            bottom: -10px; /* Смещаем текст вниз, чтобы его нижняя граница совпала с нижней границей изображения */
-            font-size: 14px;
-            color: #333;
-            margin: 0; /* Убираем стандартные отступы */
-        }
-
         .separator {
-            width: 100%;
+            width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
             height: 2px;
             background-color: #00bfff; /* Голубой цвет разделителя */
-            margin-top: 20px;
+            margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
+            margin-left: 3%; /* Отступ слева */
         }
     </style>
 </head>
@@ -83,17 +85,17 @@
         <!-- Изображение Solana -->
         <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
 
-        <!-- Контейнер для кнопок и текста курса -->
+        <!-- Контейнер для текста курса и кнопок -->
         <div class="button-text-container">
+            <!-- Текст курса -->
+            <div class="exchange-rate">
+                Курс: 1 SOL = <span id="sol-price">...</span> RUB
+            </div>
+
             <!-- Кнопки "Купить" и "Продать" -->
             <div class="button-container">
                 <button class="action-button">Купить</button>
                 <button class="action-button">Продать</button>
-            </div>
-
-            <!-- Текст курса -->
-            <div class="exchange-rate">
-                Курс: 1 SOL = <span id="sol-price">...</span> RUB
             </div>
         </div>
     </div>
