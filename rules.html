@@ -13,14 +13,12 @@
             padding: 0;
             background-color: #f9f9f9;
         }
-
         .sol-container, .cayros-container, .wallet-container {
             display: flex;
             align-items: flex-start; /* Выравниваем элементы по верхнему краю */
             margin-left: 3%; /* Отступ слева от границы экрана */
             margin-top: 20px; /* Небольшой отступ сверху */
         }
-
         .image-button-container {
             position: relative; /* Создаем относительное позиционирование для контейнера */
             display: flex;
@@ -28,14 +26,12 @@
             align-items: flex-start; /* Выравниваем элементы по левому краю */
             height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
         }
-
         .sol-image, .cayros-image, .wallet-image {
             width: 60px;
             height: 60px;
             margin-right: 15px; /* Отступ справа от изображения */
             border-radius: 8px; /* Скругление углов изображения */
         }
-
         .button-container {
             position: absolute; /* Абсолютное позиционирование для кнопок */
             bottom: 0; /* Привязываем кнопки к нижней границе контейнера */
@@ -43,7 +39,6 @@
             display: flex; /* Кнопки располагаются в одну строку */
             gap: 15px; /* Пространство между кнопками */
         }
-
         /* Стили кнопок */
         .action-button {
             display: inline-block;
@@ -58,20 +53,17 @@
             text-align: center;
             background-color: transparent; /* Прозрачный фон */
         }
-
         /* Эффект при наведении на кнопку */
         .action-button:hover {
             background-color: #00bfff; /* Темнее голубой при наведении */
             color: white; /* Белый текст при наведении */
         }
-
         .exchange-rate {
             font-size: 14px;
             color: #333;
             margin: 0; /* Убираем стандартные отступы */
             margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
         }
-
         .separator {
             width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
             height: 1px; /* Толщина разделителя 1 пиксель */
@@ -79,51 +71,43 @@
             margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
             margin-left: 3%; /* Отступ слева */
         }
-
         /* Новый блок кошелька */
         .wallet-container {
             margin-top: 30px; /* Отступ от предыдущего разделителя */
         }
-
         .wallet-header {
             font-size: 14px;
             margin-bottom: 10px; /* Отступ между заголовком и содержимым */
+            margin-top: 15px; /* Добавляем отступ сверху */
         }
-
         .wallet-content {
             display: flex;
             align-items: center; /* Выравниваем изображение и текст по центру */
         }
-
         .wallet-image {
             width: 60px;
             height: 60px;
             margin-right: 15px; /* Отступ справа от изображения */
             border-radius: 8px; /* Скругление углов изображения */
         }
-
         .wallet-text {
             font-size: 12px;
             color: #333;
             margin: 0; /* Убираем стандартные отступы */
         }
-
         .wallet-link {
             color: #00bfff; /* Цвет ссылки */
             text-decoration: none; /* Убираем подчеркивание */
         }
-
         .wallet-link:hover {
             text-decoration: underline; /* Добавляем подчеркивание при наведении */
         }
-
         /* Заголовок в верхней части страницы */
         .header {
             width: 100%;
             text-align: center;
             margin-top: 3%; /* Отступ от верха 3% */
         }
-
         /* Основной контейнер */
         .container-wrap {
             display: flex;
@@ -131,21 +115,18 @@
             padding: 0 3%; /* Отступы слева и справа */
             box-sizing: border-box;
         }
-
         .container {
             width: 100%;
             max-width: 400px;
             padding: 20px;
             box-sizing: border-box;
         }
-
         /* Кнопка "Правила сервиса" в левом нижнем углу */
         .footer-rules {
             position: absolute; /* Абсолютное позиционирование */
             bottom: 2%; /* Отступ от нижней границы 2% */
             left: 3%; /* Отступ от левой границы 3% */
         }
-
         /* Кнопка "Войти" в правом нижнем углу */
         .footer-button {
             position: absolute; /* Абсолютное позиционирование */
@@ -153,7 +134,6 @@
             right: 3%; /* Отступ от правой границы 3% */
             width: auto; /* Автоматическая ширина */
         }
-
         /* Стиль для кнопок "Правила сервиса" и "Войти" */
         .button {
             display: inline-block;
@@ -167,7 +147,6 @@
             text-align: center;
             background-color: transparent; /* Прозрачный фон */
         }
-
         .button:hover {
             background-color: #00bfff; /* Темнее голубой при наведении */
             color: white; /* Белый текст при наведении */
@@ -179,7 +158,6 @@
     <div class="header">
         <h1>P2P сервис обмена</h1>
     </div>
-
     <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
@@ -189,56 +167,46 @@
                 <div class="image-button-container">
                     <!-- Изображение Solana -->
                     <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
-
                     <!-- Кнопки "Купить" и "Продать" -->
                     <div class="button-container">
                         <button class="action-button">Купить</button>
                         <button class="action-button">Продать</button>
                     </div>
                 </div>
-
                 <!-- Текст курса -->
                 <div class="exchange-rate">
                     1 SOL = <span id="sol-price">...</span> RUB
                 </div>
             </div>
-
             <!-- Первый разделитель -->
             <div class="separator"></div>
-
             <!-- Блок Cayros -->
             <div class="cayros-container" style="margin-top: 20px;">
                 <!-- Контейнер для изображения и кнопок -->
                 <div class="image-button-container">
                     <!-- Изображение Cayros -->
                     <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
-
                     <!-- Кнопки "Купить" и "Продать" -->
                     <div class="button-container">
                         <button class="action-button">Купить</button>
                         <button class="action-button">Продать</button>
                     </div>
                 </div>
-
                 <!-- Текст курса -->
                 <div class="exchange-rate">
                     1 CAYROS = <span id="cayros-price">...</span> RUB
                 </div>
             </div>
-
             <!-- Второй разделитель -->
             <div class="separator"></div>
-
             <!-- Блок Phantom Wallet -->
             <div class="wallet-container" style="margin-top: 30px;">
                 <!-- Заголовок -->
                 <div class="wallet-header">Криптовалютный кошелек:</div>
-
                 <!-- Контейнер для изображения и текста -->
                 <div class="wallet-content">
                     <!-- Изображение Phantom Wallet -->
                     <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
-
                     <!-- Текст с ссылкой -->
                     <div class="wallet-text">
                         Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
@@ -248,29 +216,24 @@
             </div>
         </div>
     </div>
-
     <!-- Кнопка "Правила сервиса" в левом нижнем углу -->
     <div class="footer-rules">
         <a href="rules.html" class="button">Правила сервиса</a>
     </div>
-
     <!-- Кнопка "Войти" в правом нижнем углу -->
     <div class="footer-button">
         <a href="input.html" class="button">Войти</a>
     </div>
-
     <!-- Встроенный JavaScript -->
     <script>
         // Получаем текущий курс SOL через публичный API
         document.addEventListener('DOMContentLoaded', function () {
             const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
-
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
                     const solPrice = data.solana.rub; // Получаем цену SOL в рублях
                     document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
-
                     // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
                     const cayrosPrice = (solPrice * 0.0011).toFixed(2);
                     document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
