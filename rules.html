@@ -127,6 +127,30 @@
             margin-left: 3%; /* Отступ слева от границы экрана */
             color: #333; /* Цвет текста */
         }
+        /* Стиль для блока с изображением и текстом */
+        .wallet-info {
+            margin-left: 3%; /* Сохраняем отступ слева */
+            margin-top: 20px; /* Отступ от заголовка */
+            display: flex; /* Размещаем элементы в одну строку */
+            align-items: center; /* Выравниваем элементы по центру */
+        }
+        .wallet-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px; /* Скругление углов изображения */
+        }
+        .wallet-text {
+            font-size: 14px; /* Размер текста */
+            color: #333; /* Цвет текста */
+            margin-left: 15px; /* Отступ между изображением и текстом */
+        }
+        .wallet-link {
+            color: #00bfff; /* Цвет ссылки */
+            text-decoration: none; /* Убираем подчеркивание */
+        }
+        .wallet-link:hover {
+            text-decoration: underline; /* Добавляем подчеркивание при наведении */
+        }
     </style>
 </head>
 <body>
@@ -178,6 +202,20 @@
             <!-- Новый блок с текстом "Криптовалютный кошелек:" -->
             <div class="crypto-wallet-title">
                 Криптовалютный кошелек:
+            </div>
+            <!-- Блок с изображением и текстом -->
+            <div class="wallet-info">
+                <!-- Изображение Phantom Wallet -->
+                <img 
+                    src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" 
+                    alt="Phantom Wallet" 
+                    class="wallet-image"
+                >
+                <!-- Текст с ссылкой -->
+                <div class="wallet-text">
+                    Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
+                    <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
+                </div>
             </div>
         </div>
     </div>
