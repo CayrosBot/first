@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Вход для трейдеров</title>
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
 </head>
@@ -90,6 +90,14 @@
             alert("Данные успешно отправлены!");
             return true;
         }
+
+        // JavaScript для фиксации кнопки "Назад"
+        window.addEventListener('resize', function () {
+            const backButtonWrap = document.querySelector('.back-button-wrap');
+            if (backButtonWrap) {
+                backButtonWrap.style.bottom = 'env(safe-area-inset-bottom, 2%)'; // Учитываем безопасную зону
+            }
+        });
     </script>
 </body>
 </html>
