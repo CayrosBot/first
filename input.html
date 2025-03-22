@@ -8,8 +8,12 @@
     <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили -->
 </head>
 <body>
-    <!-- Заголовок вне рамки -->
-    <h1 class="page-title">Вход для трейдеров</h1>
+    <!-- Фиксированный заголовок с кнопкой "Назад" -->
+    <div class="header-wrap">
+        <a href="index.html" class="back-button">< Назад</a>
+        <h1 class="page-title">Вход для трейдеров</h1>
+    </div>
+
     <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
         <div class="container">
@@ -32,10 +36,7 @@
             </form>
         </div>
     </div>
-    <!-- Кнопка "Назад" в нижнем левом углу -->
-    <div class="back-button-wrap">
-        <a href="index.html" class="back-button"> < Назад</a>
-    </div>
+
     <script>
         // Функция для очистки сообщений об ошибках
         function clearErrorMessage() {
@@ -90,14 +91,6 @@
             alert("Данные успешно отправлены!");
             return true;
         }
-
-        // JavaScript для фиксации кнопки "Назад"
-        window.addEventListener('resize', function () {
-            const backButtonWrap = document.querySelector('.back-button-wrap');
-            if (backButtonWrap) {
-                backButtonWrap.style.bottom = 'env(safe-area-inset-bottom, 2%)'; // Учитываем безопасную зону
-            }
-        });
     </script>
 </body>
 </html>
