@@ -5,17 +5,44 @@ body {
     display: flex;
     flex-direction: column; /* Вертикальное расположение элементов */
     align-items: center;
-    height: 100vh;
     background-color: #f9f9f9;
     overflow-anchor: none; /* Отключаем скролл-якорь */
 }
 
+/* Фиксированный заголовок с кнопкой "Назад" */
+.header-wrap {
+    position: fixed; /* Фиксированное позиционирование */
+    top: 0; /* Прикреплен к верхней границе */
+    left: 0; /* Прикреплен к левой границе */
+    width: 100%; /* Занимает всю ширину экрана */
+    background-color: #ffffff; /* Белый фон */
+    padding: 10px; /* Внутренние отступы */
+    box-sizing: border-box; /* Учитываем padding в ширине */
+    display: flex; /* Размещаем элементы в одну строку */
+    justify-content: space-between; /* Располагаем элементы по разным сторонам */
+    align-items: center; /* Выравниваем элементы по центру вертикально */
+    z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
+    border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+}
+
+/* Кнопка "Назад" в заголовке */
+.back-button {
+    font-size: 14px; /* Размер текста */
+    color: #00bfff; /* Цвет текста */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    cursor: pointer; /* Изменяем курсор при наведении */
+}
+
+.back-button:hover {
+    text-decoration: underline; /* Добавляем подчеркивание при наведении */
+}
+
 /* Заголовок страницы */
 .page-title {
-    font-size: 16px;
-    text-align: center;
-    margin-top: 3%; /* Отступ от верха */
-    margin-bottom: 10px; /* Отступ до блока ввода */
+    font-size: 16px; /* Размер текста */
+    text-align: center; /* Выравниваем текст по центру */
+    margin: 0; /* Убираем стандартные отступы */
+    flex: 1; /* Занимает доступное пространство */
 }
 
 /* Основной контейнер */
@@ -25,6 +52,7 @@ body {
     box-sizing: border-box;
     display: flex;
     justify-content: center;
+    margin-top: 60px; /* Отступ под заголовком */
 }
 
 .container {
@@ -79,42 +107,4 @@ input[type="text"], input[type="password"] {
     color: red;
     font-size: 12px;
     margin-top: 5px;
-}
-
-/* Кнопка "Назад" в нижнем левом углу */
-.back-button-wrap {
-    position: fixed; /* Фиксированное позиционирование */
-    bottom: env(safe-area-inset-bottom, 2%); /* Отступ от нижней границы с учетом безопасной зоны */
-    left: 3%; /* Отступ от левой границы 3% */
-    z-index: 1000; /* Гарантируем, что кнопка находится поверх других элементов */
-}
-
-.back-button {
-    display: inline-block;
-    font-size: 12px;
-    padding: 5px 10px;
-    border: 2px solid #00bfff; /* Голубая рамка */
-    background-color: white; /* Белый фон */
-    color: black; /* Черный текст */
-    border-radius: 10px;
-    text-decoration: none; /* Убираем подчеркивание у ссылки */
-    cursor: pointer;
-    text-align: center;
-}
-
-.back-button:hover {
-    background-color: #00bfff; /* Голубой фон при наведении */
-    color: white; /* Белый текст при наведении */
-}
-
-/* Адаптивность для мобильных устройств */
-@media (max-width: 768px) {
-    .container-wrap {
-        padding-bottom: 50px; /* Добавляем отступ снизу, чтобы кнопка не перекрывала поля */
-    }
-
-    .back-button-wrap {
-        bottom: 8px; /* Уменьшаем отступ для маленьких экранов */
-        left: 8px;
-    }
 }
