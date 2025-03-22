@@ -121,10 +121,18 @@
             background-color: #87CEEB;
             color: white;
         }
+        /* Добавляем стиль для заголовка */
+        .order-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
     </style>
 </head>
 <body>
     <div class="container-wrap">
+        <!-- Заголовок "Оформление покупки:" -->
+        <div class="order-title">Оформление покупки:</div>
         <div class="container">
             <!-- Поле расчета стоимости CAYROS -->
             <div class="field">
@@ -143,7 +151,6 @@
                 <label>Стоимость покупки:</label>
                 <div id="total-cost" class="result-container">0.00 RUB</div>
             </div>
-
             <!-- Форма с персональными данными -->
             <div class="field">
                 <label for="user-name">Ваше имя</label>
@@ -183,14 +190,12 @@
                 </div>
                 <div class="checkbox-container" onclick="toggleCheckbox(this)"></div>
             </div>
-
             <!-- Кнопка "Отправить" -->
             <div class="field">
                 <button id="nextButton">Отправить</button>
             </div>
         </div>
     </div>
-
     <script>
         // Получение курса SOL в RUB с CoinGecko API
         async function fetchSolRate() {
@@ -203,7 +208,6 @@
                 return null;
             }
         }
-
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
@@ -215,21 +219,17 @@
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
-
         // Расчет стоимости
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
-
             if (isNaN(cayrosAmount) || cayrosAmount < 0 || cayrosAmount > 1000000) {
                 document.getElementById('total-cost').textContent = '0.00 RUB';
                 return;
             }
-
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
-
         // Валидация имени
         function validateName() {
             const nameInput = document.getElementById('user-name');
@@ -242,13 +242,11 @@
                 return true;
             }
         }
-
         // Валидация адреса кошелька Solana
         function validateWalletAddress() {
             const walletInput = document.getElementById('wallet-address');
             const walletError = document.getElementById('wallet-error');
             const solanaAddressRegex = /^[A-Za-z0-9]{44}$/;
-
             if (!solanaAddressRegex.test(walletInput.value)) {
                 walletError.style.display = 'block';
                 return false;
@@ -257,49 +255,40 @@
                 return true;
             }
         }
-
         // Форматирование номера телефона
         function formatPhoneNumber() {
             const phoneInput = document.getElementById('phone-number');
             const phoneError = document.getElementById('phone-error');
             let value = phoneInput.value;
-
             if (value.startsWith('+')) {
                 value = '+' + value.slice(1).replace(/\D/g, '');
             } else {
                 value = value.replace(/\D/g, '');
             }
-
             if (value.startsWith('8') && value.length > 1) {
                 value = '+7' + value.slice(1);
             }
-
             if (!value.startsWith('+') && value.startsWith('9') && value.length > 1) {
                 value = '+7' + value;
             }
-
             if (value.startsWith('+') && value.length > 12) {
                 value = value.slice(0, 12);
             } else if (!value.startsWith('+') && value.length > 11) {
                 value = value.slice(0, 11);
             }
-
             const russianPhoneRegex = /^\+79\d{9}$/;
             if (!russianPhoneRegex.test(value)) {
                 phoneError.style.display = 'block';
             } else {
                 phoneError.style.display = 'none';
             }
-
             phoneInput.value = value;
             return phoneError.style.display === 'none';
         }
-
         // Переключение состояния чекбокса
         function toggleCheckbox(container) {
             container.classList.toggle('checked');
         }
-
         // Общая валидация формы
         function validateForm() {
             const checkbox = document.querySelector('.checkbox-container');
@@ -307,32 +296,28 @@
                 alert('Необходимо дать согласие на обработку персональных данных.');
                 return false;
             }
-
             return validateName() && validateWalletAddress() && formatPhoneNumber();
         }
-
         // Переход на следующую страницу
-function redirectToNextPage() {
-    if (validateForm()) {
-        const formData = {
-            name: document.getElementById('user-name').value,
-            walletAddress: document.getElementById('wallet-address').value,
-            phoneNumber: document.getElementById('phone-number').value,
-            cayrosAmount: document.getElementById('cayros-amount').value,
-            totalCost: document.getElementById('total-cost').textContent,
-        };
-        // Сохраняем данные в localStorage
-        localStorage.setItem('formData', JSON.stringify(formData));
-        window.location.href = 'buy_input.html';
-    }
-}
-
+        function redirectToNextPage() {
+            if (validateForm()) {
+                const formData = {
+                    name: document.getElementById('user-name').value,
+                    walletAddress: document.getElementById('wallet-address').value,
+                    phoneNumber: document.getElementById('phone-number').value,
+                    cayrosAmount: document.getElementById('cayros-amount').value,
+                    totalCost: document.getElementById('total-cost').textContent,
+                };
+                // Сохраняем данные в localStorage
+                localStorage.setItem('formData', JSON.stringify(formData));
+                window.location.href = 'buy_input.html';
+            }
+        }
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
             event.preventDefault();
             redirectToNextPage();
         });
-
         // Запускаем инициализацию при загрузке страницы
         initialize();
     </script>
