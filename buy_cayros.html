@@ -1,11 +1,13 @@
+<!-- buy_cayros.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Заказ CAYROS</title>
+    <title>Оформление покупки CAYROS</title>
+    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили из style_input.css -->
     <style>
-        /* Общие стили */
+        /* Дополнительные стили, если они не входят в style_input.css */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,27 +17,57 @@
             background-color: #f9f9f9;
         }
 
-        /* Заголовок страницы */
-        .order-title {
-            font-size: 18px;
-            text-align: center;
-            width: 100%;
-            box-sizing: border-box;
-            padding: 10px 0;
-            background-color: #ffffff; /* Фон заголовка */
+        /* Фиксированный заголовок с кнопкой "Назад" */
+        .header-wrap {
             position: fixed; /* Фиксированная позиция */
             top: 0; /* Прикреплен к верхней границе */
-            z-index: 1000; /* Выше других элементов */
+            left: 0; /* Прикреплен к левой границе */
+            width: 100%; /* Занимает всю ширину экрана */
+            background-color: #ffffff; /* Белый фон */
+            padding: 10px; /* Внутренние отступы */
+            box-sizing: border-box; /* Учитываем padding в ширине */
+            display: flex; /* Размещаем элементы в одну строку */
+            justify-content: flex-start; /* Выравниваем элементы по левому краю */
+            align-items: center; /* Выравниваем элементы по центру вертикально */
+            z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
+            border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+        }
+
+        /* Кнопка "Назад" */
+        .back-button {
+            font-size: 14px; /* Размер текста */
+            padding: 5px 10px; /* Отступы внутри кнопки */
+            border: 2px solid #00bfff; /* Голубая рамка */
+            color: black; /* Черный текст */
+            text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            cursor: pointer;
+            border-radius: 5px; /* Скругление углов */
+            background-color: transparent; /* Прозрачный фон */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
+        }
+
+        .back-button:hover {
+            background-color: #00bfff; /* Голубой фон при наведении */
+            color: white; /* Белый текст при наведении */
+        }
+
+        /* Текст заголовка */
+        .page-title {
+            font-size: 18px; /* Размер текста */
+            text-align: center; /* Текст по центру */
+            margin: 0; /* Убираем стандартные отступы */
+            flex: 1; /* Занимает доступное пространство */
         }
 
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
-            padding: 0 3%;
+            padding: 0 3%; /* Отступы слева и справа */
             box-sizing: border-box;
             display: flex;
             justify-content: center;
-            margin-top: 60px; /* Отступ под заголовком */
+            margin-top: 60px; /* Отступ под фиксированным заголовком */
         }
 
         .container {
@@ -161,36 +193,14 @@
             background-color: #87CEEB;
             color: white;
         }
-
-        /* Кнопка "Назад" */
-        .back-button-wrap {
-            position: absolute;
-            bottom: 2%;
-            left: 3%;
-        }
-
-        .back-button {
-            display: inline-block;
-            font-size: 12px;
-            padding: 5px 10px;
-            border: 2px solid #00bfff;
-            background-color: white;
-            color: black;
-            border-radius: 10px;
-            text-decoration: none;
-            cursor: pointer;
-            text-align: center;
-        }
-
-        .back-button:hover {
-            background-color: #00bfff;
-            color: white;
-        }
     </style>
 </head>
 <body>
-    <!-- Заголовок "Оформление покупки:" -->
-    <div class="order-title">Оформление покупки:</div>
+    <!-- Фиксированный заголовок с кнопкой "Назад" -->
+    <div class="header-wrap">
+        <a href="index.html" class="back-button">< Назад</a>
+        <h1 class="page-title">Оформление покупки:</h1>
+    </div>
 
     <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
@@ -212,7 +222,6 @@
                 <label>Стоимость покупки:</label>
                 <div id="total-cost" class="result-container">0.00 RUB</div>
             </div>
-
             <!-- Форма с персональными данными -->
             <div class="field">
                 <label for="user-name">Ваше имя</label>
@@ -252,17 +261,11 @@
                 </div>
                 <div class="checkbox-container" onclick="toggleCheckbox(this)"></div>
             </div>
-
             <!-- Кнопка "Отправить" -->
             <div class="field">
                 <button id="nextButton">Отправить</button>
             </div>
         </div>
-    </div>
-
-    <!-- Кнопка "Назад" -->
-    <div class="back-button-wrap">
-        <a href="index.html" class="back-button"> < Назад</a>
     </div>
 
     <script>
