@@ -80,14 +80,16 @@
             margin-top: 30px; /* Отступ от блока CAYROS */
             margin-bottom: 20px; /* Отступ между заголовком и содержимым */
         }
+        /* Измененная структура wallet-content */
         .wallet-content {
             display: flex;
-            align-items: center; /* Выравниваем изображение и текст по центру */
+            flex-direction: column; /* Вертикальное расположение элементов */
+            align-items: flex-start; /* Выравниваем элементы по левому краю */
         }
         .wallet-image {
             width: 60px;
             height: 60px;
-            margin-right: 15px; /* Отступ справа от изображения */
+            margin-bottom: 10px; /* Отступ под изображением */
             border-radius: 8px; /* Скругление углов изображения */
         }
         .wallet-text {
