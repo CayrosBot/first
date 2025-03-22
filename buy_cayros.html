@@ -5,29 +5,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказ CAYROS</title>
     <style>
+        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column; /* Вертикальное расположение элементов */
             align-items: center;
-            height: 100vh;
             background-color: #f9f9f9;
         }
+
+        /* Заголовок страницы */
         .order-title {
             font-size: 18px;
-            margin-bottom: 20px;
             text-align: center;
             width: 100%;
             box-sizing: border-box;
+            padding: 10px 0;
+            background-color: #ffffff; /* Фон заголовка */
+            position: fixed; /* Фиксированная позиция */
+            top: 0; /* Прикреплен к верхней границе */
+            z-index: 1000; /* Выше других элементов */
         }
+
+        /* Основной контейнер */
         .container-wrap {
             width: 100%;
             padding: 0 3%;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
+            margin-top: 60px; /* Отступ под заголовком */
         }
+
         .container {
             width: 100%;
             max-width: 400px;
@@ -38,14 +48,18 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
         }
+
+        /* Поля ввода */
         .field {
             margin-bottom: 20px;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         input[type="number"], input[type="text"], input[type="tel"] {
             width: 100%;
             padding: 10px;
@@ -53,6 +67,8 @@
             border: 1px solid #87CEEB;
             border-radius: 5px;
         }
+
+        /* Результат расчета стоимости */
         .result-container {
             width: 100%;
             padding: 10px;
@@ -61,14 +77,17 @@
             border-radius: 5px;
             font-size: 18px;
             text-align: center;
-            box-sizing: border-box;
         }
+
+        /* Сообщения об ошибках */
         .error-message {
             color: red;
             font-size: 12px;
             margin-top: 5px;
             display: none;
         }
+
+        /* Кнопка "Отправить" */
         button#nextButton {
             width: 100%;
             padding: 10px;
@@ -80,6 +99,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         button#nextButton:hover {
             background-color: #87CEEB;
             color: white;
@@ -91,6 +111,7 @@
             bottom: 2%;
             left: 3%;
         }
+
         .back-button {
             display: inline-block;
             font-size: 12px;
@@ -103,6 +124,7 @@
             cursor: pointer;
             text-align: center;
         }
+
         .back-button:hover {
             background-color: #00bfff;
             color: white;
@@ -110,7 +132,10 @@
     </style>
 </head>
 <body>
+    <!-- Заголовок "Оформление покупки:" -->
     <div class="order-title">Оформление покупки:</div>
+
+    <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
         <div class="container">
             <!-- Поле расчета стоимости CAYROS -->
@@ -175,9 +200,12 @@
             </div>
         </div>
     </div>
+
+    <!-- Кнопка "Назад" -->
     <div class="back-button-wrap">
         <a href="index.html" class="back-button"> < Назад</a>
     </div>
+
     <script>
         // Получение курса SOL в RUB с CoinGecko API
         async function fetchSolRate() {
@@ -190,6 +218,7 @@
                 return null;
             }
         }
+
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
@@ -201,6 +230,7 @@
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
+
         // Расчет стоимости
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
@@ -212,6 +242,7 @@
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
+
         // Валидация имени
         function validateName() {
             const nameInput = document.getElementById('user-name');
@@ -224,6 +255,7 @@
                 return true;
             }
         }
+
         // Валидация адреса кошелька Solana
         function validateWalletAddress() {
             const walletInput = document.getElementById('wallet-address');
@@ -237,6 +269,7 @@
                 return true;
             }
         }
+
         // Форматирование номера телефона
         function formatPhoneNumber() {
             const phoneInput = document.getElementById('phone-number');
@@ -267,10 +300,12 @@
             phoneInput.value = value;
             return phoneError.style.display === 'none';
         }
+
         // Переключение состояния чекбокса
         function toggleCheckbox(container) {
             container.classList.toggle('checked');
         }
+
         // Общая валидация формы
         function validateForm() {
             const checkbox = document.querySelector('.checkbox-container');
@@ -280,6 +315,7 @@
             }
             return validateName() && validateWalletAddress() && formatPhoneNumber();
         }
+
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
@@ -294,11 +330,13 @@
                 window.location.href = 'buy_input.html';
             }
         }
+
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
             event.preventDefault();
             redirectToNextPage();
         });
+
         // Запускаем инициализацию при загрузке страницы
         initialize();
     </script>
