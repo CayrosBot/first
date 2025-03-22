@@ -79,7 +79,47 @@
             text-align: center;
             box-sizing: border-box;
         }
+        .checkbox-container {
+    position: relative;
+    width: 20px; /* Размер квадрата */
+    height: 20px; /* Размер квадрата */
+    margin-left: 10px; /* Отступ слева */
+    cursor: pointer;
+    border: 2px solid #ccc; /* Граница квадрата */
+    box-sizing: border-box;
+    border-radius: 3px; /* Сlightly rounded corners */
+}
 
+/* Псевдоэлемент для создания квадрата */
+.checkbox-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 2px solid #ccc; /* Цвет границы */
+    box-sizing: border-box;
+    border-radius: 3px; /* Сlightly rounded corners */
+}
+
+/* Когда выбрано (галочка) */
+.checkbox-container.checked::after {
+    content: '\2713'; /* Unicode символ галочки */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Центрирование галочки */
+    color: #fff; /* Цвет галочки */
+    font-size: 16px; /* Размер галочки */
+    background-color: #28a745; /* Зеленый фон */
+    border-radius: 3px; /* Сlightly rounded corners */
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
         /* Сообщения об ошибках */
         .error-message {
             color: red;
