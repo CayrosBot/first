@@ -21,6 +21,14 @@
             margin-top: 20px; /* Небольшой отступ сверху */
         }
 
+        .image-button-container {
+            position: relative; /* Создаем относительное позиционирование для контейнера */
+            display: flex;
+            flex-direction: column; /* Группируем элементы вертикально */
+            align-items: flex-start; /* Выравниваем элементы по левому краю */
+            height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
+        }
+
         .sol-image {
             width: 60px;
             height: 60px;
@@ -28,25 +36,12 @@
             border-radius: 8px; /* Скругление углов изображения */
         }
 
-        .button-text-container {
-            display: flex;
-            flex-direction: column; /* Группируем кнопки и текст вертикально */
-            align-items: flex-start; /* Выравниваем элементы по левому краю */
-            height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
-        }
-
-        .exchange-rate {
-            font-size: 14px;
-            color: #333;
-            margin: 0; /* Убираем стандартные отступы */
-            margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
-        }
-
         .button-container {
+            position: absolute; /* Абсолютное позиционирование для кнопок */
+            bottom: 0; /* Привязываем кнопки к нижней границе контейнера */
+            left: 75px; /* Сдвигаем кнопки на ширину изображения + отступ */
             display: flex; /* Кнопки располагаются в одну строку */
             gap: 10px; /* Пространство между кнопками */
-            position: absolute; /* Абсолютное позиционирование для кнопок */
-            bottom: 0; /* Кнопки прикреплены к нижней границе блока */
         }
 
         /* Стили кнопок взяты из style_index.css */
@@ -70,6 +65,13 @@
             color: white; /* Белый текст при наведении */
         }
 
+        .exchange-rate {
+            font-size: 14px;
+            color: #333;
+            margin: 0; /* Убираем стандартные отступы */
+            margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
+        }
+
         .separator {
             width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
             height: 2px;
@@ -82,21 +84,21 @@
 <body>
     <!-- Блок с изображением и кнопками -->
     <div class="sol-container">
-        <!-- Изображение Solana -->
-        <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
-
-        <!-- Контейнер для текста курса и кнопок -->
-        <div class="button-text-container">
-            <!-- Текст курса -->
-            <div class="exchange-rate">
-                Курс: 1 SOL = <span id="sol-price">...</span> RUB
-            </div>
+        <!-- Контейнер для изображения и кнопок -->
+        <div class="image-button-container">
+            <!-- Изображение Solana -->
+            <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
 
             <!-- Кнопки "Купить" и "Продать" -->
             <div class="button-container">
                 <button class="action-button">Купить</button>
                 <button class="action-button">Продать</button>
             </div>
+        </div>
+
+        <!-- Текст курса -->
+        <div class="exchange-rate">
+            Курс: 1 SOL = <span id="sol-price">...</span> RUB
         </div>
     </div>
 
