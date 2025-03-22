@@ -1,164 +1,145 @@
-/* Общие стили */
+/* Встроенные стили */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
 }
-
-/* Блок Solana и Cayros */
 .sol-container, .cayros-container {
     display: flex;
-    align-items: flex-start;
-    margin-left: 3%;
-    margin-top: 20px;
+    align-items: flex-start; /* Выравниваем элементы по верхнему краю */
+    margin-left: 3%; /* Отступ слева от границы экрана */
+    margin-top: 20px; /* Небольшой отступ сверху */
 }
-
 .image-button-container {
-    position: relative;
+    position: relative; /* Создаем относительное позиционирование для контейнера */
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    height: 60px;
+    flex-direction: column; /* Группируем элементы вертикально */
+    align-items: flex-start; /* Выравниваем элементы по левому краю */
+    height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
 }
-
 .sol-image, .cayros-image {
     width: 60px;
     height: 60px;
-    margin-right: 15px;
-    border-radius: 8px;
+    margin-right: 15px; /* Отступ справа от изображения */
+    border-radius: 8px; /* Скругление углов изображения */
 }
-
 .button-container {
-    position: absolute;
-    bottom: 0;
-    left: 75px;
-    display: flex;
-    gap: 15px;
+    position: absolute; /* Абсолютное позиционирование для кнопок */
+    bottom: 0; /* Привязываем кнопки к нижней границе контейнера */
+    left: 75px; /* Сдвигаем кнопки на ширину изображения + отступ */
+    display: flex; /* Кнопки располагаются в одну строку */
+    gap: 15px; /* Пространство между кнопками */
 }
-
+/* Стили кнопок */
 .action-button {
     display: inline-block;
-    width: auto;
+    width: auto; /* Автоматическая ширина */
     font-size: 12px;
-    padding: 5px 10px;
-    border: 2px solid #00bfff;
-    color: black;
-    border-radius: 10px;
-    text-decoration: none;
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    color: black; /* Черный текст */
+    border-radius: 10px; /* Скругленные углы */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer;
     text-align: center;
-    background-color: transparent;
+    background-color: transparent; /* Прозрачный фон */
 }
-
+/* Эффект при наведении на кнопку */
 .action-button:hover {
-    background-color: #00bfff;
-    color: white;
+    background-color: #00bfff; /* Темнее голубой при наведении */
+    color: white; /* Белый текст при наведении */
 }
-
 .exchange-rate {
     font-size: 14px;
     color: #333;
-    margin: 0;
-    margin-bottom: 10px;
+    margin: 0; /* Убираем стандартные отступы */
+    margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
 }
-
 .separator {
-    width: 94%;
-    height: 1px;
-    background-color: #00bfff;
-    margin-top: 10px;
-    margin-left: 3%;
+    width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
+    height: 1px; /* Толщина разделителя 1 пиксель */
+    background-color: #00bfff; /* Голубой цвет разделителя */
+    margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
+    margin-left: 3%; /* Отступ слева */
 }
-
-/* Заголовок "Криптовалютный кошелек:" */
-.crypto-wallet-title {
-    font-size: 18px;
-    margin-top: 30px;
-    margin-left: 3%;
-    color: #333;
-}
-
-/* Блок с изображением и текстом */
-.wallet-info {
-    margin-left: 3%;
-    margin-top: 20px;
-    display: flex;
-    align-items: center; /* Выравниваем элементы по центру */
-}
-
-.wallet-image {
-    width: 60px;
-    height: 60px;
-    border-radius: 8px;
-    margin-right: 15px; /* Отступ справа от изображения */
-}
-
-.wallet-text {
-    font-size: 14px;
-    color: #333;
-}
-
-.wallet-link {
-    color: #00bfff;
-    text-decoration: none;
-}
-
-.wallet-link:hover {
-    text-decoration: underline;
-}
-
-/* Заголовок страницы */
+/* Заголовок в верхней части страницы */
 .header {
     width: 100%;
     text-align: center;
-    margin-top: 3%;
+    margin-top: 3%; /* Отступ от верха 3% */
 }
-
 /* Основной контейнер */
 .container-wrap {
     display: flex;
     justify-content: center;
-    padding: 0 3%;
+    padding: 0 3%; /* Отступы слева и справа */
     box-sizing: border-box;
 }
-
 .container {
     width: 100%;
     max-width: 400px;
     padding: 20px;
     box-sizing: border-box;
 }
-
-/* Футер */
-.footer-rules, .footer-button {
-    position: absolute;
-    bottom: 2%;
-    width: auto;
-}
-
+/* Кнопка "Правила сервиса" в левом нижнем углу */
 .footer-rules {
-    left: 3%;
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 2%; /* Отступ от нижней границы 2% */
+    left: 3%; /* Отступ от левой границы 3% */
 }
-
+/* Кнопка "Войти" в правом нижнем углу */
 .footer-button {
-    right: 3%;
+    position: absolute; /* Абсолютное позиционирование */
+    bottom: 2%; /* Отступ от нижней границы 2% */
+    right: 3%; /* Отступ от правой границы 3% */
+    width: auto; /* Автоматическая ширина */
 }
-
+/* Стиль для кнопок "Правила сервиса" и "Войти" */
 .button {
     display: inline-block;
     font-size: 12px;
-    padding: 5px 10px;
-    border: 2px solid #00bfff;
-    color: black;
-    border-radius: 10px;
-    text-decoration: none;
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+    color: black; /* Черный текст */
+    border-radius: 10px; /* Скругленные углы */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer;
     text-align: center;
-    background-color: transparent;
+    background-color: transparent; /* Прозрачный фон */
 }
-
 .button:hover {
-    background-color: #00bfff;
-    color: white;
+    background-color: #00bfff; /* Темнее голубой при наведении */
+    color: white; /* Белый текст при наведении */
+}
+/* Новый стиль для заголовка "Криптовалютный кошелек:" */
+.crypto-wallet-title {
+    font-size: 18px; /* Размер текста */
+    margin-top: 30px; /* Отступ сверху от последнего разделителя */
+    margin-left: 3%; /* Отступ слева от границы экрана */
+    color: #333; /* Цвет текста */
+}
+/* Стиль для блока с изображением и текстом */
+.wallet-info {
+    margin-left: 3%; /* Сохраняем отступ слева */
+    margin-top: 20px; /* Отступ от заголовка */
+    display: flex; /* Размещаем элементы в одну строку */
+    align-items: center; /* Выравниваем элементы по центру */
+}
+.wallet-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 8px; /* Скругление углов изображения */
+}
+.wallet-text {
+    font-size: 14px; /* Размер текста */
+    color: #333; /* Цвет текста */
+    margin-left: 15px; /* Отступ между изображением и текстом */
+}
+.wallet-link {
+    color: #00bfff; /* Цвет ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+.wallet-link:hover {
+    text-decoration: underline; /* Добавляем подчеркивание при наведении */
 }
