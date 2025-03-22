@@ -74,7 +74,7 @@
 
         .separator {
             width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
-            height: 2px;
+            height: 1px; /* Толщина разделителя 1 пиксель */
             background-color: #00bfff; /* Голубой цвет разделителя */
             margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
             margin-left: 3%; /* Отступ слева */
@@ -102,7 +102,7 @@
         </div>
     </div>
 
-    <!-- Разделитель -->
+    <!-- Первый разделитель -->
     <div class="separator"></div>
 
     <!-- Блок с изображением и кнопками Cayros -->
@@ -125,6 +125,9 @@
         </div>
     </div>
 
+    <!-- Второй разделитель -->
+    <div class="separator"></div>
+
     <!-- Встроенный JavaScript -->
     <script>
         // Получаем текущий курс SOL через публичный API
@@ -135,10 +138,10 @@
                 .then(response => response.json())
                 .then(data => {
                     const solPrice = data.solana.rub; // Получаем цену SOL в рублях
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
 
-                    // Рассчитываем цену CAYROS как SOL * 0.0011
-                    const cayrosPrice = (solPrice * 0.0011).toFixed(5); // Округляем до 5 знаков после запятой
+                    // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
+                    const cayrosPrice = (solPrice * 0.0011).toFixed(2);
                     document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
                 })
                 .catch(error => {
