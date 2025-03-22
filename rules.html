@@ -1,4 +1,4 @@
-<!-- sol_index.html -->
+<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -44,7 +44,7 @@
             gap: 15px; /* Пространство между кнопками */
         }
 
-        /* Стили кнопок взяты из style_index.css */
+        /* Стили кнопок */
         .action-button {
             display: inline-block;
             width: auto; /* Автоматическая ширина */
@@ -90,6 +90,18 @@
             margin-bottom: 10px; /* Отступ между заголовком и содержимым */
         }
 
+        .wallet-content {
+            display: flex;
+            align-items: center; /* Выравниваем изображение и текст по центру */
+        }
+
+        .wallet-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px; /* Отступ справа от изображения */
+            border-radius: 8px; /* Скругление углов изображения */
+        }
+
         .wallet-text {
             font-size: 12px;
             color: #333;
@@ -104,71 +116,147 @@
         .wallet-link:hover {
             text-decoration: underline; /* Добавляем подчеркивание при наведении */
         }
+
+        /* Заголовок в верхней части страницы */
+        .header {
+            width: 100%;
+            text-align: center;
+            margin-top: 3%; /* Отступ от верха 3% */
+        }
+
+        /* Основной контейнер */
+        .container-wrap {
+            display: flex;
+            justify-content: center;
+            padding: 0 3%; /* Отступы слева и справа */
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Кнопка "Правила сервиса" в левом нижнем углу */
+        .footer-rules {
+            position: absolute; /* Абсолютное позиционирование */
+            bottom: 2%; /* Отступ от нижней границы 2% */
+            left: 3%; /* Отступ от левой границы 3% */
+        }
+
+        /* Кнопка "Войти" в правом нижнем углу */
+        .footer-button {
+            position: absolute; /* Абсолютное позиционирование */
+            bottom: 2%; /* Отступ от нижней границы 2% */
+            right: 3%; /* Отступ от правой границы 3% */
+            width: auto; /* Автоматическая ширина */
+        }
+
+        /* Стиль для кнопок "Правила сервиса" и "Войти" */
+        .button {
+            display: inline-block;
+            font-size: 12px;
+            padding: 5px 10px; /* Отступы внутри кнопки */
+            border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
+            color: black; /* Черный текст */
+            border-radius: 10px; /* Скругленные углы */
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            cursor: pointer;
+            text-align: center;
+            background-color: transparent; /* Прозрачный фон */
+        }
+
+        .button:hover {
+            background-color: #00bfff; /* Темнее голубой при наведении */
+            color: white; /* Белый текст при наведении */
+        }
     </style>
 </head>
 <body>
-    <!-- Блок с изображением и кнопками Solana -->
-    <div class="sol-container">
-        <!-- Контейнер для изображения и кнопок -->
-        <div class="image-button-container">
-            <!-- Изображение Solana -->
-            <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
+    <!-- Заголовок в верхней части страницы -->
+    <div class="header">
+        <h1>P2P сервис обмена</h1>
+    </div>
 
-            <!-- Кнопки "Купить" и "Продать" -->
-            <div class="button-container">
-                <button class="action-button">Купить</button>
-                <button class="action-button">Продать</button>
+    <!-- Основной контейнер -->
+    <div class="container-wrap">
+        <div class="container">
+            <!-- Блок Solana -->
+            <div class="sol-container">
+                <!-- Контейнер для изображения и кнопок -->
+                <div class="image-button-container">
+                    <!-- Изображение Solana -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
+
+                    <!-- Кнопки "Купить" и "Продать" -->
+                    <div class="button-container">
+                        <button class="action-button">Купить</button>
+                        <button class="action-button">Продать</button>
+                    </div>
+                </div>
+
+                <!-- Текст курса -->
+                <div class="exchange-rate">
+                    1 SOL = <span id="sol-price">...</span> RUB
+                </div>
             </div>
-        </div>
 
-        <!-- Текст курса -->
-        <div class="exchange-rate">
-            1 SOL = <span id="sol-price">...</span> RUB
+            <!-- Первый разделитель -->
+            <div class="separator"></div>
+
+            <!-- Блок Cayros -->
+            <div class="cayros-container" style="margin-top: 20px;">
+                <!-- Контейнер для изображения и кнопок -->
+                <div class="image-button-container">
+                    <!-- Изображение Cayros -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
+
+                    <!-- Кнопки "Купить" и "Продать" -->
+                    <div class="button-container">
+                        <button class="action-button">Купить</button>
+                        <button class="action-button">Продать</button>
+                    </div>
+                </div>
+
+                <!-- Текст курса -->
+                <div class="exchange-rate">
+                    1 CAYROS = <span id="cayros-price">...</span> RUB
+                </div>
+            </div>
+
+            <!-- Второй разделитель -->
+            <div class="separator"></div>
+
+            <!-- Блок Phantom Wallet -->
+            <div class="wallet-container" style="margin-top: 30px;">
+                <!-- Заголовок -->
+                <div class="wallet-header">Криптовалютный кошелек:</div>
+
+                <!-- Контейнер для изображения и текста -->
+                <div class="wallet-content">
+                    <!-- Изображение Phantom Wallet -->
+                    <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
+
+                    <!-- Текст с ссылкой -->
+                    <div class="wallet-text">
+                        Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
+                        <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- Первый разделитель -->
-    <div class="separator"></div>
-
-    <!-- Блок с изображением и кнопками Cayros -->
-    <div class="cayros-container" style="margin-top: 20px;">
-        <!-- Контейнер для изображения и кнопок -->
-        <div class="image-button-container">
-            <!-- Изображение Cayros -->
-            <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
-
-            <!-- Кнопки "Купить" и "Продать" -->
-            <div class="button-container">
-                <button class="action-button">Купить</button>
-                <button class="action-button">Продать</button>
-            </div>
-        </div>
-
-        <!-- Текст курса -->
-        <div class="exchange-rate">
-            1 CAYROS = <span id="cayros-price">...</span> RUB
-        </div>
+    <!-- Кнопка "Правила сервиса" в левом нижнем углу -->
+    <div class="footer-rules">
+        <a href="rules.html" class="button">Правила сервиса</a>
     </div>
 
-    <!-- Второй разделитель -->
-    <div class="separator"></div>
-
-    <!-- Блок с информацией о кошельке -->
-    <div class="wallet-container" style="margin-top: 30px;">
-        <!-- Заголовок -->
-        <div class="wallet-header">Криптовалютный кошелек:</div>
-
-        <!-- Контейнер для изображения и текста -->
-        <div class="wallet-content" style="display: flex; align-items: center;">
-            <!-- Изображение Phantom Wallet -->
-            <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
-
-            <!-- Текст с ссылкой -->
-            <div class="wallet-text">
-                Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
-                <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
-            </div>
-        </div>
+    <!-- Кнопка "Войти" в правом нижнем углу -->
+    <div class="footer-button">
+        <a href="input.html" class="button">Войти</a>
     </div>
 
     <!-- Встроенный JavaScript -->
