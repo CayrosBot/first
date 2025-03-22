@@ -6,7 +6,6 @@ body {
     flex-direction: column; /* Вертикальное расположение элементов */
     align-items: center;
     background-color: #f9f9f9;
-    overflow-anchor: none; /* Отключаем скролл-якорь */
 }
 
 /* Фиксированный заголовок с кнопкой "Назад" */
@@ -19,7 +18,7 @@ body {
     padding: 10px; /* Внутренние отступы */
     box-sizing: border-box; /* Учитываем padding в ширине */
     display: flex; /* Размещаем элементы в одну строку */
-    justify-content: space-between; /* Располагаем элементы по разным сторонам */
+    justify-content: flex-start; /* Выравниваем элементы по левому краю */
     align-items: center; /* Выравниваем элементы по центру вертикально */
     z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
     border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
@@ -31,6 +30,10 @@ body {
     color: #00bfff; /* Цвет текста */
     text-decoration: none; /* Убираем подчеркивание у ссылки */
     cursor: pointer; /* Изменяем курсор при наведении */
+    margin-right: 10px; /* Отступ справа от кнопки до текста заголовка */
+    background-color: #e0f7fa; /* Светло-голубой фон */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border-radius: 5px; /* Скругление углов */
 }
 
 .back-button:hover {
@@ -40,7 +43,7 @@ body {
 /* Заголовок страницы */
 .page-title {
     font-size: 16px; /* Размер текста */
-    text-align: center; /* Выравниваем текст по центру */
+    color: #333; /* Цвет текста */
     margin: 0; /* Убираем стандартные отступы */
     flex: 1; /* Занимает доступное пространство */
 }
