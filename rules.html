@@ -14,7 +14,7 @@
             background-color: #f9f9f9;
         }
 
-        .sol-container {
+        .sol-container, .cayros-container {
             display: flex;
             align-items: flex-start; /* Выравниваем элементы по верхнему краю */
             margin-left: 3%; /* Отступ слева от границы экрана */
@@ -29,7 +29,7 @@
             height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
         }
 
-        .sol-image {
+        .sol-image, .cayros-image {
             width: 60px;
             height: 60px;
             margin-right: 15px; /* Отступ справа от изображения */
@@ -82,7 +82,7 @@
     </style>
 </head>
 <body>
-    <!-- Блок с изображением и кнопками -->
+    <!-- Блок с изображением и кнопками Solana -->
     <div class="sol-container">
         <!-- Контейнер для изображения и кнопок -->
         <div class="image-button-container">
@@ -105,6 +105,26 @@
     <!-- Разделитель -->
     <div class="separator"></div>
 
+    <!-- Блок с изображением и кнопками Cayros -->
+    <div class="cayros-container" style="margin-top: 20px;">
+        <!-- Контейнер для изображения и кнопок -->
+        <div class="image-button-container">
+            <!-- Изображение Cayros -->
+            <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
+
+            <!-- Кнопки "Купить" и "Продать" -->
+            <div class="button-container">
+                <button class="action-button">Купить</button>
+                <button class="action-button">Продать</button>
+            </div>
+        </div>
+
+        <!-- Текст курса -->
+        <div class="exchange-rate">
+            1 CAYROS = <span id="cayros-price">...</span> RUB
+        </div>
+    </div>
+
     <!-- Встроенный JavaScript -->
     <script>
         // Получаем текущий курс SOL через публичный API
@@ -115,11 +135,16 @@
                 .then(response => response.json())
                 .then(data => {
                     const solPrice = data.solana.rub; // Получаем цену SOL в рублях
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену с двумя знаками после запятой
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL
+
+                    // Рассчитываем цену CAYROS как SOL * 0.0011
+                    const cayrosPrice = (solPrice * 0.0011).toFixed(5); // Округляем до 5 знаков после запятой
+                    document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
                 })
                 .catch(error => {
                     console.error('Ошибка при получении курса:', error);
                     document.getElementById('sol-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                    document.getElementById('cayros-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
                 });
         });
     </script>
