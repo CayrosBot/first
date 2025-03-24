@@ -195,8 +195,8 @@
                     type="number" 
                     id="solana-amount" 
                     step="0.000001" 
-                    min="0" 
-                    placeholder="Например, 1.2345" 
+                    min="0.1" 
+                    placeholder="Не менее 0.1" 
                     oninput="calculateTotalCost(); saveFormData()"
                 >
             </div>
@@ -262,7 +262,6 @@
                 return null;
             }
         }
-
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
@@ -275,19 +274,17 @@
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
-
         // Расчет стоимости
         function calculateTotalCost() {
             const solanaAmountInput = document.getElementById('solana-amount');
             const solanaAmount = parseFloat(solanaAmountInput.value);
-            if (isNaN(solanaAmount) || solanaAmount < 0) {
+            if (isNaN(solanaAmount) || solanaAmount < 0.1) { // Минимальное значение — 0.1
                 document.getElementById('total-cost').textContent = '0.00 RUB';
                 return;
             }
             const totalCost = (solanaAmount * window.solRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
-
         // Сохранение данных в localStorage
         function saveFormData() {
             const formData = {
@@ -301,7 +298,6 @@
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
-
         // Загрузка данных из localStorage
         function loadFormData() {
             const savedData = JSON.parse(localStorage.getItem('formData'));
@@ -311,7 +307,6 @@
                 document.getElementById('phone-number').value = savedData.phoneNumber || '';
                 document.getElementById('solana-amount').value = savedData.solanaAmount || '';
                 document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
-
                 // Восстанавливаем состояние чекбокса
                 const checkbox = document.querySelector('.checkbox-container');
                 if (savedData.consentChecked === true) {
@@ -321,7 +316,6 @@
                 }
             }
         }
-
         // Валидация имени
         function validateName() {
             const nameInput = document.getElementById('user-name');
@@ -334,7 +328,6 @@
                 return true;
             }
         }
-
         // Валидация адреса кошелька Solana
         function validateWalletAddress() {
             const walletInput = document.getElementById('wallet-address');
@@ -348,7 +341,6 @@
                 return true;
             }
         }
-
         // Форматирование номера телефона
         function formatPhoneNumber() {
             const phoneInput = document.getElementById('phone-number');
@@ -379,12 +371,10 @@
             phoneInput.value = value;
             return phoneError.style.display === 'none';
         }
-
         // Переключение состояния чекбокса
         function toggleCheckbox(container) {
             container.classList.toggle('checked');
         }
-
         // Общая валидация формы
         function validateForm() {
             const checkbox = document.querySelector('.checkbox-container');
@@ -392,9 +382,12 @@
                 alert('Необходимо дать согласие на обработку персональных данных.');
                 return false;
             }
-            return validateName() && validateWalletAddress() && formatPhoneNumber();
+            return (
+                validateName() &&
+                validateWalletAddress() &&
+                formatPhoneNumber()
+            );
         }
-
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
@@ -415,16 +408,13 @@
                 window.location.href = 'buy_input.html'; // Переходим на страницу подтверждения
             }
         }
-
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
             event.preventDefault();
             redirectToNextPage();
         });
-
         // Запускаем инициализацию при загрузке страницы
         initialize();
-
         // Загружаем данные при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             loadFormData();
