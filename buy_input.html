@@ -7,32 +7,34 @@
     <!-- Подключаем стили из style_input.css -->
     <link rel="stylesheet" href="style_input.css">
     <style>
+        /* Дополнительные стили */
+        .sub-title {
+            font-size: 18px; /* Размер текста */
+            text-align: center; /* Текст по центру */
+            margin-top: 60px; /* Отступ под фиксированным заголовком */
+            margin-bottom: 20px; /* Отступ до блока с рамкой */
+            color: #333; /* Цвет текста */
+        }
+
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
-            padding: 0 3%;
+            padding: 0 3%; /* Отступы слева и справа */
             box-sizing: border-box;
             display: flex;
             justify-content: center;
         }
 
+        /* Форма */
         .container {
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            border: 2px solid #87CEEB;
+            border: 2px solid #00bfff; /* Голубая рамка */
             border-radius: 15px;
             background-color: #ffffff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
-        }
-
-        /* Заголовок страницы */
-        h2 {
-            font-size: 16px;
-            text-align: center;
-            margin-top: 3%; /* Отступ от верха */
-            margin-bottom: 10px; /* Отступ до блока ввода */
         }
 
         /* Поля вывода данных */
@@ -53,7 +55,7 @@
             width: 100%;
             padding: 10px;
             background-color: #f0f0f0;
-            border: 1px solid #87CEEB; /* Установлена толщина рамки в 1 пиксель */
+            border: 1px solid #00bfff; /* Голубая рамка */
             border-radius: 5px;
             font-size: 16px;
             text-align: center;
@@ -66,15 +68,15 @@
             background-color: #ffffff;
             color: #000000;
             font-size: 16px;
-            border: 2px solid #87CEEB;
+            border: 2px solid #00bfff; /* Голубая рамка */
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         button#backButton:hover {
-            background-color: #87CEEB;
-            color: white;
+            background-color: #00bfff; /* Голубой фон при наведении */
+            color: white; /* Белый текст при наведении */
         }
     </style>
 </head>
@@ -84,11 +86,12 @@
         <a href="buy_cayros.html" class="back-button">< Назад</a>
     </div>
 
+    <!-- Подзаголовок -->
+    <h1 class="sub-title">Подтверждение покупки</h1>
+
+    <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Заголовок -->
-            <h2>Подтверждение заказа CAYROS</h2>
-
             <!-- Вывод данных -->
             <div class="field">
                 <label>Имя:</label>
