@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение заказа</title>
     <style>
-        /* Общие стили */
+        /* Общие настройки */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -176,17 +176,19 @@
             // Определяем название токена и его количество
             let tokenName = "CAYROS";
             let tokenAmountKey = "cayrosAmount";
+            let tokenLabelKey = "cayrosLabel";
 
             if (formData.solanaAmount !== undefined) {
                 tokenName = "SOLANA";
                 tokenAmountKey = "solanaAmount";
+                tokenLabelKey = "solanaLabel";
             }
 
             // Обновляем текст меток на основе данных из предыдущей страницы
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
             document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
-            document.getElementById('token-label').textContent = formData[tokenName.toLowerCase() + "Label"] || `Количество ${tokenName}:`;
+            document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
 
             // Выводим данные на экран
