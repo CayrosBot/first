@@ -6,13 +6,62 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solana Exchange</title>
     <link rel="stylesheet" href="style_index.css"> <!-- Ссылка на внешний файл со стилями -->
+    <style>
+        /* Фиксированный заголовок с кнопками */
+        .header-wrap {
+            position: fixed; /* Фиксированная позиция */
+            top: 0; /* Прикреплен к верхней границе */
+            left: 0; /* Прикреплен к левой границе */
+            width: 100%; /* Занимает всю ширину экрана */
+            background-color: #ffffff; /* Белый фон */
+            padding: 10px; /* Внутренние отступы */
+            box-sizing: border-box; /* Учитываем padding в ширине */
+            display: flex; /* Размещаем элементы в одну строку */
+            justify-content: space-between; /* Располагаем элементы по краям */
+            align-items: center; /* Выравниваем элементы по центру вертикально */
+            z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
+            border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+        }
+        /* Кнопки в заголовке */
+        .header-button {
+            font-size: 14px; /* Размер текста */
+            padding: 5px 10px; /* Отступы внутри кнопки */
+            border: 2px solid #00bfff; /* Голубая рамка */
+            color: black; /* Черный текст */
+            text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            cursor: pointer;
+            border-radius: 5px; /* Скругление углов */
+            background-color: transparent; /* Прозрачный фон */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
+        }
+        .header-button:hover {
+            background-color: #00bfff; /* Голубой фон при наведении */
+            color: white; /* Белый текст при наведении */
+        }
+        /* Подзаголовок */
+        .sub-title {
+            font-size: 18px; /* Размер текста */
+            line-height: 18px; /* Высота текста */
+            text-align: center; /* Текст по центру */
+            margin: 0; /* Убираем стандартные отступы */
+            margin-top: 60px; /* Отступ под фиксированным заголовком */
+            margin-bottom: 20px; /* Отступ до основного контента */
+        }
+    </style>
 </head>
 <body>
-    <!-- Заголовок в верхней части страницы -->
-    <div class="header">
-        <h1>P2P сервис обмена</h1>
+    <!-- Фиксированный заголовок с кнопками -->
+    <div class="header-wrap">
+        <!-- Кнопка "Правила сервиса" -->
+        <a href="rules.html" class="header-button">правила сервиса</a>
+        <!-- Название сервиса -->
+        <h1 class="site-title">P2P сервис обмена</h1>
+        <!-- Кнопка "Войти" -->
+        <a href="input.html" class="header-button">войти</a>
     </div>
-
+    <!-- Подзаголовок -->
+    <h1 class="sub-title">P2P Сервис обмена</h1>
     <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
@@ -35,10 +84,8 @@
                     1 SOL = <span id="sol-price">...</span> RUB
                 </div>
             </div>
-
             <!-- Первый разделитель -->
             <div class="separator"></div>
-
             <!-- Блок Cayros -->
             <div class="cayros-container" style="margin-top: 20px;">
                 <!-- Контейнер для изображения и кнопок -->
@@ -58,15 +105,12 @@
                     1 CAYROS = <span id="cayros-price">...</span> RUB
                 </div>
             </div>
-
             <!-- Второй разделитель -->
             <div class="separator"></div>
-
             <!-- Новый блок с текстом "Криптовалютный кошелек:" -->
             <div class="crypto-wallet-title">
                 Криптовалютный кошелек:
             </div>
-
             <!-- Блок с изображением и текстом -->
             <div class="wallet-info">
                 <!-- Изображение Phantom Wallet -->
@@ -83,17 +127,6 @@
             </div>
         </div>
     </div>
-
-    <!-- Кнопка "Правила сервиса" в левом нижнем углу -->
-    <div class="footer-rules">
-        <a href="rules.html" class="button">Правила сервиса</a>
-    </div>
-
-    <!-- Кнопка "Войти" в правом нижнем углу -->
-    <div class="footer-button">
-        <a href="input.html" class="button">Войти</a>
-    </div>
-
     <!-- Встроенный JavaScript -->
     <script>
         // Получаем текущий курс SOL через публичный API
@@ -104,7 +137,6 @@
                 .then(data => {
                     const solPrice = data.solana.rub; // Получаем цену SOL в рублях
                     document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
-
                     // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
                     const cayrosPrice = (solPrice * 0.0011).toFixed(2);
                     document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
