@@ -176,23 +176,6 @@
             background-color: #87CEEB;
             color: white;
         }
-
-        /* Стили для кнопки "Вставить" */
-        .insert-button {
-            width: 100%;
-            padding: 5px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            font-size: 14px;
-            cursor: pointer;
-            margin-top: 5px;
-            display: none; /* Сначала скрыта */
-        }
-        .insert-button:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
@@ -239,13 +222,10 @@
                     type="text" 
                     id="wallet-address" 
                     placeholder="Введите адрес" 
-                    required 
-                    onfocus="showInsertButton()" 
-                    oninput="validateWalletAddress(); hideInsertButton(); saveFormData()"
+                    oninput="validateWalletAddress(); saveFormData()" 
+                    required
                 >
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
-                <!-- Кнопка "Вставить" -->
-                <button id="insertButton" class="insert-button" onclick="pasteFromClipboard()">Вставить из буфера обмена</button>
             </div>
             <div class="field">
                 <label for="phone-number">Укажите номер телефона</label>
@@ -253,8 +233,8 @@
                     type="tel" 
                     id="phone-number" 
                     placeholder="Номер телефона" 
-                    required 
-                    oninput="formatPhoneNumber(); saveFormData()"
+                    oninput="formatPhoneNumber(); saveFormData()" 
+                    required
                 >
                 <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
             </div>
@@ -317,7 +297,7 @@
                 solanaAmount: document.getElementById('solana-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
                 consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
-                backPage: "buy_solana.html"
+                backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
@@ -429,36 +409,10 @@
                     phoneLabel: "Номер телефона:",
                     solanaLabel: "Количество SOLANA:",
                     costLabel: "Общая стоимость:",
-                    backPage: "buy_solana.html"
+                    backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
                 };
                 localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
                 window.location.href = 'buy_input.html'; // Переходим на страницу подтверждения
-            }
-        }
-
-        // Показываем кнопку "Вставить" при фокусе на поле адреса кошелька
-        function showInsertButton() {
-            const insertButton = document.getElementById('insertButton');
-            insertButton.style.display = 'block'; // Показываем кнопку
-        }
-
-        // Скрываем кнопку "Вставить" при вводе текста
-        function hideInsertButton() {
-            const insertButton = document.getElementById('insertButton');
-            insertButton.style.display = 'none'; // Скрываем кнопку
-        }
-
-        // Функция для вставки значения из буфера обмена
-        async function pasteFromClipboard() {
-            try {
-                const clipboardText = await navigator.clipboard.readText(); // Читаем буфер обмена
-                const walletInput = document.getElementById('wallet-address');
-                walletInput.value = clipboardText; // Вставляем значение в поле
-                validateWalletAddress(); // Проверяем корректность адреса
-                hideInsertButton(); // Скрываем кнопку после вставки
-            } catch (err) {
-                console.error('Failed to read clipboard contents: ', err);
-                alert('Не удалось получить данные из буфера обмена.');
             }
         }
 
