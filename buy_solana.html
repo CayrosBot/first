@@ -239,12 +239,13 @@
                     type="text" 
                     id="wallet-address" 
                     placeholder="Введите адрес" 
-                    oninput="validateWalletAddress(); saveFormData()" 
-                    required
+                    required 
+                    onfocus="showInsertButton()" 
+                    oninput="validateWalletAddress(); hideInsertButton(); saveFormData()"
                 >
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
                 <!-- Кнопка "Вставить" -->
-                <button id="insertButton" class="insert-button">Вставить из буфера обмена</button>
+                <button id="insertButton" class="insert-button" onclick="pasteFromClipboard()">Вставить из буфера обмена</button>
             </div>
             <div class="field">
                 <label for="phone-number">Укажите номер телефона</label>
@@ -252,8 +253,8 @@
                     type="tel" 
                     id="phone-number" 
                     placeholder="Номер телефона" 
-                    oninput="formatPhoneNumber(); saveFormData()" 
-                    required
+                    required 
+                    oninput="formatPhoneNumber(); saveFormData()"
                 >
                 <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
             </div>
@@ -435,13 +436,13 @@
             }
         }
 
-        // Функция для показа кнопки "Вставить"
+        // Показываем кнопку "Вставить" при фокусе на поле адреса кошелька
         function showInsertButton() {
             const insertButton = document.getElementById('insertButton');
             insertButton.style.display = 'block'; // Показываем кнопку
         }
 
-        // Функция для скрытия кнопки "Вставить"
+        // Скрываем кнопку "Вставить" при вводе текста
         function hideInsertButton() {
             const insertButton = document.getElementById('insertButton');
             insertButton.style.display = 'none'; // Скрываем кнопку
@@ -460,16 +461,6 @@
                 alert('Не удалось получить данные из буфера обмена.');
             }
         }
-
-        // Добавляем обработчик события для поля ввода адреса кошелька
-        const walletInput = document.getElementById('wallet-address');
-        walletInput.addEventListener('focus', showInsertButton); // При фокусе показываем кнопку
-        walletInput.addEventListener('input', hideInsertButton); // При вводе скрываем кнопку
-
-        // Добавляем обработчик события для кнопки "Вставить"
-        document.getElementById('insertButton').addEventListener('click', async () => {
-            await pasteFromClipboard(); // Выполняем вставку из буфера обмена
-        });
 
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
