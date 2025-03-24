@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение заказа CAYROS</title>
     <style>
+        /* Общие настройки */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -14,6 +15,8 @@
             height: 100vh;
             background-color: #f9f9f9;
         }
+
+        /* Основной контейнер */
         .container-wrap {
             width: 100%;
             padding: 0 3%;
@@ -21,6 +24,7 @@
             display: flex;
             justify-content: center;
         }
+
         .container {
             width: 100%;
             max-width: 400px;
@@ -31,23 +35,40 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
         }
+
+        /* Заголовок страницы (стили из input со стилями.txt) */
+        h2 {
+            font-size: 16px;
+            text-align: center;
+            margin-top: 3%; /* Отступ от верха */
+            margin-bottom: 10px; /* Отступ до блока ввода */
+        }
+
+        /* Поля вывода данных */
         .field {
             margin-bottom: 20px;
+            position: relative; /* Для корректного размещения элементов */
+            padding: 0 10px; /* Добавляем отступы, чтобы поля не заходили на рамку */
+            box-sizing: border-box;
         }
+
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
+
         .result-container {
             width: 100%;
             padding: 10px;
             background-color: #f0f0f0;
-            border: 2px solid #87CEEB;
+            border: 1px solid #87CEEB; /* Установлена толщина рамки в 1 пиксель */
             border-radius: 5px;
             font-size: 16px;
             text-align: center;
         }
+
+        /* Кнопка "Вернуться к покупке" (стили из input со стилями.txt) */
         button#backButton {
             width: 100%;
             padding: 10px;
@@ -59,6 +80,7 @@
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
+
         button#backButton:hover {
             background-color: #87CEEB;
             color: white;
@@ -68,7 +90,10 @@
 <body>
     <div class="container-wrap">
         <div class="container">
+            <!-- Заголовок -->
             <h2>Подтверждение заказа CAYROS</h2>
+
+            <!-- Вывод данных -->
             <div class="field">
                 <label>Имя:</label>
                 <div id="user-name-display" class="result-container">Загрузка...</div>
@@ -89,6 +114,8 @@
                 <label>Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
+
+            <!-- Кнопка "Вернуться к покупке" -->
             <div class="field">
                 <button id="backButton">Вернуться к покупке</button>
             </div>
