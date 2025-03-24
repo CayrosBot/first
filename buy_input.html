@@ -4,22 +4,67 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение заказа CAYROS</title>
-    <!-- Подключаем стили из style_input.css -->
-    <link rel="stylesheet" href="style_input.css">
     <style>
-        /* Дополнительные стили */
+        /* Общие настройки */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+
+        /* Фиксированный заголовок с кнопкой "Назад" */
+        .header-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Кнопка "Назад" */
+        .back-button {
+            display: inline-block;
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 2px solid #00bfff;
+            color: black;
+            text-transform: lowercase;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: #00bfff;
+            color: white;
+        }
+
+        /* Второй заголовок */
         .sub-title {
-            font-size: 18px; /* Размер текста */
-            text-align: center; /* Текст по центру */
-            margin-top: 60px; /* Отступ под фиксированным заголовком */
-            margin-bottom: 20px; /* Отступ до блока с рамкой */
-            color: #333; /* Цвет текста */
+            font-size: 18px;
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            color: #333;
         }
 
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
-            padding: 0 3%; /* Отступы слева и справа */
+            padding: 0 3%;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
@@ -30,53 +75,56 @@
             width: 100%;
             max-width: 400px;
             padding: 20px;
-            border: 2px solid #00bfff; /* Голубая рамка */
+            border: 2px solid #00bfff;
             border-radius: 15px;
             background-color: #ffffff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
+            text-align: center; /* Выравнивание содержимого по центру */
         }
 
         /* Поля вывода данных */
         .field {
-            margin-bottom: 20px;
-            position: relative; /* Для корректного размещения элементов */
-            padding: 0 10px; /* Добавляем отступы, чтобы поля не заходили на рамку */
-            box-sizing: border-box;
+            margin-bottom: 15px;
         }
 
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
+            text-align: left; /* Метки выравниваются по левому краю */
         }
 
         .result-container {
             width: 100%;
             padding: 10px;
-            background-color: #f0f0f0;
-            border: 1px solid #00bfff; /* Голубая рамка */
+            border: 1px solid #ccc;
             border-radius: 5px;
-            font-size: 16px;
-            text-align: center;
+            font-size: 14px;
+            box-sizing: border-box;
+            word-break: break-word; /* Перенос длинных строк */
+        }
+
+        /* Увеличение размера поля для адреса кошелька */
+        #wallet-address-display {
+            height: 50px;
+            white-space: pre-wrap; /* Разрешаем перенос текста */
         }
 
         /* Кнопка "Вернуться к покупке" */
         button#backButton {
             width: 100%;
             padding: 10px;
-            background-color: #ffffff;
-            color: #000000;
-            font-size: 16px;
-            border: 2px solid #00bfff; /* Голубая рамка */
+            background-color: #4CAF50;
+            color: white;
+            border: none;
             border-radius: 5px;
+            font-size: 14px;
             cursor: pointer;
-            transition: background-color 0.3s ease, color 0.3s ease;
         }
 
         button#backButton:hover {
-            background-color: #00bfff; /* Голубой фон при наведении */
-            color: white; /* Белый текст при наведении */
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -94,23 +142,23 @@
         <div class="container">
             <!-- Вывод данных -->
             <div class="field">
-                <label>Имя:</label>
+                <label id="name-label">Имя:</label>
                 <div id="user-name-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
-                <label>Адрес кошелька:</label>
+                <label id="wallet-label">Адрес кошелька:</label>
                 <div id="wallet-address-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
-                <label>Номер телефона:</label>
+                <label id="phone-label">Номер телефона:</label>
                 <div id="phone-number-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
-                <label>Количество CAYROS:</label>
+                <label id="cayros-label">Количество CAYROS:</label>
                 <div id="cayros-amount-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
-                <label>Общая стоимость:</label>
+                <label id="cost-label">Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
 
@@ -126,6 +174,13 @@
         const formData = JSON.parse(localStorage.getItem('formData'));
 
         if (formData) {
+            // Обновляем текст меток на основе данных из предыдущей страницы
+            document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
+            document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
+            document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
+            document.getElementById('cayros-label').textContent = formData.cayrosLabel || 'Количество CAYROS:';
+            document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
+
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
