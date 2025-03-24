@@ -5,12 +5,14 @@ body {
     padding: 0;
     background-color: #f9f9f9;
 }
+
 .sol-container, .cayros-container {
     display: flex;
     align-items: flex-start; /* Выравниваем элементы по верхнему краю */
     margin-left: 3%; /* Отступ слева от границы экрана */
     margin-top: 20px; /* Небольшой отступ сверху */
 }
+
 .image-button-container {
     position: relative; /* Создаем относительное позиционирование для контейнера */
     display: flex;
@@ -18,12 +20,14 @@ body {
     align-items: flex-start; /* Выравниваем элементы по левому краю */
     height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
 }
+
 .sol-image, .cayros-image {
     width: 60px;
     height: 60px;
     margin-right: 15px; /* Отступ справа от изображения */
     border-radius: 8px; /* Скругление углов изображения */
 }
+
 .button-container {
     position: absolute; /* Абсолютное позиционирование для кнопок */
     bottom: 0; /* Привязываем кнопки к нижней границе контейнера */
@@ -31,6 +35,7 @@ body {
     display: flex; /* Кнопки располагаются в одну строку */
     gap: 15px; /* Пространство между кнопками */
 }
+
 /* Стили кнопок */
 .action-button {
     display: inline-block;
@@ -45,17 +50,20 @@ body {
     text-align: center;
     background-color: transparent; /* Прозрачный фон */
 }
+
 /* Эффект при наведении на кнопку */
 .action-button:hover {
     background-color: #00bfff; /* Темнее голубой при наведении */
     color: white; /* Белый текст при наведении */
 }
+
 .exchange-rate {
     font-size: 14px;
     color: #333;
     margin: 0; /* Убираем стандартные отступы */
     margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
 }
+
 .separator {
     width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
     height: 1px; /* Толщина разделителя 1 пиксель */
@@ -63,12 +71,14 @@ body {
     margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
     margin-left: 3%; /* Отступ слева */
 }
+
 /* Заголовок в верхней части страницы */
 .header {
     width: 100%;
     text-align: center;
     margin-top: 3%; /* Отступ от верха 3% */
 }
+
 /* Основной контейнер */
 .container-wrap {
     display: flex;
@@ -76,18 +86,21 @@ body {
     padding: 0 3%; /* Отступы слева и справа */
     box-sizing: border-box;
 }
+
 .container {
     width: 100%;
     max-width: 400px;
     padding: 20px;
     box-sizing: border-box;
 }
+
 /* Кнопка "Правила сервиса" в левом нижнем углу */
 .footer-rules {
     position: absolute; /* Абсолютное позиционирование */
     bottom: 2%; /* Отступ от нижней границы 2% */
     left: 3%; /* Отступ от левой границы 3% */
 }
+
 /* Кнопка "Войти" в правом нижнем углу */
 .footer-button {
     position: absolute; /* Абсолютное позиционирование */
@@ -95,6 +108,7 @@ body {
     right: 3%; /* Отступ от правой границы 3% */
     width: auto; /* Автоматическая ширина */
 }
+
 /* Стиль для кнопок "Правила сервиса" и "Войти" */
 .button {
     display: inline-block;
@@ -108,6 +122,7 @@ body {
     text-align: center;
     background-color: transparent; /* Прозрачный фон */
 }
+
 .button:hover {
     background-color: #00bfff; /* Темнее голубой при наведении */
     color: white; /* Белый текст при наведении */
@@ -136,20 +151,93 @@ body {
     display: flex; /* Размещаем элементы в одну строку */
     align-items: center; /* Выравниваем элементы по центру */
 }
+
 .wallet-image {
     width: 60px;
     height: 60px;
     border-radius: 8px; /* Скругление углов изображения */
 }
+
 .wallet-text {
     font-size: 14px; /* Размер текста */
     color: #333; /* Цвет текста */
     margin-left: 15px; /* Отступ между изображением и текстом */
 }
+
 .wallet-link {
     color: #00bfff; /* Цвет ссылки */
     text-decoration: none; /* Убираем подчеркивание */
 }
+
 .wallet-link:hover {
     text-decoration: underline; /* Добавляем подчеркивание при наведении */
+}
+
+/* Изображение в нижней части экрана */
+.bottom-image {
+    position: fixed; /* Фиксированное положение */
+    bottom: 20px; /* Отступ от нижней границы */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Корректировка центрирования */
+    width: 150px; /* Ширина изображения */
+    height: 150px; /* Высота изображения */
+    cursor: pointer; /* Изменяем курсор при наведении */
+    z-index: 999; /* Позиция ниже диалогового окна */
+}
+
+/* Диалоговое окно */
+.dialog-box {
+    display: none; /* Сначала скрыто */
+    position: fixed; /* Фиксированное положение */
+    bottom: calc(100% - 170px); /* Появляется выше изображения на 20 пикселей */
+    left: 50%; /* Центрирование по горизонтали */
+    transform: translateX(-50%); /* Корректировка центрирования */
+    background-color: white; /* Белый фон */
+    border: 1px solid #00bfff; /* Синяя рамка */
+    border-radius: 10px; /* Скругление углов */
+    padding: 10px; /* Компактные отступы внутри */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта диалогового окна */
+    z-index: 1001; /* Показывается поверх остальных элементов */
+    font-size: 14px; /* Размер текста */
+    max-width: 300px; /* Максимальная ширина */
+    text-align: center; /* Текст по центру */
+}
+
+/* Кнопки в диалоговом окне */
+.dialog-buttons {
+    display: flex; /* Размещаем кнопки в одну строку */
+    gap: 10px; /* Пространство между кнопками */
+    margin-top: 10px; /* Отступ от текста */
+    justify-content: center; /* Кнопки расположены по центру */
+}
+
+.dialog-button {
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    font-size: 12px; /* Размер текста */
+    border: 1px solid #00bfff; /* Голубая рамка */
+    border-radius: 5px; /* Скругление углов */
+    cursor: pointer; /* Изменяем курсор при наведении */
+    background-color: transparent; /* Прозрачный фон */
+    transition: background-color 0.3s ease; /* Анимация при наведении */
+}
+
+.dialog-button:hover {
+    background-color: #00bfff; /* Голубой фон при наведении */
+    color: white; /* Белый текст при наведении */
+}
+
+/* Адаптивность для больших экранов */
+@media (min-width: 768px) {
+    .bottom-image {
+        position: absolute; /* Абсолютное позиционирование */
+        bottom: 20px; /* Отступ от нижней границы */
+        left: 3%; /* Отступ от левой границы */
+        transform: none; /* Отключаем центрирование */
+    }
+
+    .dialog-box {
+        bottom: calc(100% - 150px); /* Позиционируется выше изображения */
+        left: 3%; /* Отступ от левой границы */
+        transform: none; /* Отключаем центрирование */
+    }
 }
