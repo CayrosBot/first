@@ -1,4 +1,3 @@
-<!-- buy_cayros.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,7 +15,6 @@
             align-items: center;
             background-color: #f9f9f9;
         }
-
         /* Фиксированный заголовок с кнопкой "Назад" */
         .header-wrap {
             position: fixed; /* Фиксированная позиция */
@@ -32,7 +30,6 @@
             z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
             border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
         }
-
         /* Кнопка "Назад" */
         .back-button {
             font-size: 14px; /* Размер текста */
@@ -46,12 +43,10 @@
             background-color: transparent; /* Прозрачный фон */
             transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
         }
-
         .back-button:hover {
             background-color: #00bfff; /* Голубой фон при наведении */
             color: white; /* Белый текст при наведении */
         }
-
         /* Новый заголовок под первым */
         .sub-title {
             font-size: 18px; /* Размер текста */
@@ -61,7 +56,6 @@
             margin-top: 60px; /* Отступ под фиксированным заголовком */
             margin-bottom: 20px; /* Отступ до основного контента */
         }
-
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
@@ -70,7 +64,6 @@
             display: flex;
             justify-content: center;
         }
-
         .container {
             width: 100%;
             max-width: 400px;
@@ -81,18 +74,15 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
         }
-
         /* Поля ввода */
         .field {
             margin-bottom: 20px;
         }
-
         label {
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
         }
-
         input[type="number"], input[type="text"], input[type="tel"] {
             width: 100%;
             padding: 10px;
@@ -100,7 +90,6 @@
             border: 1px solid #87CEEB;
             border-radius: 5px;
         }
-
         /* Результат расчета стоимости */
         .result-container {
             width: 100%; /* Занимает всю ширину контейнера */
@@ -112,7 +101,6 @@
             text-align: center;
             box-sizing: border-box; /* Учитывает padding и border в ширине */
         }
-
         /* Блок согласия с условиями */
         .consent-block {
             display: flex;
@@ -120,14 +108,12 @@
             margin-bottom: 20px;
             width: 100%;
         }
-
         .consent-text {
             flex: 1;
             font-size: 14px;
             color: #333;
             margin-right: 10px; /* Отступ справа от текста до чекбокса */
         }
-
         .checkbox-container {
             position: relative;
             width: 20px; /* Размер квадрата */
@@ -137,7 +123,6 @@
             box-sizing: border-box;
             border-radius: 3px; /* Сlightly rounded corners */
         }
-
         /* Псевдоэлемент для создания квадрата */
         .checkbox-container::before {
             content: '';
@@ -150,7 +135,6 @@
             box-sizing: border-box;
             border-radius: 3px; /* Сlightly rounded corners */
         }
-
         /* Когда выбрано (галочка) */
         .checkbox-container.checked::after {
             content: '\2713'; /* Unicode символ галочки */
@@ -168,7 +152,6 @@
             justify-content: center;
             align-items: center;
         }
-
         /* Сообщения об ошибках */
         .error-message {
             color: red;
@@ -176,7 +159,6 @@
             margin-top: 5px;
             display: none;
         }
-
         /* Кнопка "Отправить" */
         button#nextButton {
             width: 100%;
@@ -189,7 +171,6 @@
             cursor: pointer;
             transition: background-color 0.3s ease, color 0.3s ease;
         }
-
         button#nextButton:hover {
             background-color: #87CEEB;
             color: white;
@@ -201,10 +182,8 @@
     <div class="header-wrap">
         <a href="index.html" class="back-button">< Назад</a>
     </div>
-
     <!-- Новый заголовок под первым -->
-    <h1 class="sub-title">Оформление покупки</h1>
-
+    <h1 class="sub-title">Оформление покупки CAYROS</h1>
     <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
         <div class="container">
@@ -218,7 +197,7 @@
                     min="0" 
                     max="1000000" 
                     placeholder="Например, 123.456789" 
-                    oninput="calculateTotalCost()"
+                    oninput="calculateTotalCost(); saveFormData()"
                 >
             </div>
             <div class="field">
@@ -232,7 +211,8 @@
                     type="text" 
                     id="user-name" 
                     placeholder="Имя" 
-                    required
+                    required 
+                    onblur="saveFormData()"
                 >
                 <div class="error-message" id="name-error">Пожалуйста, введите ваше имя.</div>
             </div>
@@ -242,7 +222,7 @@
                     type="text" 
                     id="wallet-address" 
                     placeholder="Введите адрес" 
-                    oninput="validateWalletAddress()"
+                    oninput="validateWalletAddress(); saveFormData()" 
                     required
                 >
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
@@ -253,7 +233,7 @@
                     type="tel" 
                     id="phone-number" 
                     placeholder="Номер телефона" 
-                    oninput="formatPhoneNumber()" 
+                    oninput="formatPhoneNumber(); saveFormData()" 
                     required
                 >
                 <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
@@ -262,17 +242,16 @@
                 <div class="consent-text">
                     Даю свое согласие на хранение и обработку персональных данных
                 </div>
-                <div class="checkbox-container" onclick="toggleCheckbox(this)"></div>
+                <div class="checkbox-container" onclick="toggleCheckbox(this); saveFormData()"></div>
             </div>
-            <!-- Кнопка "Отправить" -->
+            <!-- Кнопка "Далее" -->
             <div class="field">
                 <button id="nextButton">Далее</button>
             </div>
         </div>
     </div>
-
     <script>
-        // Получение курса SOL в RUB с CoinGecko API
+        // Получение курса SOLANA в RUB с CoinGecko API
         async function fetchSolRate() {
             try {
                 const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub');
@@ -291,6 +270,7 @@
             if (solRate !== null) {
                 window.cayrosRate = (solRate * 0.00125).toFixed(2);
                 calculateTotalCost();
+                loadFormData(); // Загружаем ранее сохраненные данные
             } else {
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
@@ -306,6 +286,40 @@
             }
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
+        }
+
+        // Сохранение данных в localStorage
+        function saveFormData() {
+            const formData = {
+                name: document.getElementById('user-name').value,
+                walletAddress: document.getElementById('wallet-address').value,
+                phoneNumber: document.getElementById('phone-number').value,
+                cayrosAmount: document.getElementById('cayros-amount').value,
+                totalCost: document.getElementById('total-cost').textContent,
+                consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
+                backPage: "buy_cayros.html"
+            };
+            localStorage.setItem('formData', JSON.stringify(formData));
+        }
+
+        // Загрузка данных из localStorage
+        function loadFormData() {
+            const savedData = JSON.parse(localStorage.getItem('formData'));
+            if (savedData && savedData.backPage === "buy_cayros.html") {
+                document.getElementById('user-name').value = savedData.name || '';
+                document.getElementById('wallet-address').value = savedData.walletAddress || '';
+                document.getElementById('phone-number').value = savedData.phoneNumber || '';
+                document.getElementById('cayros-amount').value = savedData.cayrosAmount || '';
+                document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
+
+                // Восстанавливаем состояние чекбокса
+                const checkbox = document.querySelector('.checkbox-container');
+                if (savedData.consentChecked === true) {
+                    checkbox.classList.add('checked');
+                } else {
+                    checkbox.classList.remove('checked');
+                }
+            }
         }
 
         // Валидация имени
@@ -384,14 +398,7 @@
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
-                const formData = {
-                    name: document.getElementById('user-name').value,
-                    walletAddress: document.getElementById('wallet-address').value,
-                    phoneNumber: document.getElementById('phone-number').value,
-                    cayrosAmount: document.getElementById('cayros-amount').value,
-                    totalCost: document.getElementById('total-cost').textContent,
-                };
-                localStorage.setItem('formData', JSON.stringify(formData));
+                saveFormData(); // Сохраняем данные перед переходом
                 window.location.href = 'buy_input.html';
             }
         }
@@ -404,6 +411,11 @@
 
         // Запускаем инициализацию при загрузке страницы
         initialize();
+
+        // Загружаем данные при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFormData();
+        });
     </script>
 </body>
 </html>
