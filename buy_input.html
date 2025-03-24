@@ -4,18 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение заказа CAYROS</title>
+    <!-- Подключаем стили из style_input.css -->
+    <link rel="stylesheet" href="style_input.css">
     <style>
-        /* Общие настройки */
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #f9f9f9;
-        }
-
         /* Основной контейнер */
         .container-wrap {
             width: 100%;
@@ -36,7 +27,7 @@
             box-sizing: border-box;
         }
 
-        /* Заголовок страницы (стили из input со стилями.txt) */
+        /* Заголовок страницы */
         h2 {
             font-size: 16px;
             text-align: center;
@@ -68,7 +59,7 @@
             text-align: center;
         }
 
-        /* Кнопка "Вернуться к покупке" (стили из input со стилями.txt) */
+        /* Кнопка "Вернуться к покупке" */
         button#backButton {
             width: 100%;
             padding: 10px;
@@ -88,6 +79,11 @@
     </style>
 </head>
 <body>
+    <!-- Фиксированный заголовок с кнопкой "Назад" -->
+    <div class="header-wrap">
+        <a href="buy_cayros.html" class="back-button">< Назад</a>
+    </div>
+
     <div class="container-wrap">
         <div class="container">
             <!-- Заголовок -->
