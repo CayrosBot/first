@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение заказа</title>
     <style>
-        /* Общие настройки */
+        /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -34,7 +34,6 @@
 
         /* Кнопка "Назад" */
         .back-button {
-            display: inline-block;
             font-size: 14px;
             padding: 5px 10px;
             border: 2px solid #00bfff;
@@ -80,7 +79,7 @@
             background-color: #ffffff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
-            text-align: center; /* Выравнивание содержимого по центру */
+            text-align: center;
         }
 
         /* Поля вывода данных */
@@ -92,7 +91,7 @@
             display: block;
             margin-bottom: 5px;
             font-weight: bold;
-            text-align: left; /* Метки выравниваются по левому краю */
+            text-align: left;
         }
 
         .result-container {
@@ -102,13 +101,13 @@
             border-radius: 5px;
             font-size: 14px;
             box-sizing: border-box;
-            word-break: break-word; /* Перенос длинных строк */
+            word-break: break-word;
         }
 
         /* Увеличение размера поля для адреса кошелька */
         #wallet-address-display {
             height: 50px;
-            white-space: pre-wrap; /* Разрешаем перенос текста */
+            white-space: pre-wrap;
         }
 
         /* Кнопка "Вернуться к покупке" */
@@ -174,18 +173,27 @@
         const formData = JSON.parse(localStorage.getItem('formData'));
 
         if (formData) {
+            // Определяем название токена и его количество
+            let tokenName = "CAYROS";
+            let tokenAmountKey = "cayrosAmount";
+
+            if (formData.solanaAmount !== undefined) {
+                tokenName = "SOLANA";
+                tokenAmountKey = "solanaAmount";
+            }
+
             // Обновляем текст меток на основе данных из предыдущей страницы
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
             document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
-            document.getElementById('token-label').textContent = formData.tokenLabel || 'Количество токенов:';
+            document.getElementById('token-label').textContent = formData[tokenName.toLowerCase() + "Label"] || `Количество ${tokenName}:`;
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
 
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
             document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
-            document.getElementById('token-amount-display').textContent = `${formData.tokenAmount} ${formData.tokenName}` || 'Не рассчитано';
+            document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
 
             // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
@@ -199,7 +207,8 @@
 
         // Обработчик кнопки "Вернуться к покупке"
         document.getElementById('backButton').addEventListener('click', function () {
-            window.location.href = formData.backPage || 'buy_cayros.html'; // Переход на предыдущую страницу
+            const backPage = formData.backPage || 'buy_cayros.html'; // По умолчанию ведет на buy_cayros.html
+            window.location.href = backPage;
         });
     </script>
 </body>
