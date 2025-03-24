@@ -247,14 +247,23 @@
             const dialogBox = document.getElementById('dialog-box');
             dialogBox.innerHTML = '<p>Я буду ждать</p>'; // Устанавливаем новый текст
             setTimeout(() => {
+                dialogBox.style.display = 'none'; // Скрываем окно через 1 секунду
                 dialogBox.innerHTML = ''; // Очищаем содержимое
-                dialogBox.style.display = 'none'; // Скрываем окно
             }, 1000); // Задержка в 1 секунду
         });
 
         // Обработка клика на кнопку "Да"
         document.getElementById('dialog-yes').addEventListener('click', function () {
             window.location.href = 'how_to_sell.html'; // Переход на страницу how_to_sell.html
+        });
+
+        // Убедимся, что диалоговое окно скрывается при повторном клике
+        document.addEventListener('click', function (event) {
+            const dialogBox = document.getElementById('dialog-box');
+            if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
+                dialogBox.style.display = 'none'; // Скрываем окно, если кликнули вне изображения
+                dialogBox.innerHTML = ''; // Очищаем содержимое
+            }
         });
     </script>
 </body>
