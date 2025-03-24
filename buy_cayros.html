@@ -1,3 +1,4 @@
+<!-- buy_cayros.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -194,9 +195,9 @@
                     type="number" 
                     id="cayros-amount" 
                     step="0.000001" 
-                    min="0" 
+                    min="100" 
                     max="1000000" 
-                    placeholder="Например, 123.456789" 
+                    placeholder="Не менее 100" 
                     oninput="calculateTotalCost(); saveFormData()"
                 >
             </div>
@@ -280,7 +281,7 @@
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
-            if (isNaN(cayrosAmount) || cayrosAmount < 0 || cayrosAmount > 1000000) {
+            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
                 document.getElementById('total-cost').textContent = '0.00 RUB';
                 return;
             }
@@ -297,7 +298,7 @@
                 cayrosAmount: document.getElementById('cayros-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
                 consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
-                backPage: "buy_cayros.html"
+                backPage: "buy_cayros.html" // Указываем текущую страницу как предыдущую
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
@@ -392,14 +393,36 @@
                 alert('Необходимо дать согласие на обработку персональных данных.');
                 return false;
             }
+
+            const cayrosAmountInput = document.getElementById('cayros-amount');
+            const cayrosAmount = parseFloat(cayrosAmountInput.value);
+
+            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
+                alert('Минимальное количество CAYROS для покупки — 100.');
+                return false;
+            }
+
             return validateName() && validateWalletAddress() && formatPhoneNumber();
         }
 
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
-                saveFormData(); // Сохраняем данные перед переходом
-                window.location.href = 'buy_input.html';
+                const formData = {
+                    name: document.getElementById('user-name').value,
+                    walletAddress: document.getElementById('wallet-address').value,
+                    phoneNumber: document.getElementById('phone-number').value,
+                    cayrosAmount: document.getElementById('cayros-amount').value,
+                    totalCost: document.getElementById('total-cost').textContent,
+                    nameLabel: "Имя:",
+                    walletLabel: "Адрес кошелька:",
+                    phoneLabel: "Номер телефона:",
+                    cayrosLabel: "Количество CAYROS:",
+                    costLabel: "Общая стоимость:",
+                    backPage: "buy_cayros.html" // Указываем текущую страницу как предыдущую
+                };
+                localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
+                window.location.href = 'buy_input.html'; // Переходим на страницу подтверждения
             }
         }
 
