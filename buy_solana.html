@@ -196,7 +196,7 @@
                     step="0.000001" 
                     min="0" 
                     placeholder="Например, 1.2345" 
-                    oninput="calculateTotalCost()"
+                    oninput="calculateTotalCost(); saveFormData()"
                 >
             </div>
             <div class="field">
@@ -210,7 +210,8 @@
                     type="text" 
                     id="user-name" 
                     placeholder="Имя" 
-                    required
+                    required 
+                    onblur="saveFormData()"
                 >
                 <div class="error-message" id="name-error">Пожалуйста, введите ваше имя.</div>
             </div>
@@ -220,7 +221,7 @@
                     type="text" 
                     id="wallet-address" 
                     placeholder="Введите адрес" 
-                    oninput="validateWalletAddress()"
+                    oninput="validateWalletAddress(); saveFormData()" 
                     required
                 >
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
@@ -231,7 +232,7 @@
                     type="tel" 
                     id="phone-number" 
                     placeholder="Номер телефона" 
-                    oninput="formatPhoneNumber()" 
+                    oninput="formatPhoneNumber(); saveFormData()" 
                     required
                 >
                 <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
@@ -240,7 +241,7 @@
                 <div class="consent-text">
                     Даю свое согласие на хранение и обработку персональных данных
                 </div>
-                <div class="checkbox-container" onclick="toggleCheckbox(this)"></div>
+                <div class="checkbox-container" onclick="toggleCheckbox(this); saveFormData()"></div>
             </div>
             <!-- Кнопка "Далее" -->
             <div class="field">
@@ -260,6 +261,7 @@
                 return null;
             }
         }
+
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
@@ -267,10 +269,12 @@
             if (solRate !== null) {
                 window.solRate = solRate * 1.2; // Добавляем 20% к стоимости
                 calculateTotalCost();
+                loadFormData(); // Загружаем ранее сохраненные данные
             } else {
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
+
         // Расчет стоимости
         function calculateTotalCost() {
             const solanaAmountInput = document.getElementById('solana-amount');
@@ -282,6 +286,40 @@
             const totalCost = (solanaAmount * window.solRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
+
+        // Сохранение данных в localStorage
+        function saveFormData() {
+            const formData = {
+                name: document.getElementById('user-name').value,
+                walletAddress: document.getElementById('wallet-address').value,
+                phoneNumber: document.getElementById('phone-number').value,
+                solanaAmount: document.getElementById('solana-amount').value,
+                totalCost: document.getElementById('total-cost').textContent,
+                consentChecked: document.querySelector('.checkbox-container').classList.contains('checked')
+            };
+            localStorage.setItem('formData', JSON.stringify(formData));
+        }
+
+        // Загрузка данных из localStorage
+        function loadFormData() {
+            const savedData = JSON.parse(localStorage.getItem('formData'));
+            if (savedData) {
+                document.getElementById('user-name').value = savedData.name || '';
+                document.getElementById('wallet-address').value = savedData.walletAddress || '';
+                document.getElementById('phone-number').value = savedData.phoneNumber || '';
+                document.getElementById('solana-amount').value = savedData.solanaAmount || '';
+                document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
+
+                // Восстанавливаем состояние чекбокса
+                const checkbox = document.querySelector('.checkbox-container');
+                if (savedData.consentChecked === true) {
+                    checkbox.classList.add('checked');
+                } else {
+                    checkbox.classList.remove('checked');
+                }
+            }
+        }
+
         // Валидация имени
         function validateName() {
             const nameInput = document.getElementById('user-name');
@@ -294,6 +332,7 @@
                 return true;
             }
         }
+
         // Валидация адреса кошелька Solana
         function validateWalletAddress() {
             const walletInput = document.getElementById('wallet-address');
@@ -307,6 +346,7 @@
                 return true;
             }
         }
+
         // Форматирование номера телефона
         function formatPhoneNumber() {
             const phoneInput = document.getElementById('phone-number');
@@ -337,10 +377,12 @@
             phoneInput.value = value;
             return phoneError.style.display === 'none';
         }
+
         // Переключение состояния чекбокса
         function toggleCheckbox(container) {
             container.classList.toggle('checked');
         }
+
         // Общая валидация формы
         function validateForm() {
             const checkbox = document.querySelector('.checkbox-container');
@@ -350,27 +392,28 @@
             }
             return validateName() && validateWalletAddress() && formatPhoneNumber();
         }
+
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
-                const formData = {
-                    name: document.getElementById('user-name').value,
-                    walletAddress: document.getElementById('wallet-address').value,
-                    phoneNumber: document.getElementById('phone-number').value,
-                    solanaAmount: document.getElementById('solana-amount').value,
-                    totalCost: document.getElementById('total-cost').textContent,
-                };
-                localStorage.setItem('formData', JSON.stringify(formData));
+                saveFormData(); // Сохраняем данные перед переходом
                 window.location.href = 'buy_input.html';
             }
         }
+
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
             event.preventDefault();
             redirectToNextPage();
         });
+
         // Запускаем инициализацию при загрузке страницы
         initialize();
+
+        // Загружаем данные при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFormData();
+        });
     </script>
 </body>
 </html>
