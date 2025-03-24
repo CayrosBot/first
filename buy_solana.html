@@ -176,6 +176,23 @@
             background-color: #87CEEB;
             color: white;
         }
+
+        /* Стили для кнопки "Вставить" */
+        .insert-button {
+            width: 100%;
+            padding: 5px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 5px;
+            display: none; /* Сначала скрыта */
+        }
+        .insert-button:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -226,6 +243,8 @@
                     required
                 >
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
+                <!-- Кнопка "Вставить" -->
+                <button id="insertButton" class="insert-button">Вставить из буфера обмена</button>
             </div>
             <div class="field">
                 <label for="phone-number">Укажите номер телефона</label>
@@ -297,7 +316,7 @@
                 solanaAmount: document.getElementById('solana-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
                 consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
-                backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
+                backPage: "buy_solana.html"
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
@@ -409,12 +428,48 @@
                     phoneLabel: "Номер телефона:",
                     solanaLabel: "Количество SOLANA:",
                     costLabel: "Общая стоимость:",
-                    backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
+                    backPage: "buy_solana.html"
                 };
                 localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
                 window.location.href = 'buy_input.html'; // Переходим на страницу подтверждения
             }
         }
+
+        // Функция для показа кнопки "Вставить"
+        function showInsertButton() {
+            const insertButton = document.getElementById('insertButton');
+            insertButton.style.display = 'block'; // Показываем кнопку
+        }
+
+        // Функция для скрытия кнопки "Вставить"
+        function hideInsertButton() {
+            const insertButton = document.getElementById('insertButton');
+            insertButton.style.display = 'none'; // Скрываем кнопку
+        }
+
+        // Функция для вставки значения из буфера обмена
+        async function pasteFromClipboard() {
+            try {
+                const clipboardText = await navigator.clipboard.readText(); // Читаем буфер обмена
+                const walletInput = document.getElementById('wallet-address');
+                walletInput.value = clipboardText; // Вставляем значение в поле
+                validateWalletAddress(); // Проверяем корректность адреса
+                hideInsertButton(); // Скрываем кнопку после вставки
+            } catch (err) {
+                console.error('Failed to read clipboard contents: ', err);
+                alert('Не удалось получить данные из буфера обмена.');
+            }
+        }
+
+        // Добавляем обработчик события для поля ввода адреса кошелька
+        const walletInput = document.getElementById('wallet-address');
+        walletInput.addEventListener('focus', showInsertButton); // При фокусе показываем кнопку
+        walletInput.addEventListener('input', hideInsertButton); // При вводе скрываем кнопку
+
+        // Добавляем обработчик события для кнопки "Вставить"
+        document.getElementById('insertButton').addEventListener('click', async () => {
+            await pasteFromClipboard(); // Выполняем вставку из буфера обмена
+        });
 
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
