@@ -1,3 +1,4 @@
+<!-- buy_solana.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -295,7 +296,8 @@
                 phoneNumber: document.getElementById('phone-number').value,
                 solanaAmount: document.getElementById('solana-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
-                consentChecked: document.querySelector('.checkbox-container').classList.contains('checked')
+                consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
+                backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
@@ -303,7 +305,7 @@
         // Загрузка данных из localStorage
         function loadFormData() {
             const savedData = JSON.parse(localStorage.getItem('formData'));
-            if (savedData) {
+            if (savedData && savedData.backPage === "buy_solana.html") {
                 document.getElementById('user-name').value = savedData.name || '';
                 document.getElementById('wallet-address').value = savedData.walletAddress || '';
                 document.getElementById('phone-number').value = savedData.phoneNumber || '';
@@ -396,8 +398,21 @@
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
-                saveFormData(); // Сохраняем данные перед переходом
-                window.location.href = 'buy_input.html';
+                const formData = {
+                    name: document.getElementById('user-name').value,
+                    walletAddress: document.getElementById('wallet-address').value,
+                    phoneNumber: document.getElementById('phone-number').value,
+                    solanaAmount: document.getElementById('solana-amount').value,
+                    totalCost: document.getElementById('total-cost').textContent,
+                    nameLabel: "Имя:",
+                    walletLabel: "Адрес кошелька:",
+                    phoneLabel: "Номер телефона:",
+                    solanaLabel: "Количество SOLANA:",
+                    costLabel: "Общая стоимость:",
+                    backPage: "buy_solana.html" // Указываем текущую страницу как предыдущую
+                };
+                localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
+                window.location.href = 'buy_input.html'; // Переходим на страницу подтверждения
             }
         }
 
