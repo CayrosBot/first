@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Подтверждение заказа CAYROS</title>
+    <title>Подтверждение заказа</title>
     <style>
         /* Общие настройки */
         body {
@@ -131,7 +131,7 @@
 <body>
     <!-- Фиксированный заголовок с кнопкой "Назад" -->
     <div class="header-wrap">
-        <a href="buy_cayros.html" class="back-button">< Назад</a>
+        <a href="#" class="back-button" id="backLink">< Назад</a>
     </div>
 
     <!-- Подзаголовок -->
@@ -154,8 +154,8 @@
                 <div id="phone-number-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
-                <label id="cayros-label">Количество CAYROS:</label>
-                <div id="cayros-amount-display" class="result-container">Загрузка...</div>
+                <label id="token-label">Количество токенов:</label>
+                <div id="token-amount-display" class="result-container">Загрузка...</div>
             </div>
             <div class="field">
                 <label id="cost-label">Общая стоимость:</label>
@@ -178,24 +178,28 @@
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
             document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
-            document.getElementById('cayros-label').textContent = formData.cayrosLabel || 'Количество CAYROS:';
+            document.getElementById('token-label').textContent = formData.tokenLabel || 'Количество токенов:';
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
 
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
             document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
-            document.getElementById('cayros-amount-display').textContent = `${formData.cayrosAmount} CAYROS`;
+            document.getElementById('token-amount-display').textContent = `${formData.tokenAmount} ${formData.tokenName}` || 'Не рассчитано';
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
+
+            // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
+            const backLink = document.getElementById('backLink');
+            backLink.href = formData.backPage || 'buy_cayros.html'; // По умолчанию ведет на buy_cayros.html
         } else {
             // Если данные не найдены, показываем сообщение об ошибке
             alert('Произошла ошибка при получении данных.');
-            window.location.href = 'buy_cayros.html';
+            window.location.href = 'index.html'; // Переходим на главную страницу
         }
 
         // Обработчик кнопки "Вернуться к покупке"
         document.getElementById('backButton').addEventListener('click', function () {
-            window.location.href = 'buy_cayros.html';
+            window.location.href = formData.backPage || 'buy_cayros.html'; // Переход на предыдущую страницу
         });
     </script>
 </body>
