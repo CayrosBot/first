@@ -4,8 +4,76 @@ body {
     margin: 0;
     padding: 0;
     background-color: #f9f9f9;
+    overflow-y: auto; /* Добавляем вертикальную прокрутку для больших экранов */
 }
 
+/* Фиксированный заголовок с кнопками */
+.header-wrap {
+    position: fixed; /* Фиксированная позиция */
+    top: 0; /* Прикреплен к верхней границе */
+    left: 0; /* Прикреплен к левой границе */
+    width: 100%; /* Занимает всю ширину экрана */
+    background-color: #ffffff; /* Белый фон */
+    padding: 10px; /* Внутренние отступы */
+    box-sizing: border-box; /* Учитываем padding в ширине */
+    display: flex; /* Размещаем элементы в одну строку */
+    justify-content: space-between; /* Располагаем элементы по краям */
+    align-items: center; /* Выравниваем элементы по центру вертикально */
+    z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
+    border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+}
+
+/* Кнопки в заголовке */
+.header-button {
+    font-size: 14px; /* Размер текста */
+    padding: 5px 10px; /* Отступы внутри кнопки */
+    border: 2px solid #00bfff; /* Голубая рамка */
+    color: black; /* Черный текст */
+    text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+    text-decoration: none; /* Убираем подчеркивание у ссылки */
+    cursor: pointer;
+    border-radius: 5px; /* Скругление углов */
+    background-color: transparent; /* Прозрачный фон */
+    transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
+}
+.header-button:hover {
+    background-color: #00bfff; /* Голубой фон при наведении */
+    color: white; /* Белый текст при наведении */
+}
+
+/* Подзаголовок */
+.sub-title {
+    font-size: 20px; /* Размер текста */
+    line-height: 18px; /* Высота текста */
+    text-align: center; /* Текст по центру */
+    margin: 0; /* Убираем стандартные отступы */
+    margin-top: 60px; /* Отступ под фиксированным заголовком */
+    margin-bottom: 20px; /* Отступ до основного контента */
+}
+
+/* Новый стиль для заголовка "Купить/Продать:" */
+.buy-sell-title {
+    font-size: 18px; /* Размер текста */
+    margin-top: 20px; /* Отступ сверху от предыдущего элемента */
+    margin-left: 3%; /* Отступ слева от границы экрана */
+    color: #333; /* Цвет текста */
+}
+
+/* Основной контейнер */
+.container-wrap {
+    display: flex;
+    justify-content: center;
+    padding: 0 3%; /* Отступы слева и справа */
+    box-sizing: border-box;
+}
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* Блок Solana */
 .sol-container, .cayros-container {
     display: flex;
     align-items: flex-start; /* Выравниваем элементы по верхнему краю */
@@ -13,6 +81,7 @@ body {
     margin-top: 20px; /* Небольшой отступ сверху */
 }
 
+/* Контейнер для изображения и кнопок */
 .image-button-container {
     position: relative; /* Создаем относительное позиционирование для контейнера */
     display: flex;
@@ -21,6 +90,7 @@ body {
     height: 60px; /* Фиксированная высота контейнера (равна высоте изображения) */
 }
 
+/* Изображения валют */
 .sol-image, .cayros-image {
     width: 60px;
     height: 60px;
@@ -28,6 +98,7 @@ body {
     border-radius: 8px; /* Скругление углов изображения */
 }
 
+/* Контейнер для кнопок */
 .button-container {
     position: absolute; /* Абсолютное позиционирование для кнопок */
     bottom: 0; /* Привязываем кнопки к нижней границе контейнера */
@@ -50,13 +121,12 @@ body {
     text-align: center;
     background-color: transparent; /* Прозрачный фон */
 }
-
-/* Эффект при наведении на кнопку */
 .action-button:hover {
     background-color: #00bfff; /* Темнее голубой при наведении */
     color: white; /* Белый текст при наведении */
 }
 
+/* Текст курса */
 .exchange-rate {
     font-size: 14px;
     color: #333;
@@ -64,76 +134,13 @@ body {
     margin-bottom: 10px; /* Отступ между текстом курса и кнопками */
 }
 
+/* Сепараторы */
 .separator {
     width: 94%; /* Ширина разделителя с отступами 3% слева и справа */
     height: 1px; /* Толщина разделителя 1 пиксель */
     background-color: #00bfff; /* Голубой цвет разделителя */
     margin-top: 10px; /* Расстояние от нижней части изображения до разделителя */
     margin-left: 3%; /* Отступ слева */
-}
-
-/* Заголовок в верхней части страницы */
-.header {
-    width: 100%;
-    text-align: center;
-    margin-top: 3%; /* Отступ от верха 3% */
-}
-
-/* Основной контейнер */
-.container-wrap {
-    display: flex;
-    justify-content: center;
-    padding: 0 3%; /* Отступы слева и справа */
-    box-sizing: border-box;
-}
-
-.container {
-    width: 100%;
-    max-width: 400px;
-    padding: 20px;
-    box-sizing: border-box;
-}
-
-/* Кнопка "Правила сервиса" в левом нижнем углу */
-.footer-rules {
-    position: absolute; /* Абсолютное позиционирование */
-    bottom: 2%; /* Отступ от нижней границы 2% */
-    left: 3%; /* Отступ от левой границы 3% */
-}
-
-/* Кнопка "Войти" в правом нижнем углу */
-.footer-button {
-    position: absolute; /* Абсолютное позиционирование */
-    bottom: 2%; /* Отступ от нижней границы 2% */
-    right: 3%; /* Отступ от правой границы 3% */
-    width: auto; /* Автоматическая ширина */
-}
-
-/* Стиль для кнопок "Правила сервиса" и "Войти" */
-.button {
-    display: inline-block;
-    font-size: 12px;
-    padding: 5px 10px; /* Отступы внутри кнопки */
-    border: 2px solid #00bfff; /* Голубая рамка 2 пикселя */
-    color: black; /* Черный текст */
-    border-radius: 10px; /* Скругленные углы */
-    text-decoration: none; /* Убираем подчеркивание у ссылки */
-    cursor: pointer;
-    text-align: center;
-    background-color: transparent; /* Прозрачный фон */
-}
-
-.button:hover {
-    background-color: #00bfff; /* Темнее голубой при наведении */
-    color: white; /* Белый текст при наведении */
-}
-
-/* Новый стиль для заголовка "Купить/продать:" */
-.buy-sell-title {
-    font-size: 18px; /* Размер текста */
-    margin-top: 20px; /* Отступ сверху от предыдущего элемента */
-    margin-left: 3%; /* Отступ слева от границы экрана */
-    color: #333; /* Цвет текста */
 }
 
 /* Новый стиль для заголовка "Криптовалютный кошелек:" */
@@ -144,31 +151,27 @@ body {
     color: #333; /* Цвет текста */
 }
 
-/* Стиль для блока с изображением и текстом */
+/* Блок с изображением и текстом */
 .wallet-info {
     margin-left: 3%; /* Сохраняем отступ слева */
     margin-top: 20px; /* Отступ от заголовка */
     display: flex; /* Размещаем элементы в одну строку */
     align-items: center; /* Выравниваем элементы по центру */
 }
-
 .wallet-image {
     width: 60px;
     height: 60px;
     border-radius: 8px; /* Скругление углов изображения */
 }
-
 .wallet-text {
     font-size: 14px; /* Размер текста */
     color: #333; /* Цвет текста */
     margin-left: 15px; /* Отступ между изображением и текстом */
 }
-
 .wallet-link {
     color: #00bfff; /* Цвет ссылки */
     text-decoration: none; /* Убираем подчеркивание */
 }
-
 .wallet-link:hover {
     text-decoration: underline; /* Добавляем подчеркивание при наведении */
 }
@@ -195,7 +198,7 @@ body {
     background-color: white; /* Белый фон */
     border: 1px solid #00bfff; /* Синяя рамка */
     border-radius: 10px; /* Скругление углов */
-    padding: 10px; /* Компактные отступы внутри */
+    padding: 15px; /* Отступы внутри */
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта диалогового окна */
     z-index: 1001; /* Показывается поверх остальных элементов */
     font-size: 14px; /* Размер текста */
@@ -211,6 +214,7 @@ body {
     justify-content: center; /* Кнопки расположены по центру */
 }
 
+/* Стиль кнопок в диалоговом окне */
 .dialog-button {
     padding: 5px 10px; /* Отступы внутри кнопки */
     font-size: 12px; /* Размер текста */
@@ -220,7 +224,6 @@ body {
     background-color: transparent; /* Прозрачный фон */
     transition: background-color 0.3s ease; /* Анимация при наведении */
 }
-
 .dialog-button:hover {
     background-color: #00bfff; /* Голубой фон при наведении */
     color: white; /* Белый текст при наведении */
@@ -228,6 +231,7 @@ body {
 
 /* Адаптивность для больших экранов */
 @media (min-width: 768px) {
+    /* Изображение в нижней части экрана */
     .bottom-image {
         position: absolute; /* Абсолютное позиционирование */
         bottom: 20px; /* Отступ от нижней границы */
@@ -235,8 +239,10 @@ body {
         transform: none; /* Отключаем центрирование */
     }
 
+    /* Диалоговое окно */
     .dialog-box {
-        bottom: calc(100% - 150px); /* Позиционируется выше изображения */
+        position: absolute; /* Абсолютное позиционирование */
+        bottom: calc(100% - 150px); /* Появляется выше изображения */
         left: 3%; /* Отступ от левой границы */
         transform: none; /* Отключаем центрирование */
     }
