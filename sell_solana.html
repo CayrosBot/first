@@ -1,0 +1,529 @@
+<!-- sell_solana.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Продажа SOLANA</title>
+    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили из style_input.css -->
+    <style>
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column; /* Вертикальное расположение элементов */
+            align-items: center;
+            background-color: #f9f9f9;
+        }
+        /* Фиксированный заголовок с кнопкой "Назад" */
+        .header-wrap {
+            position: fixed; /* Фиксированная позиция */
+            top: 0; /* Прикреплен к верхней границе */
+            left: 0; /* Прикреплен к левой границе */
+            width: 100%; /* Занимает всю ширину экрана */
+            background-color: #ffffff; /* Белый фон */
+            padding: 10px; /* Внутренние отступы */
+            box-sizing: border-box; /* Учитываем padding в ширине */
+            display: flex; /* Размещаем элементы в одну строку */
+            justify-content: flex-start; /* Выравниваем элементы по левому краю */
+            align-items: center; /* Выравниваем элементы по центру вертикально */
+            z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
+            border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+        }
+        /* Кнопка "Назад" */
+        .back-button {
+            font-size: 14px; /* Размер текста */
+            padding: 5px 10px; /* Отступы внутри кнопки */
+            border: 2px solid #00bfff; /* Голубая рамка */
+            color: black; /* Черный текст */
+            text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            cursor: pointer;
+            border-radius: 5px; /* Скругление углов */
+            background-color: transparent; /* Прозрачный фон */
+            transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
+        }
+        .back-button:hover {
+            background-color: #00bfff; /* Голубой фон при наведении */
+            color: white; /* Белый текст при наведении */
+        }
+        /* Новый заголовок под первым */
+        .sub-title {
+            font-size: 18px; /* Размер текста */
+            line-height: 18px; /* Высота текста */
+            text-align: center; /* Текст по центру */
+            margin: 0; /* Убираем стандартные отступы */
+            margin-top: 60px; /* Отступ под фиксированным заголовком */
+            margin-bottom: 20px; /* Отступ до основного контента */
+        }
+        /* Основной контейнер */
+        .container-wrap {
+            width: 100%;
+            padding: 0 3%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border: 2px solid #87CEEB;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+        /* Поля ввода */
+        .field {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="number"], input[type="text"], input[type="tel"] {
+            width: 100%;
+            padding: 10px;
+            box-sizing: border-box;
+            border: 1px solid #87CEEB;
+            border-radius: 5px;
+        }
+        /* Результат расчета стоимости */
+        .result-container {
+            width: 100%; /* Занимает всю ширину контейнера */
+            padding: 10px;
+            background-color: #f0f0f0;
+            border: 2px solid #87CEEB;
+            border-radius: 5px;
+            font-size: 18px;
+            text-align: center;
+            box-sizing: border-box; /* Учитывает padding и border в ширине */
+        }
+        /* Блок согласия с условиями */
+        .consent-block {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .consent-text {
+            flex: 1;
+            font-size: 14px;
+            color: #333;
+            margin-right: 10px; /* Отступ справа от текста до чекбокса */
+        }
+        .checkbox-container {
+            position: relative;
+            width: 20px; /* Размер квадрата */
+            height: 20px; /* Размер квадрата */
+            cursor: pointer;
+            border: 2px solid #ccc; /* Граница квадрата */
+            box-sizing: border-box;
+            border-radius: 3px; /* Сlightly rounded corners */
+        }
+        /* Псевдоэлемент для создания квадрата */
+        .checkbox-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ccc; /* Цвет границы */
+            box-sizing: border-box;
+            border-radius: 3px; /* Сlightly rounded corners */
+        }
+        /* Когда выбрано (галочка) */
+        .checkbox-container.checked::after {
+            content: '\2713'; /* Unicode символ галочки */
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%); /* Центрирование галочки */
+            color: #fff; /* Цвет галочки */
+            font-size: 16px; /* Размер галочки */
+            background-color: #28a745; /* Зеленый фон */
+            border-radius: 3px; /* Сlightly rounded corners */
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        /* Сообщения об ошибках */
+        .error-message {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+            display: none;
+        }
+        /* Кнопка "Отправить" */
+        button#nextButton {
+            width: 100%;
+            padding: 10px;
+            background-color: #ffffff;
+            color: #000000;
+            font-size: 16px;
+            border: 2px solid #87CEEB;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        button#nextButton:hover {
+            background-color: #87CEEB;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <!-- Фиксированный заголовок с кнопкой "Назад" -->
+    <div class="header-wrap">
+        <a href="index.html" class="back-button">< Назад</a>
+    </div>
+    <!-- Новый заголовок под первым -->
+    <h1 class="sub-title">Оформление продажи SOLANA</h1>
+    <!-- Основной контейнер формы (с рамкой) -->
+    <div class="container-wrap">
+        <div class="container">
+            <!-- Поле расчета стоимости SOLANA -->
+            <div class="field">
+                <label for="solana-amount">Введите количество SOLANA</label>
+                <input 
+                    type="number" 
+                    id="solana-amount" 
+                    step="0.000001" 
+                    min="0.1" 
+                    placeholder="Не менее 0.1" 
+                    oninput="calculateTotalCost(); saveFormData()"
+                >
+            </div>
+            <div class="field">
+                <label>Стоимость продажи:</label>
+                <div id="total-cost" class="result-container">0.00 RUB</div>
+            </div>
+            <!-- Форма с персональными данными -->
+            <div class="field">
+                <label for="user-name">Ваше имя</label>
+                <input 
+                    type="text" 
+                    id="user-name" 
+                    placeholder="Имя" 
+                    required 
+                    onblur="saveFormData()"
+                >
+                <div class="error-message" id="name-error">Пожалуйста, введите ваше имя.</div>
+            </div>
+            <div class="field">
+                <label for="wallet-address">Введите адрес вашего кошелька</label>
+                <input 
+                    type="text" 
+                    id="wallet-address" 
+                    placeholder="Введите адрес" 
+                    oninput="validateWalletAddress(); saveFormData()" 
+                    required
+                >
+                <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
+            </div>
+            <div class="field">
+                <label for="phone-number">Укажите номер телефона</label>
+                <input 
+                    type="tel" 
+                    id="phone-number" 
+                    placeholder="Номер телефона" 
+                    oninput="formatPhoneNumber(); saveFormData()" 
+                    required
+                >
+                <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
+            </div>
+            <!-- Новое поле: Банк получателя -->
+            <div class="field">
+                <label for="bank-name">Банк получателя</label>
+                <input 
+                    type="text" 
+                    id="bank-name" 
+                    placeholder="Название вашего банка" 
+                    required 
+                    onblur="saveFormData()"
+                >
+                <div class="error-message" id="bank-error">Пожалуйста, укажите название банка.</div>
+            </div>
+            <!-- Новое поле: Номер карты -->
+            <div class="field">
+                <label for="card-number">Номер карты</label>
+                <input 
+                    type="text" 
+                    id="card-number" 
+                    placeholder="Введите номер вашей карты" 
+                    oninput="validateCardNumber(); saveFormData()" 
+                    required
+                >
+                <div class="error-message" id="card-error">Некорректный номер карты.</div>
+            </div>
+            <!-- Новое поле: Получатель -->
+            <div class="field">
+                <label for="recipient-name">Получатель</label>
+                <input 
+                    type="text" 
+                    id="recipient-name" 
+                    placeholder="Введите Ф.И.О. получателя" 
+                    required 
+                    onblur="saveFormData()"
+                >
+                <div class="error-message" id="recipient-error">Пожалуйста, введите Ф.И.О. получателя.</div>
+            </div>
+            <!-- Блок согласия с условиями -->
+            <div class="field consent-block">
+                <div class="consent-text">
+                    Даю свое согласие на хранение и обработку персональных данных
+                </div>
+                <div class="checkbox-container" onclick="toggleCheckbox(this); saveFormData()"></div>
+            </div>
+            <!-- Кнопка "Далее" -->
+            <div class="field">
+                <button id="nextButton">Далее</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Получение курса SOLANA в RUB с CoinGecko API
+        async function fetchSolRate() {
+            try {
+                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub');
+                const data = await response.json();
+                return data.solana.rub;
+            } catch (error) {
+                console.error("Ошибка при получении курса:", error);
+                return null;
+            }
+        }
+
+        // Главная функция инициализации
+        async function initialize() {
+            const totalCostDiv = document.getElementById('total-cost');
+            const solRate = await fetchSolRate();
+            if (solRate !== null) {
+                window.solRate = solRate * 0.8; // Уменьшаем курс на 20%
+                calculateTotalCost();
+                loadFormData(); // Загружаем ранее сохраненные данные
+            } else {
+                totalCostDiv.textContent = "Не удалось загрузить курс.";
+            }
+        }
+
+        // Расчет стоимости
+        function calculateTotalCost() {
+            const solanaAmountInput = document.getElementById('solana-amount');
+            const solanaAmount = parseFloat(solanaAmountInput.value);
+            if (isNaN(solanaAmount) || solanaAmount < 0.1) { // Минимальное значение — 0.1
+                document.getElementById('total-cost').textContent = '0.00 RUB';
+                return;
+            }
+            const totalCost = (solanaAmount * window.solRate).toFixed(2);
+            document.getElementById('total-cost').textContent = `${totalCost} RUB`;
+        }
+
+        // Сохранение данных в localStorage
+        function saveFormData() {
+            const formData = {
+                name: document.getElementById('user-name').value,
+                walletAddress: document.getElementById('wallet-address').value,
+                phoneNumber: document.getElementById('phone-number').value,
+                bankName: document.getElementById('bank-name').value, // Новое поле
+                cardNumber: document.getElementById('card-number').value, // Новое поле
+                recipientName: document.getElementById('recipient-name').value, // Новое поле
+                solanaAmount: document.getElementById('solana-amount').value,
+                totalCost: document.getElementById('total-cost').textContent,
+                consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
+                backPage: "sell_solana.html" // Указываем текущую страницу как предыдущую
+            };
+            localStorage.setItem('formData', JSON.stringify(formData));
+        }
+
+        // Загрузка данных из localStorage
+        function loadFormData() {
+            const savedData = JSON.parse(localStorage.getItem('formData'));
+            if (savedData && savedData.backPage === "sell_solana.html") {
+                document.getElementById('user-name').value = savedData.name || '';
+                document.getElementById('wallet-address').value = savedData.walletAddress || '';
+                document.getElementById('phone-number').value = savedData.phoneNumber || '';
+                document.getElementById('bank-name').value = savedData.bankName || ''; // Новое поле
+                document.getElementById('card-number').value = savedData.cardNumber || ''; // Новое поле
+                document.getElementById('recipient-name').value = savedData.recipientName || ''; // Новое поле
+                document.getElementById('solana-amount').value = savedData.solanaAmount || '';
+                document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
+                // Восстанавливаем состояние чекбокса
+                const checkbox = document.querySelector('.checkbox-container');
+                if (savedData.consentChecked === true) {
+                    checkbox.classList.add('checked');
+                } else {
+                    checkbox.classList.remove('checked');
+                }
+            }
+        }
+
+        // Валидация имени
+        function validateName() {
+            const nameInput = document.getElementById('user-name');
+            const nameError = document.getElementById('name-error');
+            if (nameInput.value.trim() === '') {
+                nameError.style.display = 'block';
+                return false;
+            } else {
+                nameError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Валидация адреса кошелька Solana
+        function validateWalletAddress() {
+            const walletInput = document.getElementById('wallet-address');
+            const walletError = document.getElementById('wallet-error');
+            const solanaAddressRegex = /^[A-Za-z0-9]{44}$/;
+            if (!solanaAddressRegex.test(walletInput.value)) {
+                walletError.style.display = 'block';
+                return false;
+            } else {
+                walletError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Форматирование номера телефона
+        function formatPhoneNumber() {
+            const phoneInput = document.getElementById('phone-number');
+            const phoneError = document.getElementById('phone-error');
+            let value = phoneInput.value;
+            if (value.startsWith('+')) {
+                value = '+' + value.slice(1).replace(/\D/g, '');
+            } else {
+                value = value.replace(/\D/g, '');
+            }
+            if (value.startsWith('8') && value.length > 1) {
+                value = '+7' + value.slice(1);
+            }
+            if (!value.startsWith('+') && value.startsWith('9') && value.length > 1) {
+                value = '+7' + value;
+            }
+            if (value.startsWith('+') && value.length > 12) {
+                value = value.slice(0, 12);
+            } else if (!value.startsWith('+') && value.length > 11) {
+                value = value.slice(0, 11);
+            }
+            const russianPhoneRegex = /^\+79\d{9}$/;
+            if (!russianPhoneRegex.test(value)) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+            phoneInput.value = value;
+            return phoneError.style.display === 'none';
+        }
+
+        // Валидация названия банка
+        function validateBankName() {
+            const bankInput = document.getElementById('bank-name');
+            const bankError = document.getElementById('bank-error');
+            if (bankInput.value.trim() === '') {
+                bankError.style.display = 'block';
+                return false;
+            } else {
+                bankError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Валидация номера карты
+        function validateCardNumber() {
+            const cardInput = document.getElementById('card-number');
+            const cardError = document.getElementById('card-error');
+            const cardNumber = cardInput.value.replace(/\s/g, ''); // Удаляем пробелы
+            const cardRegex = /^\d{16,19}$/; // Проверяем длину номера карты (16 или 19 цифр)
+            if (!cardRegex.test(cardNumber)) {
+                cardError.style.display = 'block';
+                return false;
+            } else {
+                cardError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Валидация Ф.И.О. получателя
+        function validateRecipientName() {
+            const recipientInput = document.getElementById('recipient-name');
+            const recipientError = document.getElementById('recipient-error');
+            if (recipientInput.value.trim() === '') {
+                recipientError.style.display = 'block';
+                return false;
+            } else {
+                recipientError.style.display = 'none';
+                return true;
+            }
+        }
+
+        // Переключение состояния чекбокса
+        function toggleCheckbox(container) {
+            container.classList.toggle('checked');
+        }
+
+        // Общая валидация формы
+        function validateForm() {
+            const checkbox = document.querySelector('.checkbox-container');
+            if (!checkbox.classList.contains('checked')) {
+                alert('Необходимо дать согласие на обработку персональных данных.');
+                return false;
+            }
+            return (
+                validateName() &&
+                validateWalletAddress() &&
+                formatPhoneNumber() &&
+                validateBankName() &&
+                validateCardNumber() &&
+                validateRecipientName()
+            );
+        }
+
+        // Переход на следующую страницу
+        function redirectToNextPage() {
+            if (validateForm()) {
+                const formData = {
+                    name: document.getElementById('user-name').value,
+                    walletAddress: document.getElementById('wallet-address').value,
+                    phoneNumber: document.getElementById('phone-number').value,
+                    bankName: document.getElementById('bank-name').value, // Новое поле
+                    cardNumber: document.getElementById('card-number').value, // Новое поле
+                    recipientName: document.getElementById('recipient-name').value, // Новое поле
+                    solanaAmount: document.getElementById('solana-amount').value,
+                    totalCost: document.getElementById('total-cost').textContent,
+                    nameLabel: "Имя:",
+                    walletLabel: "Адрес кошелька:",
+                    phoneLabel: "Номер телефона:",
+                    bankLabel: "Банк получателя:", // Новая метка
+                    cardLabel: "Номер карты:", // Новая метка
+                    recipientLabel: "Получатель:", // Новая метка
+                    costLabel: "Общая стоимость:",
+                    backPage: "sell_solana.html"
+                };
+                localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
+                window.location.href = 'sell_input.html'; // Переходим на страницу подтверждения
+            }
+        }
+
+        // Добавляем обработчик события для кнопки "Далее"
+        document.getElementById('nextButton').addEventListener('click', function (event) {
+            event.preventDefault();
+            redirectToNextPage();
+        });
+
+        // Запускаем инициализацию при загрузке страницы
+        initialize();
+
+        // Загружаем данные при загрузке страницы
+        window.addEventListener('DOMContentLoaded', () => {
+            loadFormData();
+        });
+    </script>
+</body>
+</html>
