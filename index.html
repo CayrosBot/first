@@ -72,15 +72,14 @@
             position: absolute; /* Абсолютное положение */
             bottom: calc(100% + 10px); /* Появляется над изображением, выше на 10 пикселей */
             left: 3%; /* Отступ от левого края */
-            width: auto; /* Автоматическая ширина */
-            max-width: 300px; /* Максимальная ширина */
             background-color: white; /* Белый фон */
             border: 1px solid #00bfff; /* Синяя рамка */
             border-radius: 10px; /* Скругление углов */
-            padding: 15px; /* Компактные отступы внутри */
+            padding: 15px; /* Отступы внутри */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта диалогового окна */
             z-index: 1001; /* Показывается поверх остальных элементов */
             font-size: 14px; /* Размер текста */
+            max-width: 300px; /* Максимальная ширина */
             text-align: center; /* Текст по центру */
         }
         /* Кнопки в диалоговом окне */
@@ -111,14 +110,14 @@
             .bottom-image {
                 position: absolute; /* Абсолютное позиционирование */
                 bottom: 20px; /* Отступ от нижней границы */
-                left: 3%; /* Отступ от левого края */
+                left: 3%; /* Отступ от левой границы */
                 transform: none; /* Отключаем центрирование */
             }
             /* Диалоговое окно */
             .dialog-box {
                 position: absolute; /* Абсолютное позиционирование */
-                bottom: calc(100% + 10px); /* Появляется над изображением, выше на 10 пикселей */
-                left: 3%; /* Отступ от левого края */
+                bottom: calc(100% + 10px); /* Появляется над изображением */
+                left: 3%; /* Отступ от левой границы */
                 transform: none; /* Отключаем центрирование */
             }
         }
@@ -201,19 +200,22 @@
             </div>
         </div>
     </div>
-    <!-- Изображение в нижней части экрана -->
-    <img 
-        src="https://github.com/CayrosBot/first/blob/main/LogoBot.png?raw=true" 
-        alt="Bot Logo" 
-        class="bottom-image" 
-        id="bot-logo"
-    >
-    <!-- Диалоговое окно -->
-    <div class="dialog-box" id="dialog-box">
-        <p>Рассказать тебе как начать торговать CAYROS?</p>
-        <div class="dialog-buttons">
-            <button class="dialog-button" id="dialog-yes">Да</button>
-            <button class="dialog-button" id="dialog-no">Нет</button>
+    <!-- Родительский контейнер для изображения и диалогового окна -->
+    <div class="bottom-image-container">
+        <!-- Изображение в нижней части экрана -->
+        <img 
+            src="https://github.com/CayrosBot/first/blob/main/LogoBot.png?raw=true" 
+            alt="Bot Logo" 
+            class="bottom-image" 
+            id="bot-logo"
+        >
+        <!-- Диалоговое окно -->
+        <div class="dialog-box" id="dialog-box">
+            <p>Рассказать тебе как начать торговать CAYROS?</p>
+            <div class="dialog-buttons">
+                <button class="dialog-button" id="dialog-yes">Да</button>
+                <button class="dialog-button" id="dialog-no">Нет</button>
+            </div>
         </div>
     </div>
     <script>
@@ -240,6 +242,11 @@
         document.getElementById('bot-logo').addEventListener('click', function () {
             const dialogBox = document.getElementById('dialog-box');
             dialogBox.style.display = 'block'; // Показываем диалоговое окно
+
+            // Добавляем вибрацию
+            if ('vibrate' in navigator) {
+                navigator.vibrate(100); // Вибрация продолжительностью 100 мс
+            }
         });
 
         // Обработка клика на кнопку "Нет"
@@ -255,15 +262,6 @@
         // Обработка клика на кнопку "Да"
         document.getElementById('dialog-yes').addEventListener('click', function () {
             window.location.href = 'how_to_sell.html'; // Переход на страницу how_to_sell.html
-        });
-
-        // Убедимся, что диалоговое окно скрывается при повторном клике
-        document.addEventListener('click', function (event) {
-            const dialogBox = document.getElementById('dialog-box');
-            if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
-                dialogBox.style.display = 'none'; // Скрываем окно, если кликнули вне изображения
-                dialogBox.innerHTML = ''; // Очищаем содержимое
-            }
         });
     </script>
 </body>
