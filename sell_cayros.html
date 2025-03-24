@@ -229,6 +229,17 @@
                 <div class="error-message" id="wallet-error">Некорректный адрес кошелька.</div>
             </div>
             <div class="field">
+                <label for="phone-number">Укажите номер телефона</label>
+                <input 
+                    type="tel" 
+                    id="phone-number" 
+                    placeholder="Номер телефона" 
+                    oninput="formatPhoneNumber(); saveFormData()" 
+                    required
+                >
+                <div class="error-message" id="phone-error">Некорректный номер телефона.</div>
+            </div>
+            <div class="field">
                 <label for="bank-name">Банк получателя</label>
                 <input 
                     type="text" 
@@ -285,7 +296,6 @@
                 return null;
             }
         }
-
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
@@ -298,7 +308,6 @@
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
-
         // Расчет стоимости
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
@@ -310,16 +319,15 @@
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
-
         // Сохранение данных в localStorage
         function saveFormData() {
             const formData = {
                 name: document.getElementById('user-name').value,
                 walletAddress: document.getElementById('wallet-address').value,
+                phoneNumber: document.getElementById('phone-number').value,
                 bankName: document.getElementById('bank-name').value, // Новое поле
                 cardNumber: document.getElementById('card-number').value, // Новое поле
                 recipientName: document.getElementById('recipient-name').value, // Новое поле
-                phoneNumber: document.getElementById('phone-number').value,
                 cayrosAmount: document.getElementById('cayros-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
                 consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
@@ -327,17 +335,16 @@
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
-
         // Загрузка данных из localStorage
         function loadFormData() {
             const savedData = JSON.parse(localStorage.getItem('formData'));
             if (savedData && savedData.backPage === "sell_cayros.html") {
                 document.getElementById('user-name').value = savedData.name || '';
                 document.getElementById('wallet-address').value = savedData.walletAddress || '';
+                document.getElementById('phone-number').value = savedData.phoneNumber || '';
                 document.getElementById('bank-name').value = savedData.bankName || ''; // Загрузка нового поля
                 document.getElementById('card-number').value = savedData.cardNumber || ''; // Загрузка нового поля
                 document.getElementById('recipient-name').value = savedData.recipientName || ''; // Загрузка нового поля
-                document.getElementById('phone-number').value = savedData.phoneNumber || '';
                 document.getElementById('cayros-amount').value = savedData.cayrosAmount || '';
                 document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
                 // Восстанавливаем состояние чекбокса
@@ -349,7 +356,6 @@
                 }
             }
         }
-
         // Валидация имени
         function validateName() {
             const nameInput = document.getElementById('user-name');
@@ -362,7 +368,6 @@
                 return true;
             }
         }
-
         // Валидация адреса кошелька Solana
         function validateWalletAddress() {
             const walletInput = document.getElementById('wallet-address');
@@ -376,7 +381,36 @@
                 return true;
             }
         }
-
+        // Форматирование номера телефона
+        function formatPhoneNumber() {
+            const phoneInput = document.getElementById('phone-number');
+            const phoneError = document.getElementById('phone-error');
+            let value = phoneInput.value;
+            if (value.startsWith('+')) {
+                value = '+' + value.slice(1).replace(/\D/g, '');
+            } else {
+                value = value.replace(/\D/g, '');
+            }
+            if (value.startsWith('8') && value.length > 1) {
+                value = '+7' + value.slice(1);
+            }
+            if (!value.startsWith('+') && value.startsWith('9') && value.length > 1) {
+                value = '+7' + value;
+            }
+            if (value.startsWith('+') && value.length > 12) {
+                value = value.slice(0, 12);
+            } else if (!value.startsWith('+') && value.length > 11) {
+                value = value.slice(0, 11);
+            }
+            const russianPhoneRegex = /^\+79\d{9}$/;
+            if (!russianPhoneRegex.test(value)) {
+                phoneError.style.display = 'block';
+            } else {
+                phoneError.style.display = 'none';
+            }
+            phoneInput.value = value;
+            return phoneError.style.display === 'none';
+        }
         // Валидация названия банка
         function validateBankName() {
             const bankInput = document.getElementById('bank-name');
@@ -389,13 +423,12 @@
                 return true;
             }
         }
-
-        // Валидация номера карты
+        // Валидация номера карты (только цифры)
         function validateCardNumber() {
             const cardInput = document.getElementById('card-number');
             const cardError = document.getElementById('card-error');
-            const cardNumber = cardInput.value.replace(/\s/g, ''); // Удаляем пробелы
-            const cardRegex = /^\d{16,19}$/; // Проверяем длину (16 или 19 цифр)
+            const cardNumber = cardInput.value.replace(/\D/g, ''); // Удаляем все нецифровые символы
+            const cardRegex = /^\d{16,19}$/; // Проверяем длину номера карты (16 или 19 цифр)
             if (!cardRegex.test(cardNumber)) {
                 cardError.style.display = 'block';
                 return false;
@@ -404,7 +437,6 @@
                 return true;
             }
         }
-
         // Валидация Ф.И.О. получателя
         function validateRecipientName() {
             const recipientInput = document.getElementById('recipient-name');
@@ -417,12 +449,10 @@
                 return true;
             }
         }
-
         // Переключение состояния чекбокса
         function toggleCheckbox(container) {
             container.classList.toggle('checked');
         }
-
         // Общая валидация формы
         function validateForm() {
             const checkbox = document.querySelector('.checkbox-container');
@@ -433,46 +463,44 @@
             return (
                 validateName() &&
                 validateWalletAddress() &&
+                formatPhoneNumber() &&
                 validateBankName() &&
                 validateCardNumber() &&
                 validateRecipientName()
             );
         }
-
         // Переход на следующую страницу
         function redirectToNextPage() {
             if (validateForm()) {
                 const formData = {
                     name: document.getElementById('user-name').value,
                     walletAddress: document.getElementById('wallet-address').value,
+                    phoneNumber: document.getElementById('phone-number').value,
                     bankName: document.getElementById('bank-name').value, // Новое поле
                     cardNumber: document.getElementById('card-number').value, // Новое поле
                     recipientName: document.getElementById('recipient-name').value, // Новое поле
-                    phoneNumber: document.getElementById('phone-number').value,
                     cayrosAmount: document.getElementById('cayros-amount').value,
                     totalCost: document.getElementById('total-cost').textContent,
                     nameLabel: "Имя:",
                     walletLabel: "Адрес кошелька:",
+                    phoneLabel: "Номер телефона:",
                     bankLabel: "Банк получателя:", // Новая метка
                     cardLabel: "Номер карты:", // Новая метка
                     recipientLabel: "Получатель:", // Новая метка
                     costLabel: "Общая стоимость:",
-                    backPage: "sell_cayros.html" // Указываем текущую страницу как предыдущую
+                    backPage: "sell_cayros.html"
                 };
                 localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
                 window.location.href = 'sell_input.html'; // Переходим на страницу подтверждения
             }
         }
-
         // Добавляем обработчик события для кнопки "Далее"
         document.getElementById('nextButton').addEventListener('click', function (event) {
             event.preventDefault();
             redirectToNextPage();
         });
-
         // Запускаем инициализацию при загрузке страницы
         initialize();
-
         // Загружаем данные при загрузке страницы
         window.addEventListener('DOMContentLoaded', () => {
             loadFormData();
