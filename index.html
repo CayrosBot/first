@@ -7,119 +7,12 @@
     <title>Solana Exchange</title>
     <link rel="stylesheet" href="style_index.css"> <!-- Ссылка на внешний файл со стилями -->
     <style>
-        /* Фиксированный заголовок с кнопками */
-        .header-wrap {
-            position: fixed; /* Фиксированная позиция */
-            top: 0; /* Прикреплен к верхней границе */
-            left: 0; /* Прикреплен к левой границе */
-            width: 100%; /* Занимает всю ширину экрана */
-            background-color: #ffffff; /* Белый фон */
-            padding: 10px; /* Внутренние отступы */
-            box-sizing: border-box; /* Учитываем padding в ширине */
-            display: flex; /* Размещаем элементы в одну строку */
-            justify-content: space-between; /* Располагаем элементы по краям */
-            align-items: center; /* Выравниваем элементы по центру вертикально */
-            z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
-            border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
-        }
-        /* Кнопки в заголовке */
-        .header-button {
-            font-size: 14px; /* Размер текста */
-            padding: 5px 10px; /* Отступы внутри кнопки */
-            border: 2px solid #00bfff; /* Голубая рамка */
-            color: black; /* Черный текст */
-            text-transform: lowercase; /* Преобразуем текст в нижний регистр */
-            text-decoration: none; /* Убираем подчеркивание у ссылки */
-            cursor: pointer;
-            border-radius: 5px; /* Скругление углов */
-            background-color: transparent; /* Прозрачный фон */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
-        }
-        .header-button:hover {
-            background-color: #00bfff; /* Голубой фон при наведении */
-            color: white; /* Белый текст при наведении */
-        }
-        /* Подзаголовок */
-        .sub-title {
-            font-size: 20px; /* Размер текста */
-            line-height: 18px; /* Высота текста */
-            text-align: center; /* Текст по центру */
-            margin: 0; /* Убираем стандартные отступы */
-            margin-top: 60px; /* Отступ под фиксированным заголовком */
-            margin-bottom: 20px; /* Отступ до основного контента */
-        }
-        /* Новый стиль для заголовка "Купить/Продать:" */
+        /* Добавленные или измененные стили */
         .buy-sell-title {
             font-size: 18px; /* Размер текста */
             margin-top: 20px; /* Отступ сверху от предыдущего элемента */
             margin-left: 3%; /* Отступ слева от границы экрана */
             color: #333; /* Цвет текста */
-        }
-        /* Изображение в нижней части экрана */
-        .bottom-image {
-            position: fixed; /* Фиксированное положение */
-            bottom: 20px; /* Отступ от нижней границы */
-            left: 80%; /* Центрирование по горизонтали */
-            transform: translateX(-50%); /* Корректировка центрирования */
-            width: 150px; /* Ширина изображения */
-            height: 150px; /* Высота изображения */
-            cursor: pointer; /* Изменяем курсор при наведении */
-            z-index: 999; /* Позиция ниже диалогового окна */
-        }
-        /* Диалоговое окно */
-        .dialog-box {
-            display: none; /* Сначала скрыто */
-            position: absolute; /* Абсолютное положение */
-            bottom: calc(30% + 10px); /* Появляется над изображением, выше на 10 пикселей */
-            left: 3%; /* Отступ от левого края */
-            background-color: white; /* Белый фон */
-            border: 1px solid #00bfff; /* Синяя рамка */
-            border-radius: 10px; /* Скругление углов */
-            padding: 5px; /* Уменьшенные внутренние отступы */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень для эффекта диалогового окна */
-            z-index: 1001; /* Показывается поверх остальных элементов */
-            font-size: 14px; /* Размер текста */
-            max-width: 200px; /* Максимальная ширина */
-            text-align: center; /* Текст по центру */
-        }
-        /* Кнопки в диалоговом окне */
-        .dialog-buttons {
-            display: flex; /* Размещаем кнопки в одну строку */
-            gap: 10px; /* Пространство между кнопками */
-            margin-top: 10px; /* Отступ от текста */
-            justify-content: center; /* Кнопки расположены по центру */
-        }
-        /* Стиль кнопок в диалоговом окне */
-        .dialog-button {
-            padding: 5px 10px; /* Отступы внутри кнопки */
-            font-size: 12px; /* Размер текста */
-            border: 1px solid #00bfff; /* Голубая рамка */
-            border-radius: 5px; /* Скругление углов */
-            cursor: pointer; /* Изменяем курсор при наведении */
-            background-color: transparent; /* Прозрачный фон */
-            transition: background-color 0.3s ease; /* Анимация при наведении */
-        }
-        .dialog-button:hover {
-            background-color: #00bfff; /* Голубой фон при наведении */
-            color: white; /* Белый текст при наведении */
-        }
-
-        /* Адаптивность для больших экранов */
-        @media (min-width: 768px) {
-            /* Изображение в нижней части экрана */
-            .bottom-image {
-                position: absolute; /* Абсолютное позиционирование */
-                bottom: 20px; /* Отступ от нижней границы */
-                left: 3%; /* Отступ от левой границы */
-                transform: none; /* Отключаем центрирование */
-            }
-            /* Диалоговое окно */
-            .dialog-box {
-                position: absolute; /* Абсолютное позиционирование */
-                bottom: calc(30% + 10px); /* Появляется над изображением */
-                left: 3%; /* Отступ от левой границы */
-                transform: none; /* Отключаем центрирование */
-            }
         }
     </style>
 </head>
@@ -135,6 +28,8 @@
     </div>
     <!-- Подзаголовок -->
     <h1 class="sub-title">P2P Сервис обмена</h1>
+    <!-- Добавленный подзаголовок "Купить/Продать" -->
+    <div class="buy-sell-title">Купить/Продать:</div>
     <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
@@ -242,7 +137,13 @@
         document.getElementById('bot-logo').addEventListener('click', function () {
             const dialogBox = document.getElementById('dialog-box');
             dialogBox.style.display = 'block'; // Показываем диалоговое окно
-
+            dialogBox.innerHTML = `
+                <p>Рассказать тебе как начать торговать CAYROS?</p>
+                <div class="dialog-buttons">
+                    <button class="dialog-button" id="dialog-yes">Да</button>
+                    <button class="dialog-button" id="dialog-no">Нет</button>
+                </div>
+            `;
             // Добавляем вибрацию
             if ('vibrate' in navigator) {
                 navigator.vibrate(100); // Вибрация продолжительностью 100 мс
@@ -255,7 +156,6 @@
             dialogBox.innerHTML = '<p>Я буду ждать</p>'; // Устанавливаем новый текст
             setTimeout(() => {
                 dialogBox.style.display = 'none'; // Скрываем окно через 1 секунду
-                dialogBox.innerHTML = ''; // Очищаем содержимое
             }, 1000); // Задержка в 1 секунду
         });
 
@@ -269,7 +169,6 @@
             const dialogBox = document.getElementById('dialog-box');
             if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
                 dialogBox.style.display = 'none'; // Скрываем окно
-                dialogBox.innerHTML = ''; // Очищаем содержимое
             }
         });
     </script>
