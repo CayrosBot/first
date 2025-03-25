@@ -52,7 +52,7 @@ body {
 }
 
 /* Новый стиль для заголовка "Купить/Продать:" */
-.buy-sell-title {
+.buy-sell-title, .crypto-wallet-title {
     font-size: 18px; /* Размер текста */
     margin-top: 20px; /* Отступ сверху от предыдущего элемента */
     margin-left: 6%; /* Отступ слева от границы экрана */
