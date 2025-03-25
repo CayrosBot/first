@@ -9,6 +9,7 @@
         .buy-sell-title {
             font-size: 18px;
             margin-top: 20px;
+            margin-left: 3%;
             color: #333;
         }
     </style>
@@ -81,7 +82,6 @@
         </div>
     </div>
     <script>
-        // Получение курса SOL и CAYROS
         document.addEventListener('DOMContentLoaded', function () {
             const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
             fetch(apiUrl)
@@ -97,42 +97,39 @@
                     document.getElementById('sol-price').textContent = 'N/A';
                     document.getElementById('cayros-price').textContent = 'N/A';
                 });
-        });
 
-        // Обработка клика на логотип
-        document.getElementById('bot-logo').addEventListener('click', function () {
             const dialogBox = document.getElementById('dialog-box');
-            dialogBox.style.display = 'block';
-            dialogBox.innerHTML = `
-                <p>Рассказать тебе как начать торговать CAYROS?</p>
-                <div class="dialog-buttons">
-                    <button class="dialog-button" id="dialog-yes">Да</button>
-                    <button class="dialog-button" id="dialog-no">Нет</button>
-                </div>
-            `;
-            if ('vibrate' in navigator) {
-                navigator.vibrate(100);
-            }
-        });
+            const botLogo = document.getElementById('bot-logo');
 
-        // Делегирование событий для кнопок "Да" и "Нет"
-        document.addEventListener('click', function (event) {
-            const dialogBox = document.getElementById('dialog-box');
-            
-            if (event.target.id === 'dialog-yes') {
-                window.location.href = 'how_to_sell.html';
-            }
-            
-            if (event.target.id === 'dialog-no') {
-                dialogBox.innerHTML = '<p>Я буду ждать</p>';
-                setTimeout(() => {
+            botLogo.addEventListener('click', function(e) {
+                e.stopPropagation();
+                dialogBox.style.display = 'block';
+                dialogBox.innerHTML = `
+                    <p>Рассказать тебе как начать торговать CAYROS?</p>
+                    <div class="dialog-buttons">
+                        <button class="dialog-button" id="dialog-yes">Да</button>
+                        <button class="dialog-button" id="dialog-no">Нет</button>
+                    </div>
+                `;
+                if ('vibrate' in navigator) {
+                    navigator.vibrate(100);
+                }
+            });
+
+            document.addEventListener('click', function(e) {
+                if (e.target.id === 'dialog-yes') {
+                    window.location.href = 'how_to_sell.html';
+                }
+                else if (e.target.id === 'dialog-no') {
+                    dialogBox.innerHTML = '<p class="dialog-message">Я буду ждать</p>';
+                    setTimeout(() => {
+                        dialogBox.style.display = 'none';
+                    }, 1000);
+                }
+                else if (!dialogBox.contains(e.target) {
                     dialogBox.style.display = 'none';
-                }, 1000);
-            }
-
-            if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
-                dialogBox.style.display = 'none';
-            }
+                }
+            });
         });
     </script>
 </body>
