@@ -59,6 +59,11 @@ body {
     color: #333; /* Цвет текста */
 }
 
+/* Выравнивание всех блоков относительно заголовка "Купить ⇌ Продать" */
+.buy-sell-title, .sol-container, .cayros-container, .crypto-wallet-title, .wallet-info {
+    margin-left: 3%; /* Единый отступ слева */
+}
+
 /* Основной контейнер */
 .container-wrap {
     display: flex;
@@ -77,7 +82,6 @@ body {
 .sol-container, .cayros-container {
     display: flex;
     align-items: flex-start; /* Выравниваем элементы по верхнему краю */
-    margin-left: 3%; /* Отступ слева от границы экрана */
     margin-top: 20px; /* Небольшой отступ сверху */
 }
 
