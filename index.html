@@ -41,6 +41,7 @@
             border-radius: 5px;
             background-color: transparent;
             transition: background-color 0.3s ease, color 0.3s ease;
+            color: black; /* Черный цвет текста */
         }
         .header-button:hover {
             background-color: #00bfff;
@@ -71,11 +72,14 @@
             padding: 0 3%;
             box-sizing: border-box;
         }
-        .container {
+        .main-content {
             width: 100%;
             max-width: 400px;
             padding: 20px;
             box-sizing: border-box;
+            border: 1px solid #666; /* Темно-серая рамка */
+            border-radius: 8px; /* Скругление углов */
+            background-color: #ffffff; /* Белый фон */
         }
 
         /* Стиль для сепараторов */
@@ -233,12 +237,12 @@
     <!-- Подзаголовок -->
     <h1 class="sub-title">P2P Сервис обмена</h1>
 
-    <!-- Заголовок "Купить ⇌ Продать" -->
-    <div class="common-title">Купить ⇌ Продать</div>
-
     <!-- Основной контейнер -->
     <div class="container-wrap">
-        <div class="container">
+        <div class="main-content">
+            <!-- Заголовок "Купить ⇌ Продать" -->
+            <div class="common-title">Купить ⇌ Продать</div>
+
             <!-- Блок Solana -->
             <div class="sol-container">
                 <div class="image-button-container">
