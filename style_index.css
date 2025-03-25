@@ -50,6 +50,7 @@ body {
 .buy-sell-title {
     font-size: 18px;
     margin-top: 20px;
+    margin-left: 3%;
     color: #333;
 }
 
@@ -124,17 +125,19 @@ body {
     width: 94%;
     height: 1px;
     background-color: #00bfff;
-    margin-top: 10px;
+    margin: 10px auto;
     margin-left: 3%;
 }
 
 .crypto-wallet-title {
     font-size: 18px;
     margin-top: 30px;
+    margin-left: 3%;
     color: #333;
 }
 
 .wallet-info {
+    margin-left: 3%;
     margin-top: 20px;
     display: flex;
     align-items: center;
@@ -210,6 +213,11 @@ body {
 .dialog-button:hover {
     background-color: #00bfff;
     color: white;
+}
+
+.dialog-message {
+    padding: 10px;
+    text-align: center;
 }
 
 @media (min-width: 768px) {
