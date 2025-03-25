@@ -58,37 +58,31 @@
             margin-bottom: 20px;
         }
 
+        /* Блок с рамкой */
+        .content-block {
+            width: 100%;
+            max-width: 400px;
+            margin: 0 auto; /* Центрирование по горизонтали */
+            padding: 20px; /* Внутренний отступ */
+            border: 1px solid #666; /* Темно-серая рамка */
+            border-radius: 8px; /* Скругление углов */
+            background-color: #ffffff; /* Белый фон */
+            box-sizing: border-box;
+        }
+
         /* Единый стиль для всех заголовков */
         .common-title {
             font-size: 18px;
             margin-top: 20px;
-            margin-left: 3%; /* Единый отступ слева */
-        }
-
-        /* Основной контейнер */
-        .container-wrap {
-            display: flex;
-            justify-content: center;
-            padding: 0 3%;
-            box-sizing: border-box;
-        }
-        .main-content {
-            width: 100%;
-            max-width: 400px;
-            padding: 20px;
-            box-sizing: border-box;
-            border: 1px solid #666; /* Темно-серая рамка */
-            border-radius: 8px; /* Скругление углов */
-            background-color: #ffffff; /* Белый фон */
+            margin-left: 0; /* Единый отступ слева */
         }
 
         /* Стиль для сепараторов */
         .separator {
-            width: 94%;
+            width: 100%; /* Занимает всю ширину контейнера */
             height: 1px;
             background-color: #00bfff;
             margin: 10px 0;
-            margin-left: 3%; /* Единый отступ слева */
         }
 
         /* Блок Solana и Cayros */
@@ -152,7 +146,6 @@
 
         /* Блок с изображением и текстом */
         .wallet-info {
-            margin-left: 3%; /* Единый отступ слева */
             margin-top: 20px;
             display: flex;
             align-items: center;
@@ -237,56 +230,54 @@
     <!-- Подзаголовок -->
     <h1 class="sub-title">P2P Сервис обмена</h1>
 
-    <!-- Основной контейнер -->
-    <div class="container-wrap">
-        <div class="main-content">
-            <!-- Заголовок "Купить ⇌ Продать" -->
-            <div class="common-title">Купить ⇌ Продать</div>
+    <!-- Основной контейнер с рамкой -->
+    <div class="content-block">
+        <!-- Заголовок "Купить ⇌ Продать" -->
+        <div class="common-title">Купить ⇌ Продать</div>
 
-            <!-- Блок Solana -->
-            <div class="sol-container">
-                <div class="image-button-container">
-                    <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
-                    <div class="button-container">
-                        <a href="buy_solana.html" class="action-button">Купить</a>
-                        <a href="sell_solana.html" class="action-button">Продать</a>
-                    </div>
-                </div>
-                <div class="exchange-rate">
-                    1 SOL = <span id="sol-price">...</span> RUB
+        <!-- Блок Solana -->
+        <div class="sol-container">
+            <div class="image-button-container">
+                <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
+                <div class="button-container">
+                    <a href="buy_solana.html" class="action-button">Купить</a>
+                    <a href="sell_solana.html" class="action-button">Продать</a>
                 </div>
             </div>
+            <div class="exchange-rate">
+                1 SOL = <span id="sol-price">...</span> RUB
+            </div>
+        </div>
 
-            <!-- Первый разделитель -->
-            <div class="separator"></div>
+        <!-- Первый разделитель -->
+        <div class="separator"></div>
 
-            <!-- Блок Cayros -->
-            <div class="cayros-container">
-                <div class="image-button-container">
-                    <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
-                    <div class="button-container">
-                        <a href="buy_cayros.html" class="action-button">Купить</a>
-                        <a href="sell_cayros.html" class="action-button">Продать</a>
-                    </div>
-                </div>
-                <div class="exchange-rate">
-                    1 CAYROS = <span id="cayros-price">...</span> RUB
+        <!-- Блок Cayros -->
+        <div class="cayros-container">
+            <div class="image-button-container">
+                <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
+                <div class="button-container">
+                    <a href="buy_cayros.html" class="action-button">Купить</a>
+                    <a href="sell_cayros.html" class="action-button">Продать</a>
                 </div>
             </div>
+            <div class="exchange-rate">
+                1 CAYROS = <span id="cayros-price">...</span> RUB
+            </div>
+        </div>
 
-            <!-- Второй разделитель -->
-            <div class="separator"></div>
+        <!-- Второй разделитель -->
+        <div class="separator"></div>
 
-            <!-- Заголовок "Криптовалютный кошелек:" -->
-            <div class="common-title">Криптовалютный кошелек:</div>
+        <!-- Заголовок "Криптовалютный кошелек:" -->
+        <div class="common-title">Криптовалютный кошелек:</div>
 
-            <!-- Блок с изображением и текстом -->
-            <div class="wallet-info">
-                <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
-                <div class="wallet-text">
-                    Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
-                    <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
-                </div>
+        <!-- Блок с изображением и текстом -->
+        <div class="wallet-info">
+            <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
+            <div class="wallet-text">
+                Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
+                <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
             </div>
         </div>
     </div>
