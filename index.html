@@ -1,93 +1,295 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Solana Exchange</title>
-    <link rel="stylesheet" href="style_index.css"> <!-- Ссылка на внешний файл со стилями -->
     <style>
-        /* Новый стиль для заголовка "Купить ⇌ Продать:" */
-        .buy-sell-title {
-            font-size: 18px; /* Размер текста */
-            margin-top: 20px; /* Отступ сверху от предыдущего элемента */
-            margin-left: 3%; /* Отступ слева от границы экрана */
-            color: #333; /* Цвет текста */
+        /* Общие стили */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            overflow-y: auto;
+            color: #333; /* Унифицированный цвет текста */
+        }
+
+        /* Фиксированный заголовок с кнопками */
+        .header-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #ccc;
+        }
+
+        /* Кнопки в заголовке */
+        .header-button {
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 2px solid #00bfff;
+            text-transform: lowercase;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .header-button:hover {
+            background-color: #00bfff;
+            color: white;
+        }
+
+        /* Подзаголовок */
+        .sub-title {
+            font-size: 20px;
+            line-height: 18px;
+            text-align: center;
+            margin: 0;
+            margin-top: 60px;
+            margin-bottom: 20px;
+        }
+
+        /* Общий стиль для всех заголовков */
+        .common-title {
+            font-size: 18px;
+            margin-top: 20px;
+            margin-left: 3%;
+        }
+
+        /* Основной контейнер */
+        .container-wrap {
+            display: flex;
+            justify-content: center;
+            padding: 0 3%;
+            box-sizing: border-box;
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        /* Блок Solana и Cayros */
+        .sol-container, .cayros-container {
+            display: flex;
+            align-items: flex-start;
+            margin-top: 20px;
+        }
+
+        /* Контейнер для изображения и кнопок */
+        .image-button-container {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            height: 60px;
+        }
+
+        /* Изображения валют */
+        .sol-image, .cayros-image {
+            width: 60px;
+            height: 60px;
+            margin-right: 15px;
+            border-radius: 8px;
+        }
+
+        /* Контейнер для кнопок */
+        .button-container {
+            position: absolute;
+            bottom: 0;
+            left: 75px;
+            display: flex;
+            gap: 15px;
+        }
+
+        /* Стили кнопок */
+        .action-button {
+            display: inline-block;
+            width: auto;
+            font-size: 12px;
+            padding: 5px 10px;
+            border: 2px solid #00bfff;
+            border-radius: 10px;
+            text-decoration: none;
+            text-align: center;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .action-button:hover {
+            background-color: #00bfff;
+            color: white;
+        }
+
+        /* Текст курса */
+        .exchange-rate {
+            font-size: 14px;
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        /* Сепараторы */
+        .separator {
+            width: 94%;
+            height: 1px;
+            background-color: #00bfff;
+            margin: 10px 0;
+            margin-left: 3%;
+        }
+
+        /* Блок с изображением и текстом */
+        .wallet-info {
+            margin-left: 3%;
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+        }
+        .wallet-image {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+        }
+        .wallet-text {
+            font-size: 14px;
+            margin-left: 15px;
+        }
+        .wallet-link {
+            color: #00bfff;
+            text-decoration: none;
+        }
+        .wallet-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Изображение в нижней части экрана */
+        .bottom-image {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 150px;
+            height: 150px;
+            cursor: pointer;
+            z-index: 999;
+            outline: none;
+        }
+
+        /* Диалоговое окно */
+        .dialog-box {
+            display: none;
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 3%;
+            background-color: white;
+            border: 1px solid #00bfff;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1001;
+            font-size: 14px;
+            max-width: 300px;
+            text-align: center;
+        }
+
+        /* Кнопки в диалоговом окне */
+        .dialog-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            justify-content: center;
+        }
+        .dialog-button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border: 1px solid #00bfff;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: transparent;
+            transition: background-color 0.3s ease;
+        }
+        .dialog-button:hover {
+            background-color: #00bfff;
+            color: white;
+        }
+
+        /* Адаптивность для больших экранов */
+        @media (min-width: 768px) {
+            .bottom-image {
+                position: absolute;
+                transform: none;
+            }
+            .dialog-box {
+                position: absolute;
+                transform: none;
+            }
         }
     </style>
 </head>
 <body>
     <!-- Фиксированный заголовок с кнопками -->
     <div class="header-wrap">
-        <!-- Кнопка "Правила сервиса" -->
         <a href="rules.html" class="header-button">правила сервиса</a>
-        <!-- Кнопка "Поддержка" -->
         <a href="support.html" class="header-button">поддержка</a>
-        <!-- Кнопка "Войти" -->
         <a href="input.html" class="header-button">войти</a>
     </div>
+
     <!-- Подзаголовок -->
     <h1 class="sub-title">P2P Сервис обмена</h1>
+
     <!-- Исправленный подзаголовок "Купить ⇌ Продать" -->
-    <div class="buy-sell-title">Купить ⇌ Продать</div>
+    <div class="common-title">Купить ⇌ Продать</div>
+
     <!-- Основной контейнер -->
     <div class="container-wrap">
         <div class="container">
             <!-- Блок Solana -->
             <div class="sol-container">
-                <!-- Контейнер для изображения и кнопок -->
                 <div class="image-button-container">
-                    <!-- Изображение Solana -->
                     <img src="https://github.com/CayrosBot/first/blob/main/sol_logo-min.jpg?raw=true" alt="Solana Logo" class="sol-image">
-                    <!-- Кнопки "Купить" и "Продать" -->
                     <div class="button-container">
-                        <!-- Кнопка "Купить" ведет на buy_solana.html -->
                         <a href="buy_solana.html" class="action-button">Купить</a>
-                        <!-- Кнопка "Продать" ведет на sell_solana.html -->
                         <a href="sell_solana.html" class="action-button">Продать</a>
                     </div>
                 </div>
-                <!-- Текст курса -->
                 <div class="exchange-rate">
                     1 SOL = <span id="sol-price">...</span> RUB
                 </div>
             </div>
+
             <!-- Первый разделитель -->
             <div class="separator"></div>
+
             <!-- Блок Cayros -->
-            <div class="cayros-container" style="margin-top: 20px;">
-                <!-- Контейнер для изображения и кнопок -->
+            <div class="cayros-container">
                 <div class="image-button-container">
-                    <!-- Изображение Cayros -->
                     <img src="https://github.com/CayrosBot/first/blob/main/cayros_logo-min.jpg?raw=true" alt="Cayros Logo" class="cayros-image">
-                    <!-- Кнопки "Купить" и "Продать" -->
                     <div class="button-container">
-                        <!-- Кнопка "Купить" ведет на buy_cayros.html -->
                         <a href="buy_cayros.html" class="action-button">Купить</a>
-                        <!-- Кнопка "Продать" ведет на sell_cayros.html -->
                         <a href="sell_cayros.html" class="action-button">Продать</a>
                     </div>
                 </div>
-                <!-- Текст курса -->
                 <div class="exchange-rate">
                     1 CAYROS = <span id="cayros-price">...</span> RUB
                 </div>
             </div>
+
             <!-- Второй разделитель -->
             <div class="separator"></div>
+
             <!-- Новый блок с текстом "Криптовалютный кошелек:" -->
-            <div class="crypto-wallet-title">
-                Криптовалютный кошелек:
-            </div>
+            <div class="common-title">Криптовалютный кошелек:</div>
+
             <!-- Блок с изображением и текстом -->
             <div class="wallet-info">
-                <!-- Изображение Phantom Wallet -->
-                <img 
-                    src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" 
-                    alt="Phantom Wallet" 
-                    class="wallet-image"
-                >
-                <!-- Текст с ссылкой -->
+                <img src="https://github.com/CayrosBot/first/blob/main/phantom-min.jpg?raw=true" alt="Phantom Wallet" class="wallet-image">
                 <div class="wallet-text">
                     Для хранения, перевода и получения криптовалют скачайте удобный кошелек 
                     <a href="https://phantom.com/" target="_blank" class="wallet-link">Phantom wallet</a>.
@@ -95,16 +297,10 @@
             </div>
         </div>
     </div>
+
     <!-- Родительский контейнер для изображения и диалогового окна -->
     <div class="bottom-image-container">
-        <!-- Изображение в нижней части экрана -->
-        <img 
-            src="https://github.com/CayrosBot/first/blob/main/LogoBot.png?raw=true" 
-            alt="Bot Logo" 
-            class="bottom-image" 
-            id="bot-logo"
-        >
-        <!-- Диалоговое окно -->
+        <img src="https://github.com/CayrosBot/first/blob/main/LogoBot.png?raw=true" alt="Bot Logo" class="bottom-image" id="bot-logo">
         <div class="dialog-box" id="dialog-box">
             <p>Рассказать тебе как начать торговать CAYROS?</p>
             <div class="dialog-buttons">
@@ -113,6 +309,7 @@
             </div>
         </div>
     </div>
+
     <script>
         // Получаем текущий курс SOL через публичный API
         document.addEventListener('DOMContentLoaded', function () {
@@ -120,55 +317,46 @@
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
-                    const solPrice = data.solana.rub; // Получаем цену SOL в рублях
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2); // Выводим цену SOL, округленную до 2 знаков
-                    // Рассчитываем цену CAYROS как SOL * 0.0011 и округляем до 2 знаков
+                    const solPrice = data.solana.rub;
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2);
                     const cayrosPrice = (solPrice * 0.0011).toFixed(2);
-                    document.getElementById('cayros-price').textContent = cayrosPrice; // Выводим цену CAYROS
+                    document.getElementById('cayros-price').textContent = cayrosPrice;
                 })
                 .catch(error => {
                     console.error('Ошибка при получении курса:', error);
-                    document.getElementById('sol-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
-                    document.getElementById('cayros-price').textContent = 'N/A'; // Если произошла ошибка, показываем N/A
+                    document.getElementById('sol-price').textContent = 'N/A';
+                    document.getElementById('cayros-price').textContent = 'N/A';
                 });
         });
 
         // Обработка клика на изображение
         document.getElementById('bot-logo').addEventListener('click', function () {
             const dialogBox = document.getElementById('dialog-box');
-            dialogBox.style.display = 'block'; // Показываем диалоговое окно
-            dialogBox.innerHTML = `
-                <p>Рассказать тебе как начать торговать CAYROS?</p>
-                <div class="dialog-buttons">
-                    <button class="dialog-button" id="dialog-yes">Да</button>
-                    <button class="dialog-button" id="dialog-no">Нет</button>
-                </div>
-            `;
-            // Добавляем вибрацию
+            dialogBox.style.display = 'block';
             if ('vibrate' in navigator) {
-                navigator.vibrate(100); // Вибрация продолжительностью 100 мс
+                navigator.vibrate(100);
             }
         });
 
         // Обработка клика на кнопку "Нет"
         document.getElementById('dialog-no').addEventListener('click', function () {
             const dialogBox = document.getElementById('dialog-box');
-            dialogBox.innerHTML = '<p>Я буду ждать</p>'; // Устанавливаем новый текст
+            dialogBox.innerHTML = '<p>Я буду ждать</p>';
             setTimeout(() => {
-                dialogBox.style.display = 'none'; // Скрываем окно через 1 секунду
-            }, 1000); // Задержка в 1 секунду
+                dialogBox.style.display = 'none';
+            }, 1000);
         });
 
         // Обработка клика на кнопку "Да"
         document.getElementById('dialog-yes').addEventListener('click', function () {
-            window.location.href = 'how_to_sell.html'; // Переход на страницу how_to_sell.html
+            window.location.href = 'how_to_sell.html'; // Исправлена ошибка перенаправления
         });
 
-        // Убедимся, что диалоговое окно скрывается при повторном клике
+        // Скрываем диалоговое окно при клике вне области
         document.addEventListener('click', function (event) {
             const dialogBox = document.getElementById('dialog-box');
             if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
-                dialogBox.style.display = 'none'; // Скрываем окно
+                dialogBox.style.display = 'none';
             }
         });
     </script>
