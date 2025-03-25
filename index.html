@@ -11,8 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #f9f9f9;
-            overflow-y: auto;
-            color: #333; /* Унифицированный цвет текста */
+            color: #333;
         }
 
         /* Фиксированный заголовок с кнопками */
@@ -58,11 +57,11 @@
             margin-bottom: 20px;
         }
 
-        /* Общий стиль для всех заголовков */
+        /* Единый стиль для всех заголовков */
         .common-title {
             font-size: 18px;
             margin-top: 20px;
-            margin-left: 3%;
+            margin-left: 3%; /* Единый отступ слева */
         }
 
         /* Основной контейнер */
@@ -77,6 +76,15 @@
             max-width: 400px;
             padding: 20px;
             box-sizing: border-box;
+        }
+
+        /* Стиль для сепараторов */
+        .separator {
+            width: 94%;
+            height: 1px;
+            background-color: #00bfff;
+            margin: 10px 0;
+            margin-left: 3%; /* Единый отступ слева */
         }
 
         /* Блок Solana и Cayros */
@@ -119,6 +127,7 @@
             font-size: 12px;
             padding: 5px 10px;
             border: 2px solid #00bfff;
+            color: black; /* Черный цвет текста */
             border-radius: 10px;
             text-decoration: none;
             text-align: center;
@@ -137,18 +146,9 @@
             margin-bottom: 10px;
         }
 
-        /* Сепараторы */
-        .separator {
-            width: 94%;
-            height: 1px;
-            background-color: #00bfff;
-            margin: 10px 0;
-            margin-left: 3%;
-        }
-
         /* Блок с изображением и текстом */
         .wallet-info {
-            margin-left: 3%;
+            margin-left: 3%; /* Единый отступ слева */
             margin-top: 20px;
             display: flex;
             align-items: center;
@@ -210,6 +210,7 @@
             padding: 5px 10px;
             font-size: 12px;
             border: 1px solid #00bfff;
+            color: black; /* Черный цвет текста */
             border-radius: 5px;
             cursor: pointer;
             background-color: transparent;
@@ -218,18 +219,6 @@
         .dialog-button:hover {
             background-color: #00bfff;
             color: white;
-        }
-
-        /* Адаптивность для больших экранов */
-        @media (min-width: 768px) {
-            .bottom-image {
-                position: absolute;
-                transform: none;
-            }
-            .dialog-box {
-                position: absolute;
-                transform: none;
-            }
         }
     </style>
 </head>
@@ -244,7 +233,7 @@
     <!-- Подзаголовок -->
     <h1 class="sub-title">P2P Сервис обмена</h1>
 
-    <!-- Исправленный подзаголовок "Купить ⇌ Продать" -->
+    <!-- Заголовок "Купить ⇌ Продать" -->
     <div class="common-title">Купить ⇌ Продать</div>
 
     <!-- Основной контейнер -->
@@ -284,7 +273,7 @@
             <!-- Второй разделитель -->
             <div class="separator"></div>
 
-            <!-- Новый блок с текстом "Криптовалютный кошелек:" -->
+            <!-- Заголовок "Криптовалютный кошелек:" -->
             <div class="common-title">Криптовалютный кошелек:</div>
 
             <!-- Блок с изображением и текстом -->
@@ -349,7 +338,7 @@
 
         // Обработка клика на кнопку "Да"
         document.getElementById('dialog-yes').addEventListener('click', function () {
-            window.location.href = 'how_to_sell.html'; // Исправлена ошибка перенаправления
+            window.location.href = 'how_to_sell.html';
         });
 
         // Скрываем диалоговое окно при клике вне области
