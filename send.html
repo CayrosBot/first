@@ -99,7 +99,7 @@
             height: 50px;
             white-space: pre-wrap;
         }
-        /* Кнопка "Вернуться" */
+        /* Кнопка "Отправить" */
         button#backButton {
             width: 100%;
             padding: 10px;
@@ -158,9 +158,9 @@
                 <label id="cost-label">Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
-            <!-- Кнопка "Вернуться" -->
+            <!-- Кнопка "Отправить" -->
             <div class="field">
-                <button id="backButton">Вернуться</button>
+                <button id="backButton">Отправить</button>
             </div>
         </div>
     </div>
@@ -217,7 +217,7 @@
             window.location.href = 'index.html'; // Переходим на главную страницу
         }
 
-        // Обработчик кнопки "Вернуться"
+        // Обработчик кнопки "Отправить"
         document.getElementById('backButton').addEventListener('click', function () {
             const backPage = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
             window.location.href = backPage;
