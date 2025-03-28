@@ -158,16 +158,12 @@
                 <label id="cost-label">Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
-            <!-- Форма для предотвращения стандартного поведения -->
-            <form onsubmit="return false;">
-                <!-- Кнопка "Отправить" -->
-                <div class="field">
-                    <button id="submitButton">Отправить</button>
-                </div>
-            </form>
+            <!-- Кнопка "Отправить" -->
+            <div class="field">
+                <button id="submitButton">Отправить</button>
+            </div>
         </div>
     </div>
-
     <script>
         // Получаем данные из localStorage
         const formData = JSON.parse(localStorage.getItem('formData'));
@@ -238,11 +234,11 @@
                 // Преобразуем данные в строку
                 const queryString = encodeURIComponent(JSON.stringify(dataToSend));
 
-                // Перенаправляем пользователя на Telegram бота с данными
+                // Формируем ссылку Telegram-бота
                 const botUsername = "CayrosExchangeP2PBot"; // Замените на имя вашего бота
                 const telegramLink = `https://t.me/${botUsername}?startapp=${queryString}`;
 
-                // Создаем временный iframe для проверки доступности ссылки
+                // Проверяем доступность ссылки через создание временного iframe
                 const iframe = document.createElement('iframe');
                 iframe.style.display = 'none';
                 iframe.src = telegramLink;
@@ -254,12 +250,15 @@
                 }, 100);
 
                 // Попытка перенаправления
-                try {
+                iframe.onload = function () {
+                    // Если iframe загрузился успешно, выполняем перенаправление
                     window.location.href = telegramLink;
-                } catch (error) {
-                    // При ошибке ничего не делаем (тихо игнорируем)
-                    console.error('Ошибка при перенаправлении:', error);
-                }
+                };
+
+                iframe.onerror = function () {
+                    // Если произошла ошибка загрузки iframe, ничего не делаем
+                    console.error('Telegram-бот недоступен.');
+                };
             } catch (error) {
                 // При любой ошибке просто игнорируем её
                 console.error('Ошибка при создании ссылки:', error);
