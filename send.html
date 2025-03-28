@@ -100,7 +100,7 @@
             white-space: pre-wrap;
         }
         /* Кнопка "Отправить" */
-        button#backButton {
+        button#submitButton {
             width: 100%;
             padding: 10px;
             background-color: #4CAF50;
@@ -110,7 +110,7 @@
             font-size: 14px;
             cursor: pointer;
         }
-        button#backButton:hover {
+        button#submitButton:hover {
             background-color: #45a049;
         }
     </style>
@@ -160,7 +160,7 @@
             </div>
             <!-- Кнопка "Отправить" -->
             <div class="field">
-                <button id="backButton">Отправить</button>
+                <button id="submitButton">Отправить</button>
             </div>
         </div>
     </div>
@@ -203,10 +203,12 @@
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
 
             // Скрываем ненужные поля
-            document.getElementById('phoneField').style.display = isBuyOperation ? 'block' : 'none'; // Только для покупки
             document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
             document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
             document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+
+            // Поле "Номер телефона" всегда видимо
+            document.getElementById('phoneField').style.display = 'block';
 
             // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
             const backLink = document.getElementById('backLink');
@@ -218,9 +220,26 @@
         }
 
         // Обработчик кнопки "Отправить"
-        document.getElementById('backButton').addEventListener('click', function () {
-            const backPage = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
-            window.location.href = backPage;
+        document.getElementById('submitButton').addEventListener('click', function () {
+            // Собираем данные из формы
+            const dataToSend = {
+                name: formData.name,
+                walletAddress: formData.walletAddress,
+                phoneNumber: formData.phoneNumber,
+                bankName: formData.bankName,
+                cardNumber: formData.cardNumber,
+                recipientName: formData.recipientName,
+                tokenAmount: formData.cayrosAmount || formData.solanaAmount,
+                totalCost: formData.totalCost,
+                operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+            };
+
+            // Преобразуем данные в строку
+            const queryString = encodeURIComponent(JSON.stringify(dataToSend));
+
+            // Перенаправляем пользователя на Telegram бота с данными
+            const botUsername = "@CayrosExchangeP2PBot"; // Замените на имя вашего бота
+            window.location.href = `https://t.me/${botUsername}?startapp=${queryString}`;
         });
     </script>
 </body>
