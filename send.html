@@ -29,37 +29,58 @@
       justify-content: flex-start;
       align-items: center;
       z-index: 1000;
+      border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
     }
 
+    /* Кнопка "Назад" */
     .back-button {
-      text-decoration: none;
-      color: #333;
-      font-size: 16px;
+      font-size: 14px; /* Размер текста */
+      padding: 5px 10px; /* Отступы внутри кнопки */
+      border: 2px solid #00bfff; /* Голубая рамка */
+      color: black; /* Черный текст */
+      text-transform: lowercase; /* Преобразуем текст в нижний регистр */
+      text-decoration: none; /* Убираем подчеркивание у ссылки */
       cursor: pointer;
+      border-radius: 5px; /* Скругление углов */
+      background-color: transparent; /* Прозрачный фон */
+      transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
     }
 
     .back-button:hover {
-      text-decoration: underline;
+      background-color: #00bfff; /* Голубой фон при наведении */
+      color: white; /* Белый текст при наведении */
     }
 
     /* Заголовок */
     h1 {
       margin-top: 60px; /* Отступ под фиксированным заголовком */
       margin-bottom: 20px;
+      text-align: center;
+    }
+
+    /* Блок с формами */
+    .container {
+      width: 100%;
+      max-width: 400px;
+      padding: 20px;
+      border: 2px solid #00bfff; /* Голубая рамка */
+      border-radius: 15px; /* Скругление углов */
+      background-color: #ffffff; /* Белый фон */
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень */
+      box-sizing: border-box;
+      text-align: center;
     }
 
     /* Поля вывода данных */
     .field {
       margin-bottom: 15px;
       text-align: left;
-      width: 100%;
-      max-width: 400px;
     }
 
     .field label {
-      font-weight: bold;
       display: block;
       margin-bottom: 5px;
+      font-weight: bold;
     }
 
     .field span {
@@ -68,22 +89,24 @@
       padding: 10px;
       border-radius: 5px;
       word-break: break-all;
+      border: 1px solid #ccc; /* Рамка для полей */
     }
 
     /* Кнопка "Отправить" */
     button#submitButton {
       width: 100%;
       padding: 10px;
-      background-color: #4CAF50;
+      background-color: #4CAF50; /* Зеленый фон */
       color: white;
       border: none;
       border-radius: 5px;
       font-size: 14px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
 
     button#submitButton:hover {
-      background-color: #45a049;
+      background-color: #45a049; /* Темно-зеленый фон при наведении */
     }
 
     /* Сообщение об успехе */
@@ -92,32 +115,6 @@
       color: green;
       font-weight: bold;
       display: none; /* Скрываем по умолчанию */
-    }
-
-    /* Поля для реквизитов */
-    .payment-details {
-      margin-top: 20px;
-      display: none; /* Скрываем по умолчанию */
-    }
-
-    .payment-details div {
-      margin-bottom: 10px;
-    }
-
-    /* Кнопка "Подтвердить оплату" */
-    button#confirmPaymentButton {
-      width: 100%;
-      padding: 10px;
-      background-color: #007BFF;
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-
-    button#confirmPaymentButton:hover {
-      background-color: #0056b3;
     }
   </style>
 </head>
@@ -130,59 +127,54 @@
   <!-- Заголовок -->
   <h1 id="operationTitle">Подтверждение операции</h1>
 
-  <!-- Поля для отображения данных -->
-  <div class="field">
-    <label id="name-label">Имя:</label>
-    <span id="user-name-display">Не указано</span>
-  </div>
+  <!-- Блок с формами -->
+  <div class="container">
+    <!-- Поля для отображения данных -->
+    <div class="field">
+      <label id="name-label">Имя:</label>
+      <span id="user-name-display">Не указано</span>
+    </div>
 
-  <div class="field">
-    <label id="wallet-label">Адрес кошелька:</label>
-    <span id="wallet-address-display">Не указано</span>
-  </div>
+    <div class="field">
+      <label id="wallet-label">Адрес кошелька:</label>
+      <span id="wallet-address-display">Не указано</span>
+    </div>
 
-  <div class="field" id="phoneField">
-    <label id="phone-label">Номер телефона:</label>
-    <span id="phone-number-display">Не указано</span>
-  </div>
+    <div class="field" id="phoneField">
+      <label id="phone-label">Номер телефона:</label>
+      <span id="phone-number-display">Не указано</span>
+    </div>
 
-  <div class="field" id="bankField">
-    <label id="bank-label">Банк получателя:</label>
-    <span id="bank-name-display">Не указано</span>
-  </div>
+    <div class="field" id="bankField">
+      <label id="bank-label">Банк получателя:</label>
+      <span id="bank-name-display">Не указано</span>
+    </div>
 
-  <div class="field" id="cardField">
-    <label id="card-label">Номер карты:</label>
-    <span id="card-number-display">Не указано</span>
-  </div>
+    <div class="field" id="cardField">
+      <label id="card-label">Номер карты:</label>
+      <span id="card-number-display">Не указано</span>
+    </div>
 
-  <div class="field" id="recipientField">
-    <label id="recipient-label">Получатель:</label>
-    <span id="recipient-name-display">Не указано</span>
-  </div>
+    <div class="field" id="recipientField">
+      <label id="recipient-label">Получатель:</label>
+      <span id="recipient-name-display">Не указано</span>
+    </div>
 
-  <div class="field">
-    <label id="token-label">Количество токенов:</label>
-    <span id="token-amount-display">Не указано</span>
-  </div>
+    <div class="field">
+      <label id="token-label">Количество токенов:</label>
+      <span id="token-amount-display">Не указано</span>
+    </div>
 
-  <div class="field">
-    <label id="cost-label">Общая стоимость:</label>
-    <span id="total-cost-display">Не рассчитано</span>
-  </div>
+    <div class="field">
+      <label id="cost-label">Общая стоимость:</label>
+      <span id="total-cost-display">Не рассчитано</span>
+    </div>
 
-  <!-- Кнопка "Отправить" -->
-  <button id="submitButton">Отправить</button>
+    <!-- Кнопка "Отправить" -->
+    <button id="submitButton">Отправить</button>
 
-  <!-- Сообщение об успехе -->
-  <div id="successMessage" class="success-message">Данные успешно отправлены!</div>
-
-  <!-- Поля для реквизитов -->
-  <div class="payment-details" id="paymentDetails">
-    <div><strong>Банк:</strong> <span id="bankName"></span></div>
-    <div><strong>Номер карты:</strong> <span id="cardNumber"></span></div>
-    <div><strong>Получатель:</strong> <span id="recipientName"></span></div>
-    <button id="confirmPaymentButton">Подтвердить оплату</button>
+    <!-- Сообщение об успехе -->
+    <div id="successMessage" class="success-message">Данные успешно отправлены!</div>
   </div>
 
   <script>
@@ -262,11 +254,6 @@
         // Если произошла ошибка, показываем сообщение
         alert(`Произошла ошибка: ${error.message}`);
       }
-    });
-
-    // Обработчик кнопки "Подтвердить оплату"
-    document.getElementById('confirmPaymentButton').addEventListener('click', function () {
-      alert('Оплата подтверждена!');
     });
   </script>
 </body>
