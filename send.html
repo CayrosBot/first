@@ -1,260 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Подтверждение операции</title>
-  <style>
-    /* Общие настройки */
-    body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      height: 100vh;
-      background-color: #f9f9f9;
-    }
-
-    /* Фиксированный заголовок с кнопкой "Назад" */
-    .header-wrap {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: #ffffff;
-      padding: 10px;
-      box-sizing: border-box;
-      display: flex;
-      justify-content: flex-start;
-      align-items: center;
-      z-index: 1000;
-      border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
-    }
-
-    /* Кнопка "Назад" */
-    .back-button {
-      font-size: 14px; /* Размер текста */
-      padding: 5px 10px; /* Отступы внутри кнопки */
-      border: 2px solid #00bfff; /* Голубая рамка */
-      color: black; /* Черный текст */
-      text-transform: lowercase; /* Преобразуем текст в нижний регистр */
-      text-decoration: none; /* Убираем подчеркивание у ссылки */
-      cursor: pointer;
-      border-radius: 5px; /* Скругление углов */
-      background-color: transparent; /* Прозрачный фон */
-      transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
-    }
-
-    .back-button:hover {
-      background-color: #00bfff; /* Голубой фон при наведении */
-      color: white; /* Белый текст при наведении */
-    }
-
-    /* Заголовок */
-    h1 {
-      margin-top: 60px; /* Отступ под фиксированным заголовком */
-      margin-bottom: 20px;
-      text-align: center;
-    }
-
-    /* Блок с формами */
-    .container {
-      width: 100%;
-      max-width: 400px;
-      padding: 20px;
-      border: 2px solid #00bfff; /* Голубая рамка */
-      border-radius: 15px; /* Скругление углов */
-      background-color: #ffffff; /* Белый фон */
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Тень */
-      box-sizing: border-box;
-      text-align: center;
-    }
-
-    /* Поля вывода данных */
-    .field {
-      margin-bottom: 15px;
-      text-align: left;
-    }
-
-    .field label {
-      display: block;
-      margin-bottom: 5px;
-      font-weight: bold;
-    }
-
-    .field span {
-      display: block;
-      background-color: #f0f0f0;
-      padding: 10px;
-      border-radius: 5px;
-      word-break: break-all;
-      border: 1px solid #ccc; /* Рамка для полей */
-    }
-
-    /* Кнопка "Отправить" */
-    button#submitButton {
-      width: 100%;
-      padding: 10px;
-      background-color: #4CAF50; /* Зеленый фон */
-      color: white;
-      border: none;
-      border-radius: 5px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-    }
-
-    button#submitButton:hover {
-      background-color: #45a049; /* Темно-зеленый фон при наведении */
-    }
-
-    /* Сообщение об успехе */
-    .success-message {
-      margin-top: 20px;
-      color: green;
-      font-weight: bold;
-      display: none; /* Скрываем по умолчанию */
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Подтверждение операции</title>
+    <style>
+        /* Общие настройки */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100vh;
+            background-color: #f9f9f9;
+        }
+        /* Фиксированный заголовок с кнопкой "Назад" */
+        .header-wrap {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #ccc;
+        }
+        /* Кнопка "Назад" */
+        .back-button {
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 2px solid #00bfff;
+            color: black;
+            text-transform: lowercase;
+            text-decoration: none;
+            cursor: pointer;
+            border-radius: 5px;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        .back-button:hover {
+            background-color: #00bfff;
+            color: white;
+        }
+        /* Второй заголовок */
+        .sub-title {
+            font-size: 18px;
+            text-align: center;
+            margin-top: 60px;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        /* Основной контейнер */
+        .container-wrap {
+            width: 100%;
+            padding: 0 3%;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+        }
+        /* Форма */
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 20px;
+            border: 2px solid #00bfff;
+            border-radius: 15px;
+            background-color: #ffffff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+            text-align: center;
+        }
+        /* Поля вывода данных */
+        .field {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            text-align: left;
+        }
+        .result-container {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 14px;
+            box-sizing: border-box;
+            word-break: break-word;
+        }
+        /* Увеличение размера поля для адреса кошелька */
+        #wallet-address-display {
+            height: 50px;
+            white-space: pre-wrap;
+        }
+        /* Кнопка "Отправить" */
+        button#submitButton {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        button#submitButton:hover {
+            background-color: #45a049;
+        }
+    </style>
 </head>
 <body>
-  <!-- Фиксированный заголовок с кнопкой "Назад" -->
-  <div class="header-wrap">
-    <a href="#" class="back-button">< Назад</a>
-  </div>
-
-  <!-- Заголовок -->
-  <h1 id="operationTitle">Подтверждение операции</h1>
-
-  <!-- Блок с формами -->
-  <div class="container">
-    <!-- Поля для отображения данных -->
-    <div class="field">
-      <label id="name-label">Имя:</label>
-      <span id="user-name-display">Не указано</span>
+    <!-- Фиксированный заголовок с кнопкой "Назад" -->
+    <div class="header-wrap">
+        <a href="#" class="back-button" id="backLink">< Назад</a>
     </div>
-
-    <div class="field">
-      <label id="wallet-label">Адрес кошелька:</label>
-      <span id="wallet-address-display">Не указано</span>
+    <!-- Подзаголовок -->
+    <h1 class="sub-title" id="operationTitle">Подтверждение операции</h1>
+    <!-- Основной контейнер формы (с рамкой) -->
+    <div class="container-wrap">
+        <div class="container">
+            <!-- Вывод данных -->
+            <div class="field" id="nameField">
+                <label id="name-label">Имя:</label>
+                <div id="user-name-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field" id="walletField">
+                <label id="wallet-label">Адрес кошелька:</label>
+                <div id="wallet-address-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field" id="phoneField">
+                <label id="phone-label">Номер телефона:</label>
+                <div id="phone-number-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field" id="bankField">
+                <label id="bank-label">Банк получателя:</label>
+                <div id="bank-name-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field" id="cardField">
+                <label id="card-label">Номер карты:</label>
+                <div id="card-number-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field" id="recipientField">
+                <label id="recipient-label">Получатель:</label>
+                <div id="recipient-name-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field">
+                <label id="token-label">Количество токенов:</label>
+                <div id="token-amount-display" class="result-container">Загрузка...</div>
+            </div>
+            <div class="field">
+                <label id="cost-label">Общая стоимость:</label>
+                <div id="total-cost-display" class="result-container">Загрузка...</div>
+            </div>
+            <!-- Кнопка "Отправить" -->
+            <div class="field">
+                <button id="submitButton">Отправить</button>
+            </div>
+        </div>
     </div>
+    <script>
+        // Получаем данные из localStorage
+        const formData = JSON.parse(localStorage.getItem('formData'));
+        if (formData) {
+            // Определяем название токена и его количество
+            let tokenName = "CAYROS";
+            let tokenAmountKey = "cayrosAmount";
+            let tokenLabelKey = "cayrosLabel";
+            if (formData.solanaAmount !== undefined) {
+                tokenName = "SOLANA";
+                tokenAmountKey = "solanaAmount";
+                tokenLabelKey = "solanaLabel";
+            }
 
-    <div class="field" id="phoneField">
-      <label id="phone-label">Номер телефона:</label>
-      <span id="phone-number-display">Не указано</span>
-    </div>
+            // Определяем тип операции (покупка/продажа)
+            const isBuyOperation = formData.backPage && formData.backPage.includes('buy');
+            document.getElementById('operationTitle').textContent = isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи';
 
-    <div class="field" id="bankField">
-      <label id="bank-label">Банк получателя:</label>
-      <span id="bank-name-display">Не указано</span>
-    </div>
+            // Обновляем текст меток на основе данных из предыдущей страницы
+            document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
+            document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
+            document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
+            document.getElementById('bank-label').textContent = formData.bankLabel || 'Банк получателя:';
+            document.getElementById('card-label').textContent = formData.cardLabel || 'Номер карты:';
+            document.getElementById('recipient-label').textContent = formData.recipientLabel || 'Получатель:';
+            document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
+            document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
 
-    <div class="field" id="cardField">
-      <label id="card-label">Номер карты:</label>
-      <span id="card-number-display">Не указано</span>
-    </div>
+            // Выводим данные на экран
+            document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
+            document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
+            document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
+            document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано'; // Банк получателя
+            document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано'; // Номер карты
+            document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано'; // Получатель
+            document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
+            document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
 
-    <div class="field" id="recipientField">
-      <label id="recipient-label">Получатель:</label>
-      <span id="recipient-name-display">Не указано</span>
-    </div>
+            // Скрываем ненужные поля
+            document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
 
-    <div class="field">
-      <label id="token-label">Количество токенов:</label>
-      <span id="token-amount-display">Не указано</span>
-    </div>
+            // Поле "Номер телефона" всегда видимо
+            document.getElementById('phoneField').style.display = 'block';
 
-    <div class="field">
-      <label id="cost-label">Общая стоимость:</label>
-      <span id="total-cost-display">Не рассчитано</span>
-    </div>
+            // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
+            const backLink = document.getElementById('backLink');
+            backLink.href = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
+        } else {
+            // Если данные не найдены, показываем сообщение об ошибке
+            alert('Произошла ошибка при получении данных.');
+            window.location.href = 'index.html'; // Переходим на главную страницу
+        }
 
-    <!-- Кнопка "Отправить" -->
-    <button id="submitButton">Отправить</button>
+        // Обработчик кнопки "Отправить"
+        document.getElementById('submitButton').addEventListener('click', function () {
+            // Собираем данные из формы
+            const dataToSend = {
+                name: formData.name,
+                walletAddress: formData.walletAddress,
+                phoneNumber: formData.phoneNumber,
+                bankName: formData.bankName,
+                cardNumber: formData.cardNumber,
+                recipientName: formData.recipientName,
+                tokenAmount: formData.cayrosAmount || formData.solanaAmount,
+                totalCost: formData.totalCost,
+                operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+            };
 
-    <!-- Сообщение об успехе -->
-    <div id="successMessage" class="success-message">Данные успешно отправлены!</div>
-  </div>
+            // Преобразуем данные в строку
+            const queryString = encodeURIComponent(JSON.stringify(dataToSend));
 
-  <script>
-    // Загрузка данных из localStorage
-    const formData = JSON.parse(localStorage.getItem('formData'));
-
-    if (!formData) {
-      // Если данные не найдены, показываем сообщение об ошибке
-      alert('Произошла ошибка при получении данных.');
-      window.location.href = 'index.html'; // Переходим на главную страницу
-    }
-
-    // Определяем тип операции (покупка/продажа)
-    const isBuyOperation = formData.backPage.includes('buy');
-
-    let tokenName = "CAYROS";
-    let tokenAmountKey = "cayrosAmount";
-    let tokenLabelKey = "cayrosLabel";
-
-    if (formData.solanaAmount !== undefined) {
-      tokenName = "SOLANA";
-      tokenAmountKey = "solanaAmount";
-      tokenLabelKey = "solanaLabel";
-    }
-
-    // Настройка текста меток и скрытие ненужных полей
-    document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
-    document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
-    document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
-    document.getElementById('bank-label').textContent = formData.bankLabel || 'Банк получателя:';
-    document.getElementById('card-label').textContent = formData.cardLabel || 'Номер карты:';
-    document.getElementById('recipient-label').textContent = formData.recipientLabel || 'Получатель:';
-    document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
-    document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
-
-    // Вывод данных на экран
-    document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
-    document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
-    document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
-    document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано';
-    document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано';
-    document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано';
-    document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
-    document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
-
-    // Скрываем ненужные поля для покупки
-    document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block';
-    document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block';
-    document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block';
-
-    // Обработчик кнопки "Отправить"
-    document.getElementById('submitButton').addEventListener('click', function () {
-      try {
-        // Собираем данные из формы
-        const dataToSend = {
-          name: formData.name,
-          walletAddress: formData.walletAddress,
-          phoneNumber: formData.phoneNumber,
-          bankName: formData.bankName,
-          cardNumber: formData.cardNumber,
-          recipientName: formData.recipientName,
-          tokenAmount: formData.cayrosAmount || formData.solanaAmount,
-          totalCost: formData.totalCost,
-          operationType: isBuyOperation ? 'buy' : 'sell'
-        };
-
-        // Преобразуем данные в строку
-        const queryString = encodeURIComponent(JSON.stringify(dataToSend));
-
-        // Генерируем ссылку для Telegram бота
-        const botUsername = "CayrosExchangeP2PBot"; // Замените на имя вашего бота
-        window.open(`https://t.me/${botUsername}?startapp=${queryString}`, '_blank');
-
-        // Показываем сообщение об успешной отправке данных
-        document.getElementById('successMessage').style.display = 'block';
-      } catch (error) {
-        // Если произошла ошибка, показываем сообщение
-        alert(`Произошла ошибка: ${error.message}`);
-      }
-    });
-  </script>
+            // Перенаправляем пользователя на Telegram бота с данными
+            const botUsername = "CayrosExchangeP2PBot"; // Замените на имя вашего бота
+            window.location.href = `https://t.me/${botUsername}?startapp=${queryString}`;
+        });
+    </script>
 </body>
 </html>
