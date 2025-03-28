@@ -158,12 +158,15 @@
                 <label id="cost-label">Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
+            <!-- Форма для предотвращения стандартного поведения -->
+        <form onsubmit="return false;">
             <!-- Кнопка "Отправить" -->
             <div class="field">
                 <button id="submitButton">Отправить</button>
             </div>
-        </div>
+        </form>
     </div>
+</div>
     <script>
         // Получаем данные из localStorage
         const formData = JSON.parse(localStorage.getItem('formData'));
