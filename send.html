@@ -220,7 +220,8 @@
         }
 
         // Обработчик кнопки "Отправить"
-        document.getElementById('submitButton').addEventListener('click', function () {
+        document.getElementById('submitButton').addEventListener('click', function (event) {
+            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
             // Собираем данные из формы
             const dataToSend = {
                 name: formData.name,
