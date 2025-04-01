@@ -241,24 +241,16 @@
                     operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
                 };
 
-                // Преобразуем данные в строку
-                const queryString = encodeURIComponent(JSON.stringify(dataToSend));
-                console.log('QueryString:', queryString);
-
-                // Отправляем данные боту через параметр start
-                const botUsername = "CayrosExchangeP2PBot"; // Замените на имя вашего бота
-                const telegramLink = `https://t.me/${botUsername}?start=${queryString}`;
-
-                // Создаем скрытый iframe для отправки данных
-                const iframe = document.createElement('iframe');
-                iframe.style.display = 'none';
-                iframe.src = telegramLink;
-                document.body.appendChild(iframe);
-
-                // Удаляем iframe после выполнения
-                setTimeout(() => {
-                    document.body.removeChild(iframe);
-                }, 100);
+                // Проверяем, запущено ли приложение в Telegram WebView
+                if (window.Telegram && window.Telegram.WebApp) {
+                    // Отправляем данные через Telegram WebApp API
+                    window.Telegram.WebApp.sendData(JSON.stringify(dataToSend));
+                } else {
+                    // Альтернативный метод отправки для других окружений
+                    const botUsername = "CayrosExchangeP2PBot";
+                    const queryString = encodeURIComponent(JSON.stringify(dataToSend));
+                    window.open(`https://t.me/${botUsername}?start=${queryString}`, '_blank');
+                }
 
                 // Показываем сообщение об успехе
                 const successMessage = document.getElementById('successMessage');
