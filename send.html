@@ -252,16 +252,21 @@
                             recipientName: formData.recipientName,
                             tokenAmount: formData.cayrosAmount || formData.solanaAmount,
                             totalCost: formData.totalCost,
-                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+                            operationType: formData.backPage.includes('buy') ? 'Покупка' : 'Продажа',
+                            tokenName: tokenName // Добавляем название токена
                         };
+
+                        // Определяем тип операции
+                        const operationType = `${dataToSend.operationType} ${dataToSend.tokenName}`;
 
                         // Формируем текст сообщения
                         const message = [
+                            operationType,
                             'Новая операция:',
                             `Имя: ${dataToSend.name || 'Не указано'}`,
                             `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
                             `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
+                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'} ${dataToSend.tokenName}`,
                             `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
                         ].join('\n');
 
