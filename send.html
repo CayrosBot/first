@@ -267,11 +267,11 @@
 
                         // Формируем текст сообщения
                         const message = [
-                            dataToSend.operationType, // Тип операции
+                            dataToSend.operationType, // Тип операции (покупка/продажа)
                             `Имя: ${dataToSend.name || 'Не указано'}`,
                             `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
                             `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                            `Количество ${dataToSend.tokenName}: ${dataToSend.tokenAmount || 'Не указано'}`, // Количество токенов с указанием типа
+                            `Количество ${dataToSend.tokenName}: ${dataToSend.tokenAmount || 'Не указано'}`,
                             `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`,
 
                             // Дополнительные поля для продажи
@@ -328,9 +328,11 @@
                             text: message
                         })
                     });
+
                     if (!response.ok) {
                         throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
                     }
+
                     const data = await response.json();
                     console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
                 }
