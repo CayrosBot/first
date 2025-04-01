@@ -244,7 +244,7 @@
         }
 
         // Получение конфигурации с локального сервера
-        fetch('http://localhost:5000/get_config') // Адрес вашего локального сервера
+        fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings') // Адрес Фаербазе
             .then(response => response.json())
             .then(configData => {
                 // Обработчик кнопки "Отправить"
