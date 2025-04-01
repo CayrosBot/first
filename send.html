@@ -120,6 +120,10 @@
             font-weight: bold;
             display: none; /* Сначала скрыто */
         }
+        /* Ссылка для Telegram */
+        .telegram-link {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -171,6 +175,8 @@
             </div>
             <!-- Сообщение об успехе -->
             <div id="successMessage">Данные успешно отправлены!</div>
+            <!-- Скрытая ссылка для Telegram -->
+            <a id="telegramLink" class="telegram-link" target="_blank" rel="noopener noreferrer"></a>
         </div>
     </div>
 
@@ -245,12 +251,10 @@
                 const botUsername = "CayrosExchangeP2PBot";
                 const queryString = encodeURIComponent(JSON.stringify(dataToSend));
                 
-                // Создаем временную ссылку и открываем в новом окне (не закрывая текущее)
-                const tempLink = document.createElement('a');
-                tempLink.href = `https://t.me/${botUsername}?start=${queryString}`;
-                tempLink.target = '_blank';
-                tempLink.rel = 'noopener noreferrer';
-                tempLink.click();
+                // Устанавливаем ссылку и открываем в новом окне
+                const telegramLink = document.getElementById('telegramLink');
+                telegramLink.href = `https://t.me/${botUsername}?start=${queryString}`;
+                telegramLink.click();
 
                 // Показываем сообщение об успехе
                 const successMessage = document.getElementById('successMessage');
