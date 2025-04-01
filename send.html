@@ -267,7 +267,7 @@
 
                         // Формируем текст сообщения
                         const messageParts = [
-                            dataToSend.operationType, // Тип операции
+                            dataToSend.operationType, // Тип операции (покупка/продажа)
                             `Имя: ${dataToSend.name}`,
                             `Адрес кошелька: ${dataToSend.walletAddress}`,
                             `Номер телефона: ${dataToSend.phoneNumber}`,
@@ -312,7 +312,6 @@
                         submitButton.disabled = true;
                         submitButton.textContent = 'Отправлено';
                         submitButton.style.backgroundColor = '#cccccc';
-
                     } catch (error) {
                         console.error('Ошибка при подготовке данных:', error);
                         alert('Произошла ошибка при отправке данных.');
@@ -334,8 +333,7 @@
                     });
 
                     if (!response.ok) {
-                        const errorData = await response.json(); // Получаем детали ошибки
-                        throw new Error(`Telegram API error (${response.status}): ${errorData.description}`);
+                        throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
                     }
 
                     const data = await response.json();
