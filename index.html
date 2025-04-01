@@ -234,23 +234,67 @@
     </div>
 
     <script>
+        // ID пула ликвидности CAYROS/USDT
+        const POOL_ID = "6AvMUjDypofK8nw5Ez13qwFswJkLKomKTzX95ZWd682n";
+
         // Получаем текущий курс SOL через публичный API
         document.addEventListener('DOMContentLoaded', function () {
-            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const solPrice = data.solana.rub;
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2);
-                    const cayrosPrice = (solPrice * 0.0011).toFixed(2);
-                    document.getElementById('cayros-price').textContent = cayrosPrice;
-                })
-                .catch(error => {
-                    console.error('Ошибка при получении курса:', error);
-                    document.getElementById('sol-price').textContent = 'N/A';
-                    document.getElementById('cayros-price').textContent = 'N/A';
-                });
+            // Загружаем курсы при старте
+            fetchPrices();
+            
+            // Обновляем каждые 10 секунд
+            setInterval(fetchPrices, 10000);
         });
+
+        // Функция для получения цен
+        async function fetchPrices() {
+            try {
+                // 1. Получаем курс SOL/RUB
+                const solResponse = await fetch(
+                    'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub'
+                );
+                const solData = await solResponse.json();
+                
+                if (solData.solana?.rub) {
+                    const solPrice = solData.solana.rub;
+                    document.getElementById('sol-price').textContent = solPrice.toFixed(2);
+                } else {
+                    throw new Error("SOL price not available");
+                }
+
+                // 2. Получаем цену CAYROS в USDT из Raydium
+                const poolResponse = await fetch(
+                    `https://api-v3.raydium.io/pools/info/ids?ids=${POOL_ID}`
+                );
+                const poolData = await poolResponse.json();
+
+                if (!poolData.success || !poolData.data[0]) {
+                    throw new Error("CAYROS price not found");
+                }
+
+                const cayrosUsdtPrice = poolData.data[0].price;
+
+                // 3. Получаем курс USDT/RUB из CoinGecko
+                const rubResponse = await fetch(
+                    "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub"
+                );
+                const rubData = await rubResponse.json();
+
+                if (!rubData.tether?.rub) {
+                    throw new Error("USDT/RUB rate not found");
+                }
+
+                const usdtRubRate = rubData.tether.rub;
+                const cayrosRubPrice = cayrosUsdtPrice * usdtRubRate;
+
+                document.getElementById('cayros-price').textContent = cayrosRubPrice.toFixed(2);
+                
+            } catch (error) {
+                console.error('Ошибка при получении курса:', error);
+                document.getElementById('sol-price').textContent = 'N/A';
+                document.getElementById('cayros-price').textContent = 'N/A';
+            }
+        }
     </script>
 </body>
 </html>
