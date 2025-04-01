@@ -253,33 +253,32 @@
                     try {
                         // Собираем данные из формы
                         const dataToSend = {
-                            name: formData.name || 'Не указано',
-                            walletAddress: formData.walletAddress || 'Не указано',
-                            phoneNumber: formData.phoneNumber || 'Не указано',
-                            bankName: formData.bankName || 'Не указано',
-                            cardNumber: formData.cardNumber || 'Не указано',
-                            recipientName: formData.recipientName || 'Не указано',
-                            tokenAmount: formData.cayrosAmount || formData.solanaAmount || 'Не указано',
-                            totalCost: formData.totalCost || 'Не рассчитана',
-                            operationType: isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи',
-                            tokenName: tokenName // Добавляем название токена
+                            name: formData.name,
+                            walletAddress: formData.walletAddress,
+                            phoneNumber: formData.phoneNumber,
+                            bankName: formData.bankName,
+                            cardNumber: formData.cardNumber,
+                            recipientName: formData.recipientName,
+                            tokenAmount: formData.cayrosAmount || formData.solanaAmount,
+                            totalCost: formData.totalCost,
+                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell' // Возвращаем исходный формат
                         };
 
                         // Формируем текст сообщения
                         const messageParts = [
-                            dataToSend.operationType, // Тип операции (покупка/продажа)
-                            `Имя: ${dataToSend.name}`,
-                            `Адрес кошелька: ${dataToSend.walletAddress}`,
-                            `Номер телефона: ${dataToSend.phoneNumber}`,
-                            `Количество ${dataToSend.tokenName}: ${dataToSend.tokenAmount}`,
-                            `Общая стоимость: ${dataToSend.totalCost}`
+                            isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи', // Заголовок для пользователя
+                            `Имя: ${dataToSend.name || 'Не указано'}`,
+                            `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
+                            `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
+                            `Количество ${tokenName}: ${dataToSend.tokenAmount || 'Не указано'}`,
+                            `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
                         ];
 
                         // Добавляем дополнительные поля для продажи
                         if (!isBuyOperation) {
-                            messageParts.push(`Банк получателя: ${dataToSend.bankName}`);
-                            messageParts.push(`Номер карты: ${dataToSend.cardNumber}`);
-                            messageParts.push(`Получатель: ${dataToSend.recipientName}`);
+                            messageParts.push(`Банк получателя: ${dataToSend.bankName || 'Не указано'}`);
+                            messageParts.push(`Номер карты: ${dataToSend.cardNumber || 'Не указано'}`);
+                            messageParts.push(`Получатель: ${dataToSend.recipientName || 'Не указано'}`);
                         }
 
                         // Объединяем части сообщения в единый текст
