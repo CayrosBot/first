@@ -228,20 +228,17 @@
             .then(configData => {
                 // Извлекаем botToken как строку
                 const botToken = configData.fields.botToken.stringValue;
-
                 // Извлекаем recipientChatIds как массив строк и преобразуем их в числа
                 const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => parseInt(value.stringValue, 10));
-
                 // Сохраняем конфигурацию в глобальную переменную
                 window.config = {
                     bot_token: botToken,
                     recipient_chat_ids: recipientChatIds
                 };
-
                 console.log("Config loaded:", window.config);
 
                 // Обработчик кнопки "Отправить"
-                document.getElementById('submitButton').addEventListener('click', function (event) {
+                document.getElementById('submitButton').addEventListener('click', async function (event) {
                     event.preventDefault(); // Предотвращаем стандартное поведение кнопки
 
                     try {
@@ -270,15 +267,18 @@
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
-                        window.config.recipient_chat_ids.forEach(chatId => {
+                        for (const chatId of window.config.recipient_chat_ids) {
                             if (chatId) {
-                                sendMessageToTelegram(chatId, message, window.config.bot_token).catch(() => {
+                                try {
+                                    await sendMessageToTelegram(chatId, message, window.config.bot_token);
+                                } catch (error) {
+                                    console.error(`Failed to send message to chat ID ${chatId}:`, error);
                                     allMessagesSent = false;
-                                });
+                                }
                             }
-                        });
+                        }
 
-                        // Показываем сообщение об успехе
+                        // Показываем сообщение об успехе или частичной ошибке
                         const successMessage = document.getElementById('successMessage');
                         if (allMessagesSent) {
                             successMessage.textContent = 'Данные успешно отправлены!';
@@ -292,6 +292,7 @@
                         submitButton.disabled = true;
                         submitButton.textContent = 'Отправлено';
                         submitButton.style.backgroundColor = '#cccccc';
+
                     } catch (error) {
                         console.error('Ошибка при подготовке данных:', error);
                         alert('Произошла ошибка при отправке данных.');
@@ -299,9 +300,9 @@
                 });
 
                 // Функция отправки сообщения через Telegram Bot API
-                function sendMessageToTelegram(chatId, message, botToken) {
+                async function sendMessageToTelegram(chatId, message, botToken) {
                     const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-                    fetch(apiUrl, {
+                    const response = await fetch(apiUrl, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
@@ -310,16 +311,14 @@
                             chat_id: chatId,
                             text: message
                         })
-                    }).then(response => {
-                        if (!response.ok) {
-                            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
-                        }
-                        return response.json();
-                    }).then(data => {
-                        console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
-                    }).catch(error => {
-                        console.error(`Ошибка при отправке сообщения пользователю ${chatId}:`, error);
                     });
+
+                    if (!response.ok) {
+                        throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
                 }
             })
             .catch(error => {
