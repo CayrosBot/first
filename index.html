@@ -41,7 +41,7 @@
             border-radius: 5px;
             background-color: transparent;
             transition: background-color 0.3s ease, color 0.3s ease;
-            color: black; /* Черный цвет текста */
+            color: black;
         }
         .header-button:hover {
             background-color: #00bfff;
@@ -60,28 +60,28 @@
 
         /* Блок с рамкой */
         .content-block {
-            width: 94%; /* Отступы 3% слева и справа */
+            width: 94%;
             max-width: 400px;
-            margin: 0 auto; /* Центрирование по горизонтали */
-            padding: 15px; /* Внутренний отступ */
-            border: 1px solid #ddd; /* Стандартный светло-серый */
-            border-radius: 12px; /* Скругление углов */
-            background-color: #ffffff; /* Белый фон */
+            margin: 0 auto;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            background-color: #ffffff;
             box-sizing: border-box;
-            margin-top: 15px; /* Отступ сверху от предыдущего элемента */
-            margin-bottom: 15px; /* Отступ снизу до следующего элемента */
+            margin-top: 15px;
+            margin-bottom: 15px;
         }
 
         /* Единый стиль для всех заголовков */
         .common-title {
             font-size: 18px;
-            margin-top: 0; /* Убираем лишний отступ */
-            margin-bottom: 20px; /* Отступ до следующего элемента */
+            margin-top: 0;
+            margin-bottom: 20px;
         }
 
         /* Стиль для сепараторов */
         .separator {
-            width: 100%; /* Занимает всю ширину контейнера */
+            width: 100%;
             height: 1px;
             background-color: #00bfff;
             margin: 10px 0;
@@ -127,7 +127,7 @@
             font-size: 12px;
             padding: 5px 10px;
             border: 2px solid #00bfff;
-            color: black; /* Черный цвет текста */
+            color: black;
             border-radius: 10px;
             text-decoration: none;
             text-align: center;
@@ -209,7 +209,7 @@
             padding: 5px 10px;
             font-size: 12px;
             border: 1px solid #00bfff;
-            color: black; /* Черный цвет текста */
+            color: black;
             border-radius: 5px;
             cursor: pointer;
             background-color: transparent;
@@ -218,6 +218,13 @@
         .dialog-button:hover {
             background-color: #00bfff;
             color: white;
+        }
+
+        /* Стиль для статуса загрузки */
+        .loading-status {
+            font-size: 12px;
+            color: #666;
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -248,6 +255,7 @@
             </div>
             <div class="exchange-rate">
                 1 SOL = <span id="sol-price">...</span> RUB
+                <div class="loading-status" id="sol-status"></div>
             </div>
         </div>
 
@@ -265,6 +273,7 @@
             </div>
             <div class="exchange-rate">
                 1 CAYROS = <span id="cayros-price">...</span> RUB
+                <div class="loading-status" id="cayros-status"></div>
             </div>
         </div>
 
@@ -296,67 +305,94 @@
         </div>
     </div>
 
-    <!-- Подключаем скрипт с курсами -->
-    <script src="cayros-price.js"></script>
-
     <script>
-        // Получаем текущий курс SOL через публичный API
-        document.addEventListener('DOMContentLoaded', function () {
-            // Загружаем курс SOL
-            const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
-            fetch(apiUrl)
-                .then(response => response.json())
-                .then(data => {
-                    const solPrice = data.solana.rub;
-                    document.getElementById('sol-price').textContent = solPrice.toFixed(2);
-                })
-                .catch(error => {
-                    console.error('Ошибка при получении курса SOL:', error);
-                    document.getElementById('sol-price').textContent = 'N/A';
-                });
+        // Конфигурация
+        const POOL_ID = "6AvMUjDypofK8nw5Ez13qwFswJkLKomKTzX95ZWd682n";
+        const SPREAD_PERCENT = 25; // 25% спред
+        const CORS_PROXY = "https://corsproxy.io/?"; // Прокси для обхода CORS
 
-            // Функция для обновления курса CAYROS
-            function updateCayrosPrice() {
-                if (window.CayrosRates && window.CayrosRates.current) {
-                    const cayrosPrice = window.CayrosRates.current.base;
-                    document.getElementById('cayros-price').textContent = cayrosPrice !== 'Загрузка...' ? cayrosPrice : '...';
-                } else {
-                    setTimeout(updateCayrosPrice, 500); // Повторяем проверку, если данные еще не загрузились
-                }
+        // Получаем курс SOL
+        async function getSolPrice() {
+            try {
+                document.getElementById('sol-status').textContent = "Обновление...";
+                const response = await fetch(`${CORS_PROXY}https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub`);
+                const data = await response.json();
+                const price = data.solana.rub.toFixed(2);
+                document.getElementById('sol-price').textContent = price;
+                document.getElementById('sol-status').textContent = "✓ Актуально";
+                return price;
+            } catch (error) {
+                console.error("Ошибка при получении курса SOL:", error);
+                document.getElementById('sol-price').textContent = "N/A";
+                document.getElementById('sol-status').textContent = "✗ Ошибка";
+                return null;
             }
+        }
 
-            // Запускаем обновление курса CAYROS
-            updateCayrosPrice();
+        // Получаем курс CAYROS
+        async function getCayrosPrice() {
+            try {
+                document.getElementById('cayros-status').textContent = "Обновление...";
+                
+                // 1. Получаем цену CAYROS в USDT из Raydium
+                const poolResponse = await fetch(`${CORS_PROXY}https://api-v3.raydium.io/pools/info/ids?ids=${POOL_ID}`);
+                const poolData = await poolResponse.json();
+                
+                if (!poolData.success || !poolData.data[0]) {
+                    throw new Error("Пул CAYROS не найден");
+                }
+                
+                const cayrosUsdt = poolData.data[0].price;
 
-            // Обновляем курс каждые 30 секунд (как в cayros-price.js)
-            setInterval(updateCayrosPrice, 30000);
+                // 2. Получаем курс USDT/RUB
+                const rubResponse = await fetch(`${CORS_PROXY}https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub`);
+                const rubData = await rubResponse.json();
+                const usdtRub = rubData.tether.rub;
+
+                // 3. Рассчитываем курс
+                const baseRateRub = (cayrosUsdt * usdtRub).toFixed(2);
+                document.getElementById('cayros-price').textContent = baseRateRub;
+                document.getElementById('cayros-status').textContent = "✓ Актуально";
+                
+                return baseRateRub;
+            } catch (error) {
+                console.error("Ошибка при получении курса CAYROS:", error);
+                document.getElementById('cayros-price').textContent = "N/A";
+                document.getElementById('cayros-status').textContent = "✗ Ошибка";
+                return null;
+            }
+        }
+
+        // Обновляем курсы при загрузке страницы
+        document.addEventListener('DOMContentLoaded', function() {
+            getSolPrice();
+            getCayrosPrice();
+            
+            // Обновляем каждые 30 секунд
+            setInterval(() => {
+                getSolPrice();
+                getCayrosPrice();
+            }, 30000);
         });
 
-        // Обработка клика на изображение
-        document.getElementById('bot-logo').addEventListener('click', function () {
+        // Обработчики для диалогового окна
+        document.getElementById('bot-logo').addEventListener('click', function() {
             const dialogBox = document.getElementById('dialog-box');
             dialogBox.style.display = 'block';
-            if ('vibrate' in navigator) {
-                navigator.vibrate(100);
-            }
+            if ('vibrate' in navigator) navigator.vibrate(100);
         });
 
-        // Обработка клика на кнопку "Нет"
-        document.getElementById('dialog-no').addEventListener('click', function () {
+        document.getElementById('dialog-no').addEventListener('click', function() {
             const dialogBox = document.getElementById('dialog-box');
             dialogBox.innerHTML = '<p>Я буду ждать</p>';
-            setTimeout(() => {
-                dialogBox.style.display = 'none';
-            }, 1000);
+            setTimeout(() => dialogBox.style.display = 'none', 1000);
         });
 
-        // Обработка клика на кнопку "Да"
-        document.getElementById('dialog-yes').addEventListener('click', function () {
+        document.getElementById('dialog-yes').addEventListener('click', function() {
             window.location.href = 'how_to_sell.html';
         });
 
-        // Скрываем диалоговое окно при клике вне области
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             const dialogBox = document.getElementById('dialog-box');
             if (event.target.id !== 'bot-logo' && dialogBox.style.display === 'block') {
                 dialogBox.style.display = 'none';
