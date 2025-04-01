@@ -186,11 +186,9 @@
                 tokenAmountKey = "solanaAmount";
                 tokenLabelKey = "solanaLabel";
             }
-
             // Определяем тип операции (покупка/продажа)
             const isBuyOperation = formData.backPage && formData.backPage.includes('buy');
             document.getElementById('operationTitle').textContent = isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи';
-
             // Обновляем текст меток на основе данных из предыдущей страницы
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
@@ -200,112 +198,128 @@
             document.getElementById('recipient-label').textContent = formData.recipientLabel || 'Получатель:';
             document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
-
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
             document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
-            document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано';
-            document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано';
-            document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано';
+            document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано'; // Банк получателя
+            document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано'; // Номер карты
+            document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано'; // Получатель
             document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
-
             // Скрываем ненужные поля
-            document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block';
-            document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block';
-            document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block';
+            document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            // Поле "Номер телефона" всегда видимо
             document.getElementById('phoneField').style.display = 'block';
-
-            // Обновляем ссылку "Назад"
+            // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
             const backLink = document.getElementById('backLink');
-            backLink.href = formData.backPage || 'index.html';
+            backLink.href = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
         } else {
+            // Если данные не найдены, показываем сообщение об ошибке
             alert('Произошла ошибка при получении данных.');
-            window.location.href = 'index.html';
+            window.location.href = 'index.html'; // Переходим на главную страницу
         }
 
         // Функция получения конфигурации с Firebase
         fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings')
             .then(response => response.json())
             .then(configData => {
+                // Извлекаем botToken как строку
                 const botToken = configData.fields.botToken.stringValue;
+                // Извлекаем recipientChatIds как массив строк и преобразуем их в числа
                 const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => parseInt(value.stringValue, 10));
-
+                // Сохраняем конфигурацию в глобальную переменную
                 window.config = {
                     bot_token: botToken,
                     recipient_chat_ids: recipientChatIds
                 };
-
                 console.log("Config loaded:", window.config);
 
                 // Обработчик кнопки "Отправить"
                 document.getElementById('submitButton').addEventListener('click', async function (event) {
-                    event.preventDefault();
+                    event.preventDefault(); // Предотвращаем стандартное поведение кнопки
 
                     try {
-                        // Формируем текст сообщения (ближе к первому рабочему варианту)
-                        const message = [
-                            isBuyOperation ? 'Покупка' : 'Продажа',
-                            `Имя: ${formData.name || 'Не указано'}`,
-                            `Адрес кошелька: ${formData.walletAddress || 'Не указано'}`,
-                            `Номер телефона: ${formData.phoneNumber || 'Не указано'}`,
-                            `Количество ${tokenName}: ${formData[tokenAmountKey] || 0}`,
-                            `Общая стоимость: ${formData.totalCost || 'Не рассчитано'}`
-                        ].join('\n');
+                        // Собираем данные из формы
+                        const dataToSend = {
+                            name: formData.name,
+                            walletAddress: formData.walletAddress,
+                            phoneNumber: formData.phoneNumber,
+                            bankName: formData.bankName,
+                            cardNumber: formData.cardNumber,
+                            recipientName: formData.recipientName,
+                            tokenAmount: formData.cayrosAmount || formData.solanaAmount,
+                            totalCost: formData.totalCost,
+                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+                        };
 
-                        // Для операций продажи добавляем дополнительные поля
-                        if (!isBuyOperation) {
-                            message += `\nБанк получателя: ${formData.bankName || 'Не указано'}`;
-                            message += `\nНомер карты: ${formData.cardNumber || 'Не указано'}`;
-                            message += `\nПолучатель: ${formData.recipientName || 'Не указано'}`;
-                        }
+                        // Формируем текст сообщения
+                        const message = [
+                            'Новая операция:',
+                            `Имя: ${dataToSend.name || 'Не указано'}`,
+                            `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
+                            `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
+                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
+                            `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
+                        ].join('\n');
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
                         for (const chatId of window.config.recipient_chat_ids) {
                             if (chatId) {
                                 try {
-                                    const apiUrl = `https://api.telegram.org/bot${window.config.bot_token}/sendMessage`;
-                                    const response = await fetch(apiUrl, {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({
-                                            chat_id: chatId,
-                                            text: message
-                                        })
-                                    });
-
-                                    if (!response.ok) {
-                                        throw new Error(`HTTP error! status: ${response.status}`);
-                                    }
+                                    await sendMessageToTelegram(chatId, message, window.config.bot_token);
                                 } catch (error) {
-                                    console.error(`Ошибка отправки для chat ID ${chatId}:`, error);
+                                    console.error(`Failed to send message to chat ID ${chatId}:`, error);
                                     allMessagesSent = false;
                                 }
                             }
                         }
 
-                        // Показываем сообщение об успехе
+                        // Показываем сообщение об успехе или частичной ошибке
                         const successMessage = document.getElementById('successMessage');
-                        successMessage.textContent = allMessagesSent 
-                            ? 'Данные успешно отправлены!' 
-                            : 'Часть сообщений не была доставлена';
+                        if (allMessagesSent) {
+                            successMessage.textContent = 'Данные успешно отправлены!';
+                        } else {
+                            successMessage.textContent = 'Часть сообщений не была доставлена.';
+                        }
                         successMessage.style.display = 'block';
 
-                        // Деактивируем кнопку
+                        // Делаем кнопку неактивной после отправки
                         const submitButton = document.getElementById('submitButton');
                         submitButton.disabled = true;
                         submitButton.textContent = 'Отправлено';
                         submitButton.style.backgroundColor = '#cccccc';
 
                     } catch (error) {
-                        console.error('Ошибка при отправке данных:', error);
-                        alert('Произошла ошибка при отправке данных. Проверьте консоль для деталей.');
+                        console.error('Ошибка при подготовке данных:', error);
+                        alert('Произошла ошибка при отправке данных.');
                     }
                 });
+
+                // Функция отправки сообщения через Telegram Bot API
+                async function sendMessageToTelegram(chatId, message, botToken) {
+                    const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                    const response = await fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: message
+                        })
+                    });
+
+                    if (!response.ok) {
+                        throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
+                    }
+
+                    const data = await response.json();
+                    console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
+                }
             })
             .catch(error => {
                 console.error('Ошибка при получении конфигурации:', error);
