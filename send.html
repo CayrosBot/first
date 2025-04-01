@@ -14,6 +14,7 @@
             align-items: center;
             height: 100vh;
             background-color: #f9f9f9;
+            position: relative;
         }
         /* Фиксированный заголовок с кнопкой "Назад" */
         .header-wrap {
@@ -113,16 +114,52 @@
         button#submitButton:hover {
             background-color: #45a049;
         }
-        /* Сообщение об успехе */
-        #successMessage {
-            margin-top: 20px;
-            color: green;
-            font-weight: bold;
-            display: none; /* Сначала скрыто */
-        }
-        /* Ссылка для Telegram */
-        .telegram-link {
+
+        /* Модальное окно */
+        .modal-overlay {
             display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1001;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80%;
+            max-width: 400px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            z-index: 1002;
+        }
+        .modal.show,
+        .modal-overlay.show {
+            display: block;
+        }
+        .modal p {
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
+        .modal button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .modal button:hover {
+            background-color: #45a049;
         }
     </style>
 </head>
@@ -173,11 +210,16 @@
             <div class="field">
                 <button id="submitButton">Отправить</button>
             </div>
-            <!-- Сообщение об успехе -->
-            <div id="successMessage">Данные успешно отправлены!</div>
             <!-- Скрытая ссылка для Telegram -->
             <a id="telegramLink" class="telegram-link" target="_blank" rel="noopener noreferrer"></a>
         </div>
+    </div>
+
+    <!-- Модальное окно -->
+    <div class="modal-overlay" id="modalOverlay"></div>
+    <div class="modal" id="successModal">
+        <p>Данные успешно отправлены!</p>
+        <button id="okButton">ОК</button>
     </div>
 
     <script>
@@ -232,7 +274,6 @@
         // Обработчик кнопки "Отправить"
         document.getElementById('submitButton').addEventListener('click', function (event) {
             event.preventDefault(); // Предотвращаем стандартное поведение кнопки
-
             try {
                 // Собираем данные из формы
                 const dataToSend = {
@@ -246,30 +287,35 @@
                     totalCost: formData.totalCost,
                     operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
                 };
-
                 // Отправляем данные боту
                 const botUsername = "CayrosExchangeP2PBot";
                 const queryString = encodeURIComponent(JSON.stringify(dataToSend));
-                
                 // Устанавливаем ссылку и открываем в новом окне
                 const telegramLink = document.getElementById('telegramLink');
                 telegramLink.href = `https://t.me/${botUsername}?start=${queryString}`;
                 telegramLink.click();
-
-                // Показываем сообщение об успехе
-                const successMessage = document.getElementById('successMessage');
-                successMessage.style.display = 'block'; // Показываем сообщение
-                
+                // Показываем модальное окно
+                const modal = document.getElementById('successModal');
+                const overlay = document.getElementById('modalOverlay');
+                modal.classList.add('show');
+                overlay.classList.add('show');
                 // Делаем кнопку неактивной после отправки
                 const submitButton = document.getElementById('submitButton');
                 submitButton.disabled = true;
                 submitButton.textContent = 'Отправлено';
                 submitButton.style.backgroundColor = '#cccccc';
-
             } catch (error) {
                 console.error('Ошибка при создании ссылки:', error);
                 alert('Произошла ошибка при отправке данных.');
             }
+        });
+
+        // Закрытие модального окна по кнопке "ОК"
+        document.getElementById('okButton').addEventListener('click', function () {
+            const modal = document.getElementById('successModal');
+            const overlay = document.getElementById('modalOverlay');
+            modal.classList.remove('show');
+            overlay.classList.remove('show');
         });
     </script>
 </body>
