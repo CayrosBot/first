@@ -296,23 +296,40 @@
         </div>
     </div>
 
+    <!-- Подключаем скрипт с курсами -->
+    <script src="cayros-price.js"></script>
+
     <script>
         // Получаем текущий курс SOL через публичный API
         document.addEventListener('DOMContentLoaded', function () {
+            // Загружаем курс SOL
             const apiUrl = 'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub';
             fetch(apiUrl)
                 .then(response => response.json())
                 .then(data => {
                     const solPrice = data.solana.rub;
                     document.getElementById('sol-price').textContent = solPrice.toFixed(2);
-                    const cayrosPrice = (solPrice * 0.0011).toFixed(2);
-                    document.getElementById('cayros-price').textContent = cayrosPrice;
                 })
                 .catch(error => {
-                    console.error('Ошибка при получении курса:', error);
+                    console.error('Ошибка при получении курса SOL:', error);
                     document.getElementById('sol-price').textContent = 'N/A';
-                    document.getElementById('cayros-price').textContent = 'N/A';
                 });
+
+            // Функция для обновления курса CAYROS
+            function updateCayrosPrice() {
+                if (window.CayrosRates && window.CayrosRates.current) {
+                    const cayrosPrice = window.CayrosRates.current.base;
+                    document.getElementById('cayros-price').textContent = cayrosPrice !== 'Загрузка...' ? cayrosPrice : '...';
+                } else {
+                    setTimeout(updateCayrosPrice, 500); // Повторяем проверку, если данные еще не загрузились
+                }
+            }
+
+            // Запускаем обновление курса CAYROS
+            updateCayrosPrice();
+
+            // Обновляем курс каждые 30 секунд (как в cayros-price.js)
+            setInterval(updateCayrosPrice, 30000);
         });
 
         // Обработка клика на изображение
