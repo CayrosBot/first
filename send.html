@@ -223,8 +223,7 @@
         }
 
         // Функция отправки сообщения через Telegram Bot API
-        function sendMessageToTelegram(chatId, message) {
-            const botToken = window.config.botToken; // Токен бота из config.py
+        function sendMessageToTelegram(chatId, message, botToken) {
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
 
             fetch(apiUrl, {
@@ -244,58 +243,71 @@
               });
         }
 
-        // Обработчик кнопки "Отправить"
-        document.getElementById('submitButton').addEventListener('click', function (event) {
-            event.preventDefault(); // Предотвращаем стандартное поведение кнопки
-            try {
-                // Собираем данные из формы
-                const dataToSend = {
-                    name: formData.name,
-                    walletAddress: formData.walletAddress,
-                    phoneNumber: formData.phoneNumber,
-                    bankName: formData.bankName,
-                    cardNumber: formData.cardNumber,
-                    recipientName: formData.recipientName,
-                    tokenAmount: formData.cayrosAmount || formData.solanaAmount,
-                    totalCost: formData.totalCost,
-                    operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
-                };
+        // Получение конфигурации с локального сервера
+        fetch('http://localhost:5000/get_config') // Адрес вашего локального сервера
+            .then(response => response.json())
+            .then(configData => {
+                // Обработчик кнопки "Отправить"
+                document.getElementById('submitButton').addEventListener('click', function (event) {
+                    event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+                    try {
+                        // Собираем данные из формы
+                        const dataToSend = {
+                            name: formData.name,
+                            walletAddress: formData.walletAddress,
+                            phoneNumber: formData.phoneNumber,
+                            bankName: formData.bankName,
+                            cardNumber: formData.cardNumber,
+                            recipientName: formData.recipientName,
+                            tokenAmount: formData.cayrosAmount || formData.solanaAmount,
+                            totalCost: formData.totalCost,
+                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+                        };
 
-                // Формируем текст сообщения
-                const message = [
-                    'Новая операция:',
-                    `Имя: ${dataToSend.name || 'Не указано'}`,
-                    `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
-                    `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                    `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
-                    `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
-                ].join('\n');
+                        // Формируем текст сообщения
+                        const message = [
+                            'Новая операция:',
+                            `Имя: ${dataToSend.name || 'Не указано'}`,
+                            `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
+                            `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
+                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
+                            `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
+                        ].join('\n');
 
-                // Отправляем сообщение каждому получателю
-                const allMessagesSent = window.config.recipientChatIds.every(chatId => {
-                    sendMessageToTelegram(chatId, message);
-                    return true; // Предполагаем, что все сообщения отправлены успешно
+                        // Отправляем сообщение каждому получателю
+                        let allMessagesSent = true;
+                        configData.recipient_chat_ids.forEach(chatId => {
+                            if (chatId) {
+                                sendMessageToTelegram(chatId, message, configData.bot_token).catch(() => {
+                                    allMessagesSent = false;
+                                });
+                            }
+                        });
+
+                        // Показываем сообщение об успехе
+                        const successMessage = document.getElementById('successMessage');
+                        if (allMessagesSent) {
+                            successMessage.textContent = 'Данные успешно отправлены!';
+                        } else {
+                            successMessage.textContent = 'Часть сообщений не была доставлена.';
+                        }
+                        successMessage.style.display = 'block';
+
+                        // Делаем кнопку неактивной после отправки
+                        const submitButton = document.getElementById('submitButton');
+                        submitButton.disabled = true;
+                        submitButton.textContent = 'Отправлено';
+                        submitButton.style.backgroundColor = '#cccccc';
+                    } catch (error) {
+                        console.error('Ошибка при подготовке данных:', error);
+                        alert('Произошла ошибка при отправке данных.');
+                    }
                 });
-
-                // Показываем сообщение об успехе
-                const successMessage = document.getElementById('successMessage');
-                if (allMessagesSent) {
-                    successMessage.textContent = 'Данные успешно отправлены!';
-                } else {
-                    successMessage.textContent = 'Часть сообщений не была доставлена.';
-                }
-                successMessage.style.display = 'block';
-
-                // Делаем кнопку неактивной после отправки
-                const submitButton = document.getElementById('submitButton');
-                submitButton.disabled = true;
-                submitButton.textContent = 'Отправлено';
-                submitButton.style.backgroundColor = '#cccccc';
-            } catch (error) {
-                console.error('Ошибка при подготовке данных:', error);
-                alert('Произошла ошибка при отправке данных.');
-            }
-        });
+            })
+            .catch(error => {
+                console.error('Ошибка при получении конфигурации:', error);
+                alert('Не удалось получить конфигурацию. Пожалуйста, проверьте подключение к серверу.');
+            });
     </script>
 </body>
 </html>
