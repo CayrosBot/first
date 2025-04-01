@@ -241,23 +241,26 @@
                     operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
                 };
 
-                // Проверяем, запущено ли приложение в Telegram WebView
-                if (window.Telegram && window.Telegram.WebApp) {
-                    // Отправляем данные через Telegram WebApp API
-                    window.Telegram.WebApp.sendData(JSON.stringify(dataToSend));
-                } else {
-                    // Альтернативный метод отправки для других окружений
-                    const botUsername = "CayrosExchangeP2PBot";
-                    const queryString = encodeURIComponent(JSON.stringify(dataToSend));
-                    window.open(`https://t.me/${botUsername}?start=${queryString}`, '_blank');
-                }
+                // Отправляем данные боту
+                const botUsername = "CayrosExchangeP2PBot";
+                const queryString = encodeURIComponent(JSON.stringify(dataToSend));
+                
+                // Создаем временную ссылку и открываем в новом окне (не закрывая текущее)
+                const tempLink = document.createElement('a');
+                tempLink.href = `https://t.me/${botUsername}?start=${queryString}`;
+                tempLink.target = '_blank';
+                tempLink.rel = 'noopener noreferrer';
+                tempLink.click();
 
                 // Показываем сообщение об успехе
                 const successMessage = document.getElementById('successMessage');
                 successMessage.style.display = 'block'; // Показываем сообщение
-                setTimeout(() => {
-                    successMessage.style.display = 'none'; // Скрываем сообщение через 5 секунд
-                }, 5000);
+                
+                // Делаем кнопку неактивной после отправки
+                const submitButton = document.getElementById('submitButton');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Отправлено';
+                submitButton.style.backgroundColor = '#cccccc';
 
             } catch (error) {
                 console.error('Ошибка при создании ссылки:', error);
