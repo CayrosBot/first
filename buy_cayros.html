@@ -1,61 +1,60 @@
-<!-- buy_cayros.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Заказ CAYROS</title>
-    <link rel="stylesheet" href="style_input.css"> <!-- Подключаем стили из style_input.css -->
+    <link rel="stylesheet" href="style_input.css">
     <style>
         /* Общие стили */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
             display: flex;
-            flex-direction: column; /* Вертикальное расположение элементов */
+            flex-direction: column;
             align-items: center;
             background-color: #f9f9f9;
         }
         /* Фиксированный заголовок с кнопкой "Назад" */
         .header-wrap {
-            position: fixed; /* Фиксированная позиция */
-            top: 0; /* Прикреплен к верхней границе */
-            left: 0; /* Прикреплен к левой границе */
-            width: 100%; /* Занимает всю ширину экрана */
-            background-color: #ffffff; /* Белый фон */
-            padding: 10px; /* Внутренние отступы */
-            box-sizing: border-box; /* Учитываем padding в ширине */
-            display: flex; /* Размещаем элементы в одну строку */
-            justify-content: flex-start; /* Выравниваем элементы по левому краю */
-            align-items: center; /* Выравниваем элементы по центру вертикально */
-            z-index: 1000; /* Гарантируем, что заголовок находится поверх других элементов */
-            border-bottom: 1px solid #ccc; /* Добавляем нижнюю границу */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #ffffff;
+            padding: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid #ccc;
         }
         /* Кнопка "Назад" */
         .back-button {
-            font-size: 14px; /* Размер текста */
-            padding: 5px 10px; /* Отступы внутри кнопки */
-            border: 2px solid #00bfff; /* Голубая рамка */
-            color: black; /* Черный текст */
-            text-transform: lowercase; /* Преобразуем текст в нижний регистр */
-            text-decoration: none; /* Убираем подчеркивание у ссылки */
+            font-size: 14px;
+            padding: 5px 10px;
+            border: 2px solid #00bfff;
+            color: black;
+            text-transform: lowercase;
+            text-decoration: none;
             cursor: pointer;
-            border-radius: 5px; /* Скругление углов */
-            background-color: transparent; /* Прозрачный фон */
-            transition: background-color 0.3s ease, color 0.3s ease; /* Анимация при наведении */
+            border-radius: 5px;
+            background-color: transparent;
+            transition: background-color 0.3s ease, color 0.3s ease;
         }
         .back-button:hover {
-            background-color: #00bfff; /* Голубой фон при наведении */
-            color: white; /* Белый текст при наведении */
+            background-color: #00bfff;
+            color: white;
         }
         /* Новый заголовок под первым */
         .sub-title {
-            font-size: 18px; /* Размер текста */
-            line-height: 18px; /* Высота текста */
-            text-align: center; /* Текст по центру */
-            margin: 0; /* Убираем стандартные отступы */
-            margin-top: 60px; /* Отступ под фиксированным заголовком */
-            margin-bottom: 20px; /* Отступ до основного контента */
+            font-size: 18px;
+            line-height: 18px;
+            text-align: center;
+            margin: 0;
+            margin-top: 60px;
+            margin-bottom: 20px;
         }
         /* Основной контейнер */
         .container-wrap {
@@ -93,14 +92,14 @@
         }
         /* Результат расчета стоимости */
         .result-container {
-            width: 100%; /* Занимает всю ширину контейнера */
+            width: 100%;
             padding: 10px;
             background-color: #f0f0f0;
             border: 2px solid #87CEEB;
             border-radius: 5px;
             font-size: 18px;
             text-align: center;
-            box-sizing: border-box; /* Учитывает padding и border в ширине */
+            box-sizing: border-box;
         }
         /* Блок согласия с условиями */
         .consent-block {
@@ -113,40 +112,27 @@
             flex: 1;
             font-size: 14px;
             color: #333;
-            margin-right: 10px; /* Отступ справа от текста до чекбокса */
+            margin-right: 10px;
         }
         .checkbox-container {
             position: relative;
-            width: 20px; /* Размер квадрата */
-            height: 20px; /* Размер квадрата */
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            border: 2px solid #ccc; /* Граница квадрата */
+            border: 2px solid #ccc;
             box-sizing: border-box;
-            border-radius: 3px; /* Сlightly rounded corners */
+            border-radius: 3px;
         }
-        /* Псевдоэлемент для создания квадрата */
-        .checkbox-container::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 2px solid #ccc; /* Цвет границы */
-            box-sizing: border-box;
-            border-radius: 3px; /* Сlightly rounded corners */
-        }
-        /* Когда выбрано (галочка) */
         .checkbox-container.checked::after {
-            content: '\2713'; /* Unicode символ галочки */
+            content: '\2713';
             position: absolute;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%); /* Центрирование галочки */
-            color: #fff; /* Цвет галочки */
-            font-size: 16px; /* Размер галочки */
-            background-color: #28a745; /* Зеленый фон */
-            border-radius: 3px; /* Сlightly rounded corners */
+            transform: translate(-50%, -50%);
+            color: #fff;
+            font-size: 16px;
+            background-color: #28a745;
+            border-radius: 3px;
             width: 100%;
             height: 100%;
             display: flex;
@@ -252,27 +238,45 @@
         </div>
     </div>
     <script>
-        // Получение курса SOLANA в RUB с CoinGecko API
-        async function fetchSolRate() {
-            try {
-                const response = await fetch('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub');
-                const data = await response.json();
-                return data.solana.rub;
-            } catch (error) {
-                console.error("Ошибка при получении курса:", error);
-                return null;
-            }
-        }
-
+        // ID пула ликвидности CAYROS/USDT
+        const POOL_ID = "6AvMUjDypofK8nw5Ez13qwFswJkLKomKTzX95ZWd682n";
+        
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
-            const solRate = await fetchSolRate();
-            if (solRate !== null) {
-                window.cayrosRate = (solRate * 0.00125).toFixed(2);
+            try {
+                // 1. Получаем цену CAYROS в USDT из Raydium
+                const poolResponse = await fetch(
+                    `https://api-v3.raydium.io/pools/info/ids?ids=${POOL_ID}`
+                );
+                const poolData = await poolResponse.json();
+
+                if (!poolData.success || !poolData.data[0]) {
+                    throw new Error("CAYROS price not found");
+                }
+
+                const cayrosUsdtPrice = poolData.data[0].price;
+
+                // 2. Получаем курс USDT/RUB из CoinGecko
+                const rubResponse = await fetch(
+                    "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub"
+                );
+                const rubData = await rubResponse.json();
+
+                if (!rubData.tether?.rub) {
+                    throw new Error("USDT/RUB rate not found");
+                }
+
+                const usdtRubRate = rubData.tether.rub;
+                
+                // Добавляем 25% к рыночной цене
+                window.cayrosRate = (cayrosUsdtPrice * usdtRubRate * 1.25).toFixed(2);
+                
                 calculateTotalCost();
                 loadFormData(); // Загружаем ранее сохраненные данные
-            } else {
+                
+            } catch (error) {
+                console.error("Ошибка при получении курса:", error);
                 totalCostDiv.textContent = "Не удалось загрузить курс.";
             }
         }
@@ -281,10 +285,22 @@
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
-            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
+            if (isNaN(cayrosAmount) {
                 document.getElementById('total-cost').textContent = '0.00 RUB';
                 return;
             }
+            
+            // Проверка минимального и максимального количества
+            if (cayrosAmount < 100) {
+                document.getElementById('total-cost').textContent = 'Минимум 100 CAYROS';
+                return;
+            }
+            
+            if (cayrosAmount > 1000000) {
+                document.getElementById('total-cost').textContent = 'Максимум 1,000,000 CAYROS';
+                return;
+            }
+            
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
@@ -298,7 +314,7 @@
                 cayrosAmount: document.getElementById('cayros-amount').value,
                 totalCost: document.getElementById('total-cost').textContent,
                 consentChecked: document.querySelector('.checkbox-container').classList.contains('checked'),
-                backPage: "buy_cayros.html" // Указываем текущую страницу как предыдущую
+                backPage: "buy_cayros.html"
             };
             localStorage.setItem('formData', JSON.stringify(formData));
         }
@@ -313,7 +329,6 @@
                 document.getElementById('cayros-amount').value = savedData.cayrosAmount || '';
                 document.getElementById('total-cost').textContent = savedData.totalCost || '0.00 RUB';
 
-                // Восстанавливаем состояние чекбокса
                 const checkbox = document.querySelector('.checkbox-container');
                 if (savedData.consentChecked === true) {
                     checkbox.classList.add('checked');
@@ -397,8 +412,18 @@
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
 
-            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
+            if (isNaN(cayrosAmount) {
+                alert('Пожалуйста, введите количество CAYROS.');
+                return false;
+            }
+
+            if (cayrosAmount < 100) {
                 alert('Минимальное количество CAYROS для покупки — 100.');
+                return false;
+            }
+
+            if (cayrosAmount > 1000000) {
+                alert('Максимальное количество CAYROS для покупки — 1,000,000.');
                 return false;
             }
 
@@ -419,10 +444,10 @@
                     phoneLabel: "Номер телефона:",
                     cayrosLabel: "Количество CAYROS:",
                     costLabel: "Общая стоимость:",
-                    backPage: "buy_cayros.html" // Указываем текущую страницу как предыдущую
+                    backPage: "buy_cayros.html"
                 };
-                localStorage.setItem('formData', JSON.stringify(formData)); // Сохраняем данные перед переходом
-                window.location.href = 'send.html'; // Переходим на страницу подтверждения
+                localStorage.setItem('formData', JSON.stringify(formData));
+                window.location.href = 'send.html';
             }
         }
 
