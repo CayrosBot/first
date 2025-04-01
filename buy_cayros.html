@@ -123,6 +123,17 @@
             box-sizing: border-box;
             border-radius: 3px;
         }
+        .checkbox-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 2px solid #ccc;
+            box-sizing: border-box;
+            border-radius: 3px;
+        }
         .checkbox-container.checked::after {
             content: '\2713';
             position: absolute;
@@ -238,14 +249,27 @@
         </div>
     </div>
     <script>
-        // ID пула ликвидности CAYROS/USDT
+        // ID пула ликвидности CAYROS/USDT (как на главной странице)
         const POOL_ID = "6AvMUjDypofK8nw5Ez13qwFswJkLKomKTzX95ZWd682n";
-        
+
         // Главная функция инициализации
         async function initialize() {
             const totalCostDiv = document.getElementById('total-cost');
+            
             try {
-                // 1. Получаем цену CAYROS в USDT из Raydium
+                // 1. Получаем курс SOL/RUB
+                const solResponse = await fetch(
+                    'https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=rub'
+                );
+                const solData = await solResponse.json();
+                
+                if (!solData.solana?.rub) {
+                    throw new Error("SOL price not available");
+                }
+
+                const solPrice = solData.solana.rub;
+
+                // 2. Получаем цену CAYROS в USDT из Raydium
                 const poolResponse = await fetch(
                     `https://api-v3.raydium.io/pools/info/ids?ids=${POOL_ID}`
                 );
@@ -257,7 +281,7 @@
 
                 const cayrosUsdtPrice = poolData.data[0].price;
 
-                // 2. Получаем курс USDT/RUB из CoinGecko
+                // 3. Получаем курс USDT/RUB из CoinGecko
                 const rubResponse = await fetch(
                     "https://api.coingecko.com/api/v3/simple/price?ids=tether&vs_currencies=rub"
                 );
@@ -268,16 +292,18 @@
                 }
 
                 const usdtRubRate = rubData.tether.rub;
+                let cayrosRubPrice = cayrosUsdtPrice * usdtRubRate;
                 
-                // Добавляем 25% к рыночной цене
-                window.cayrosRate = (cayrosUsdtPrice * usdtRubRate * 1.25).toFixed(2);
+                // Добавляем 25% к цене
+                cayrosRubPrice = cayrosRubPrice * 1.25;
                 
+                window.cayrosRate = cayrosRubPrice;
                 calculateTotalCost();
-                loadFormData(); // Загружаем ранее сохраненные данные
+                loadFormData();
                 
             } catch (error) {
-                console.error("Ошибка при получении курса:", error);
-                totalCostDiv.textContent = "Не удалось загрузить курс.";
+                console.error('Ошибка при получении курса:', error);
+                totalCostDiv.textContent = "Не удалось загрузить курс";
             }
         }
 
@@ -285,22 +311,10 @@
         function calculateTotalCost() {
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
-            if (isNaN(cayrosAmount) {
+            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
                 document.getElementById('total-cost').textContent = '0.00 RUB';
                 return;
             }
-            
-            // Проверка минимального и максимального количества
-            if (cayrosAmount < 100) {
-                document.getElementById('total-cost').textContent = 'Минимум 100 CAYROS';
-                return;
-            }
-            
-            if (cayrosAmount > 1000000) {
-                document.getElementById('total-cost').textContent = 'Максимум 1,000,000 CAYROS';
-                return;
-            }
-            
             const totalCost = (cayrosAmount * window.cayrosRate).toFixed(2);
             document.getElementById('total-cost').textContent = `${totalCost} RUB`;
         }
@@ -412,18 +426,8 @@
             const cayrosAmountInput = document.getElementById('cayros-amount');
             const cayrosAmount = parseFloat(cayrosAmountInput.value);
 
-            if (isNaN(cayrosAmount) {
-                alert('Пожалуйста, введите количество CAYROS.');
-                return false;
-            }
-
-            if (cayrosAmount < 100) {
+            if (isNaN(cayrosAmount) || cayrosAmount < 100 || cayrosAmount > 1000000) {
                 alert('Минимальное количество CAYROS для покупки — 100.');
-                return false;
-            }
-
-            if (cayrosAmount > 1000000) {
-                alert('Максимальное количество CAYROS для покупки — 1,000,000.');
                 return false;
             }
 
@@ -447,7 +451,7 @@
                     backPage: "buy_cayros.html"
                 };
                 localStorage.setItem('formData', JSON.stringify(formData));
-                window.location.href = 'send.html';
+                window.location.href = 'buy_input.html';
             }
         }
 
