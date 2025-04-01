@@ -261,7 +261,7 @@
 
                         // Формируем текст сообщения
                         const message = [
-                            operationType,
+                            operationType, // Тип операции + название токена
                             'Новая операция:',
                             `Имя: ${dataToSend.name || 'Не указано'}`,
                             `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
@@ -317,11 +317,9 @@
                             text: message
                         })
                     });
-
                     if (!response.ok) {
                         throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
                     }
-
                     const data = await response.json();
                     console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
                 }
