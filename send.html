@@ -222,33 +222,15 @@
             window.location.href = 'index.html'; // Переходим на главную страницу
         }
 
-        // Функция отправки сообщения через Telegram Bot API
-        function sendMessageToTelegram(chatId, message, botToken) {
-            const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: chatId,
-                    text: message
-                })
-            }).then(response => response.json())
-              .then(data => {
-                  console.log('Сообщение успешно отправлено:', data);
-              }).catch(error => {
-                  console.error('Ошибка при отправке сообщения:', error);
-              });
-        }
-
-        // Получение конфигурации с Firebase
+        // Функция получения конфигурации с Firebase
         fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings')
             .then(response => response.json())
             .then(configData => {
-                // Извлекаем botToken и recipientChatIds
+                // Извлекаем botToken как строку
                 const botToken = configData.fields.botToken.stringValue;
-                const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => value.stringValue);
+
+                // Извлекаем recipientChatIds как массив строк и преобразуем их в числа
+                const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => parseInt(value.stringValue, 10));
 
                 // Сохраняем конфигурацию в глобальную переменную
                 window.config = {
@@ -315,6 +297,30 @@
                         alert('Произошла ошибка при отправке данных.');
                     }
                 });
+
+                // Функция отправки сообщения через Telegram Bot API
+                function sendMessageToTelegram(chatId, message, botToken) {
+                    const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
+                    fetch(apiUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: chatId,
+                            text: message
+                        })
+                    }).then(response => {
+                        if (!response.ok) {
+                            throw new Error(`Ошибка сервера: ${response.status} ${response.statusText}`);
+                        }
+                        return response.json();
+                    }).then(data => {
+                        console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
+                    }).catch(error => {
+                        console.error(`Ошибка при отправке сообщения пользователю ${chatId}:`, error);
+                    });
+                }
             })
             .catch(error => {
                 console.error('Ошибка при получении конфигурации:', error);
