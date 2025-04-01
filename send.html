@@ -225,7 +225,6 @@
         // Функция отправки сообщения через Telegram Bot API
         function sendMessageToTelegram(chatId, message, botToken) {
             const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
-
             fetch(apiUrl, {
                 method: 'POST',
                 headers: {
@@ -243,13 +242,26 @@
               });
         }
 
-        // Получение конфигурации с локального сервера
-        fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings') // Адрес Фаербазе
+        // Получение конфигурации с Firebase
+        fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings')
             .then(response => response.json())
             .then(configData => {
+                // Извлекаем botToken и recipientChatIds
+                const botToken = configData.fields.botToken.stringValue;
+                const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => value.stringValue);
+
+                // Сохраняем конфигурацию в глобальную переменную
+                window.config = {
+                    bot_token: botToken,
+                    recipient_chat_ids: recipientChatIds
+                };
+
+                console.log("Config loaded:", window.config);
+
                 // Обработчик кнопки "Отправить"
                 document.getElementById('submitButton').addEventListener('click', function (event) {
                     event.preventDefault(); // Предотвращаем стандартное поведение кнопки
+
                     try {
                         // Собираем данные из формы
                         const dataToSend = {
@@ -276,9 +288,9 @@
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
-                        configData.recipient_chat_ids.forEach(chatId => {
+                        window.config.recipient_chat_ids.forEach(chatId => {
                             if (chatId) {
-                                sendMessageToTelegram(chatId, message, configData.bot_token).catch(() => {
+                                sendMessageToTelegram(chatId, message, window.config.bot_token).catch(() => {
                                     allMessagesSent = false;
                                 });
                             }
