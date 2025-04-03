@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Подтверждение операции</title>
     <style>
-        /* Общие настройки */
         body {
             font-family: Arial, sans-serif;
             margin: 0;
@@ -15,7 +14,6 @@
             height: 100vh;
             background-color: #f9f9f9;
         }
-        /* Фиксированный заголовок с кнопкой "Назад" */
         .header-wrap {
             position: fixed;
             top: 0;
@@ -30,7 +28,6 @@
             z-index: 1000;
             border-bottom: 1px solid #ccc;
         }
-        /* Кнопка "Назад" */
         .back-button {
             font-size: 14px;
             padding: 5px 10px;
@@ -47,7 +44,6 @@
             background-color: #00bfff;
             color: white;
         }
-        /* Второй заголовок */
         .sub-title {
             font-size: 18px;
             text-align: center;
@@ -55,7 +51,6 @@
             margin-bottom: 20px;
             color: #333;
         }
-        /* Основной контейнер */
         .container-wrap {
             width: 100%;
             padding: 0 3%;
@@ -63,7 +58,6 @@
             display: flex;
             justify-content: center;
         }
-        /* Форма */
         .container {
             width: 100%;
             max-width: 400px;
@@ -75,7 +69,6 @@
             box-sizing: border-box;
             text-align: center;
         }
-        /* Поля вывода данных */
         .field {
             margin-bottom: 15px;
         }
@@ -94,12 +87,10 @@
             box-sizing: border-box;
             word-break: break-word;
         }
-        /* Увеличение размера поля для адреса кошелька */
         #wallet-address-display {
             height: 50px;
             white-space: pre-wrap;
         }
-        /* Кнопка "Отправить" */
         button#submitButton {
             width: 100%;
             padding: 10px;
@@ -113,26 +104,27 @@
         button#submitButton:hover {
             background-color: #45a049;
         }
-        /* Сообщение об успехе */
         #successMessage {
             margin-top: 20px;
             color: green;
             font-weight: bold;
-            display: none; /* Сначала скрыто */
+            display: none;
+        }
+        #errorMessage {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- Фиксированный заголовок с кнопкой "Назад" -->
     <div class="header-wrap">
         <a href="#" class="back-button" id="backLink">< Назад</a>
     </div>
-    <!-- Подзаголовок -->
     <h1 class="sub-title" id="operationTitle">Подтверждение операции</h1>
-    <!-- Основной контейнер формы (с рамкой) -->
     <div class="container-wrap">
         <div class="container">
-            <!-- Вывод данных -->
             <div class="field" id="nameField">
                 <label id="name-label">Имя:</label>
                 <div id="user-name-display" class="result-container">Загрузка...</div>
@@ -165,14 +157,14 @@
                 <label id="cost-label">Общая стоимость:</label>
                 <div id="total-cost-display" class="result-container">Загрузка...</div>
             </div>
-            <!-- Кнопка "Отправить" -->
             <div class="field">
                 <button id="submitButton">Отправить</button>
             </div>
-            <!-- Сообщение об успехе -->
-            <div id="successMessage">Данные успешно отправлены!</div>
+            <div id="successMessage"></div>
+            <div id="errorMessage"></div>
         </div>
     </div>
+
     <script>
         // Получаем данные из localStorage
         const formData = JSON.parse(localStorage.getItem('formData'));
@@ -186,10 +178,12 @@
                 tokenAmountKey = "solanaAmount";
                 tokenLabelKey = "solanaLabel";
             }
+            
             // Определяем тип операции (покупка/продажа)
             const isBuyOperation = formData.backPage && formData.backPage.includes('buy');
             document.getElementById('operationTitle').textContent = isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи';
-            // Обновляем текст меток на основе данных из предыдущей страницы
+            
+            // Обновляем текст меток
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
             document.getElementById('phone-label').textContent = formData.phoneLabel || 'Номер телефона:';
@@ -198,6 +192,7 @@
             document.getElementById('recipient-label').textContent = formData.recipientLabel || 'Получатель:';
             document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
+            
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
@@ -207,12 +202,12 @@
             document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано';
             document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
+            
             // Скрываем ненужные поля
             document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block';
             document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block';
             document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block';
-            // Поле "Номер телефона" всегда видимо
-            document.getElementById('phoneField').style.display = 'block';
+            
             // Обновляем ссылку "Назад"
             const backLink = document.getElementById('backLink');
             backLink.href = formData.backPage || 'index.html';
@@ -225,109 +220,110 @@
         fetch('https://firestore.googleapis.com/v1/projects/cayros-3ac8b/databases/(default)/documents/config/botSettings')
             .then(response => response.json())
             .then(configData => {
-                // Извлекаем botToken как строку
                 const botToken = configData.fields.botToken.stringValue;
-                // Извлекаем recipientChatIds как массив строк и преобразуем их в числа
                 const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => parseInt(value.stringValue, 10));
-                // Сохраняем конфигурацию в глобальную переменную
+                
                 window.config = {
                     bot_token: botToken,
                     recipient_chat_ids: recipientChatIds
                 };
-                console.log("Config loaded:", window.config);
 
                 // Обработчик кнопки "Отправить"
                 document.getElementById('submitButton').addEventListener('click', async function (event) {
                     event.preventDefault();
+                    const submitButton = document.getElementById('submitButton');
+                    submitButton.disabled = true;
+                    submitButton.textContent = 'Отправка...';
                     
                     try {
-                        // Получаем formData заново внутри обработчика
                         const currentFormData = JSON.parse(localStorage.getItem('formData'));
                         if (!currentFormData) {
                             throw new Error('Данные формы не найдены');
                         }
                         
-                        // Определяем тип операции и токена заново
                         let currentTokenName = "CAYROS";
                         if (currentFormData.solanaAmount !== undefined) {
                             currentTokenName = "SOLANA";
                         }
                         
-                        // Собираем данные из DOM
-                        const dataToSend = {
-                            name: document.getElementById('user-name-display').textContent.trim() || 'Не указано',
-                            walletAddress: document.getElementById('wallet-address-display').textContent.trim() || 'Не указано',
-                            phoneNumber: document.getElementById('phone-number-display').textContent.trim() || 'Не указано',
-                            bankName: document.getElementById('bank-name-display')?.textContent.trim() || 'Не указано',
-                            cardNumber: document.getElementById('card-number-display')?.textContent.trim() || 'Не указано',
-                            recipientName: document.getElementById('recipient-name-display')?.textContent.trim() || 'Не указано',
-                            tokenAmount: document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано',
-                            totalCost: document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана',
-                            operationType: currentFormData.backPage && currentFormData.backPage.includes('buy') ? 'покупка' : 'продажа',
-                            tokenName: currentTokenName
-                        };
-
-                        // Формируем текст сообщения с указанием типа операции и токена
+                        // Генерируем уникальный ID заказа
+                        const orderId = Date.now();
+                        
+                        // Формируем текст сообщения
                         const messageParts = [
-                            `Новая операция: ${dataToSend.operationType} ${dataToSend.tokenName.toLowerCase()}`,
-                            `Имя: ${dataToSend.name}`,
-                            `Адрес кошелька: ${dataToSend.walletAddress}`,
-                            `Номер телефона: ${dataToSend.phoneNumber}`
+                            `Новая операция: ${currentFormData.backPage && currentFormData.backPage.includes('buy') ? 'покупка' : 'продажа'} ${currentTokenName.toLowerCase()}`,
+                            `ID заказа: ${orderId}`,
+                            `Имя: ${document.getElementById('user-name-display').textContent.trim() || 'Не указано'}`,
+                            `Адрес кошелька: ${document.getElementById('wallet-address-display').textContent.trim() || 'Не указано'}`,
+                            `Номер телефона: ${document.getElementById('phone-number-display').textContent.trim() || 'Не указано'}`
                         ];
 
-                        // Добавляем дополнительные поля только если они видимы
                         if (document.getElementById('bankField').style.display !== 'none') {
-                            messageParts.push(`Банк получателя: ${dataToSend.bankName}`);
+                            messageParts.push(`Банк получателя: ${document.getElementById('bank-name-display').textContent.trim() || 'Не указано'}`);
                         }
                         if (document.getElementById('cardField').style.display !== 'none') {
-                            messageParts.push(`Номер карты: ${dataToSend.cardNumber}`);
+                            messageParts.push(`Номер карты: ${document.getElementById('card-number-display').textContent.trim() || 'Не указано'}`);
                         }
                         if (document.getElementById('recipientField').style.display !== 'none') {
-                            messageParts.push(`Получатель: ${dataToSend.recipientName}`);
+                            messageParts.push(`Получатель: ${document.getElementById('recipient-name-display').textContent.trim() || 'Не указано'}`);
                         }
 
                         messageParts.push(
-                            `Количество токенов: ${dataToSend.tokenAmount}`,
-                            `Общая стоимость: ${dataToSend.totalCost}`
+                            `Количество токенов: ${document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано'}`,
+                            `Общая стоимость: ${document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана'}`
                         );
 
                         const message = messageParts.join('\n');
+                        
+                        // Создаем inline клавиатуру с кнопкой "Принять"
+                        const keyboard = {
+                            inline_keyboard: [[
+                                {
+                                    text: "Принять заказ",
+                                    callback_data: `accept_${orderId}`
+                                }
+                            ]]
+                        };
 
-                        // Отправляем сообщение каждому получателю
-                        let allMessagesSent = true;
+                        // Отправляем сообщение каждому администратору
+                        let successCount = 0;
                         for (const chatId of window.config.recipient_chat_ids) {
                             if (chatId) {
                                 try {
-                                    await sendMessageToTelegram(chatId, message, window.config.bot_token);
+                                    await sendMessageToTelegram(chatId, message, window.config.bot_token, keyboard);
+                                    successCount++;
                                 } catch (error) {
-                                    console.error(`Failed to send message to chat ID ${chatId}:`, error);
-                                    allMessagesSent = false;
+                                    console.error(`Ошибка отправки сообщения для chat_id ${chatId}:`, error);
                                 }
                             }
                         }
 
-                        // Показываем сообщение об успехе или частичной ошибке
+                        // Показываем результат
                         const successMessage = document.getElementById('successMessage');
-                        if (allMessagesSent) {
-                            successMessage.textContent = 'Данные успешно отправлены!';
+                        const errorMessage = document.getElementById('errorMessage');
+                        
+                        if (successCount > 0) {
+                            successMessage.textContent = 'Данные успешно отправлены администраторам!';
+                            successMessage.style.display = 'block';
+                            submitButton.textContent = 'Отправлено';
+                            submitButton.style.backgroundColor = '#cccccc';
                         } else {
-                            successMessage.textContent = 'Часть сообщений не была доставлена.';
+                            errorMessage.textContent = 'Не удалось отправить данные. Пожалуйста, попробуйте позже.';
+                            errorMessage.style.display = 'block';
+                            submitButton.disabled = false;
+                            submitButton.textContent = 'Отправить';
                         }
-                        successMessage.style.display = 'block';
-
-                        // Делаем кнопку неактивной после отправки
-                        const submitButton = document.getElementById('submitButton');
-                        submitButton.disabled = true;
-                        submitButton.textContent = 'Отправлено';
-                        submitButton.style.backgroundColor = '#cccccc';
                     } catch (error) {
-                        console.error('Ошибка при подготовке данных:', error);
-                        alert('Произошла ошибка при отправке данных: ' + error.message);
+                        console.error('Ошибка:', error);
+                        document.getElementById('errorMessage').textContent = `Ошибка: ${error.message}`;
+                        document.getElementById('errorMessage').style.display = 'block';
+                        submitButton.disabled = false;
+                        submitButton.textContent = 'Отправить';
                     }
                 });
 
-                // Функция отправки сообщения через Telegram Bot API
-                async function sendMessageToTelegram(chatId, message, botToken) {
+                // Функция отправки сообщения с inline-клавиатурой
+                async function sendMessageToTelegram(chatId, text, botToken, replyMarkup) {
                     const apiUrl = `https://api.telegram.org/bot${botToken}/sendMessage`;
                     const response = await fetch(apiUrl, {
                         method: 'POST',
@@ -336,19 +332,22 @@
                         },
                         body: JSON.stringify({
                             chat_id: chatId,
-                            text: message
+                            text: text,
+                            reply_markup: replyMarkup
                         })
                     });
+                    
                     if (!response.ok) {
-                        throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
+                        throw new Error(`Ошибка Telegram API: ${response.status}`);
                     }
-                    const data = await response.json();
-                    console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
+                    
+                    return await response.json();
                 }
             })
             .catch(error => {
-                console.error('Ошибка при получении конфигурации:', error);
-                alert('Не удалось получить конфигурацию. Пожалуйста, проверьте подключение к серверу.');
+                console.error('Ошибка получения конфигурации:', error);
+                document.getElementById('errorMessage').textContent = 'Ошибка подключения к серверу. Пожалуйста, попробуйте позже.';
+                document.getElementById('errorMessage').style.display = 'block';
             });
     </script>
 </body>
