@@ -100,9 +100,18 @@
             border-radius: 5px;
             font-size: 14px;
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        button#submitButton:active {
+            transform: scale(0.98);
         }
         button#submitButton:hover {
             background-color: #45a049;
+        }
+        button#submitButton:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+            background-color: #cccccc;
         }
         #successMessage {
             margin-top: 20px;
@@ -166,6 +175,9 @@
     </div>
 
     <script>
+        // Флаг для отслеживания состояния отправки
+        let isSubmitting = false;
+
         // Получаем данные из localStorage
         const formData = JSON.parse(localStorage.getItem('formData'));
         if (formData) {
@@ -228,11 +240,21 @@
                     recipient_chat_ids: recipientChatIds
                 };
 
-                // Обработчик кнопки "Отправить"
+                // Обработчик кнопки "Отправить" с виброоткликом
                 document.getElementById('submitButton').addEventListener('click', async function (event) {
                     event.preventDefault();
+                    
+                    // Если уже идет отправка, игнорируем повторное нажатие
+                    if (isSubmitting) return;
+                    
+                    // Активируем вибрацию (300ms)
+                    if (navigator.vibrate) {
+                        navigator.vibrate(300);
+                    }
+                    
                     const submitButton = document.getElementById('submitButton');
                     submitButton.disabled = true;
+                    isSubmitting = true;
                     submitButton.textContent = 'Отправка...';
                     
                     try {
@@ -312,6 +334,7 @@
                             errorMessage.style.display = 'block';
                             submitButton.disabled = false;
                             submitButton.textContent = 'Отправить';
+                            isSubmitting = false;
                         }
                     } catch (error) {
                         console.error('Ошибка:', error);
@@ -319,6 +342,7 @@
                         document.getElementById('errorMessage').style.display = 'block';
                         submitButton.disabled = false;
                         submitButton.textContent = 'Отправить';
+                        isSubmitting = false;
                     }
                 });
 
