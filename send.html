@@ -186,11 +186,9 @@
                 tokenAmountKey = "solanaAmount";
                 tokenLabelKey = "solanaLabel";
             }
-
             // Определяем тип операции (покупка/продажа)
             const isBuyOperation = formData.backPage && formData.backPage.includes('buy');
             document.getElementById('operationTitle').textContent = isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи';
-
             // Обновляем текст меток на основе данных из предыдущей страницы
             document.getElementById('name-label').textContent = formData.nameLabel || 'Имя:';
             document.getElementById('wallet-label').textContent = formData.walletLabel || 'Адрес кошелька:';
@@ -200,7 +198,6 @@
             document.getElementById('recipient-label').textContent = formData.recipientLabel || 'Получатель:';
             document.getElementById('token-label').textContent = formData[tokenLabelKey] || `Количество ${tokenName}:`;
             document.getElementById('cost-label').textContent = formData.costLabel || 'Общая стоимость:';
-
             // Выводим данные на экран
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
@@ -210,15 +207,12 @@
             document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано'; // Получатель
             document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
-
             // Скрываем ненужные поля
             document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
             document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
             document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
-
             // Поле "Номер телефона" всегда видимо
             document.getElementById('phoneField').style.display = 'block';
-
             // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
             const backLink = document.getElementById('backLink');
             backLink.href = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
@@ -234,16 +228,13 @@
             .then(configData => {
                 // Извлекаем botToken как строку
                 const botToken = configData.fields.botToken.stringValue;
-
                 // Извлекаем recipientChatIds как массив строк и преобразуем их в числа
                 const recipientChatIds = configData.fields.recipientChatIds.arrayValue.values.map(value => parseInt(value.stringValue, 10));
-
                 // Сохраняем конфигурацию в глобальную переменную
                 window.config = {
                     bot_token: botToken,
                     recipient_chat_ids: recipientChatIds
                 };
-
                 console.log("Config loaded:", window.config);
 
                 // Обработчик кнопки "Отправить"
@@ -261,28 +252,18 @@
                             recipientName: formData.recipientName,
                             tokenAmount: formData.cayrosAmount || formData.solanaAmount,
                             totalCost: formData.totalCost,
-                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell' // Возвращаем исходный формат
+                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
                         };
 
                         // Формируем текст сообщения
-                        const messageParts = [
-                            isBuyOperation ? 'Подтверждение покупки' : 'Подтверждение продажи', // Заголовок для пользователя
+                        const message = [
+                            'Новая операция:',
                             `Имя: ${dataToSend.name || 'Не указано'}`,
                             `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
                             `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                            `Количество ${tokenName}: ${dataToSend.tokenAmount || 'Не указано'}`,
+                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
                             `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
-                        ];
-
-                        // Добавляем дополнительные поля для продажи
-                        if (!isBuyOperation) {
-                            messageParts.push(`Банк получателя: ${dataToSend.bankName || 'Не указано'}`);
-                            messageParts.push(`Номер карты: ${dataToSend.cardNumber || 'Не указано'}`);
-                            messageParts.push(`Получатель: ${dataToSend.recipientName || 'Не указано'}`);
-                        }
-
-                        // Объединяем части сообщения в единый текст
-                        const message = messageParts.join('\n');
+                        ].join('\n');
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
@@ -311,6 +292,7 @@
                         submitButton.disabled = true;
                         submitButton.textContent = 'Отправлено';
                         submitButton.style.backgroundColor = '#cccccc';
+
                     } catch (error) {
                         console.error('Ошибка при подготовке данных:', error);
                         alert('Произошла ошибка при отправке данных.');
