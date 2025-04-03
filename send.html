@@ -179,6 +179,11 @@
         // Флаг для отслеживания состояния отправки
         let isSubmitting = false;
 
+        // Функция для экранирования символов MarkdownV2
+        function escapeMarkdown(text) {
+            return text.replace(/([_*\[\]()~`>#+\-=|{}.!])/g, '\\$1');
+        }
+
         // Получаем данные из localStorage
         const formData = JSON.parse(localStorage.getItem('formData'));
         if (formData) {
@@ -276,24 +281,24 @@
                         const messageParts = [
                             `Новая операция: ${currentFormData.backPage && currentFormData.backPage.includes('buy') ? 'покупка' : 'продажа'} ${currentTokenName.toLowerCase()}`,
                             `ID заказа: ${orderId}`,
-                            `Имя: ${document.getElementById('user-name-display').textContent.trim() || 'Не указано'}`,
-                            `Адрес кошелька: \`${document.getElementById('wallet-address-display').textContent.trim() || 'Не указано'}\``,
-                            `Номер телефона: ${document.getElementById('phone-number-display').textContent.trim() || 'Не указано'}`
+                            `Имя: ${escapeMarkdown(document.getElementById('user-name-display').textContent.trim() || 'Не указано')}`,
+                            `Адрес кошелька: \`${escapeMarkdown(document.getElementById('wallet-address-display').textContent.trim() || 'Не указано')}\``,
+                            `Номер телефона: ${escapeMarkdown(document.getElementById('phone-number-display').textContent.trim() || 'Не указано')}`
                         ];
 
                         if (document.getElementById('bankField').style.display !== 'none') {
-                            messageParts.push(`Банк получателя: ${document.getElementById('bank-name-display').textContent.trim() || 'Не указано'}`);
+                            messageParts.push(`Банк получателя: ${escapeMarkdown(document.getElementById('bank-name-display').textContent.trim() || 'Не указано')}`);
                         }
                         if (document.getElementById('cardField').style.display !== 'none') {
-                            messageParts.push(`Номер карты: ${document.getElementById('card-number-display').textContent.trim() || 'Не указано'}`);
+                            messageParts.push(`Номер карты: ${escapeMarkdown(document.getElementById('card-number-display').textContent.trim() || 'Не указано')}`);
                         }
                         if (document.getElementById('recipientField').style.display !== 'none') {
-                            messageParts.push(`Получатель: ${document.getElementById('recipient-name-display').textContent.trim() || 'Не указано'}`);
+                            messageParts.push(`Получатель: ${escapeMarkdown(document.getElementById('recipient-name-display').textContent.trim() || 'Не указано')}`);
                         }
 
                         messageParts.push(
-                            `Количество токенов: ${document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано'}`,
-                            `Общая стоимость: ${document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана'}`
+                            `Количество токенов: ${escapeMarkdown(document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано')}`,
+                            `Общая стоимость: ${escapeMarkdown(document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана')}`
                         );
 
                         const message = messageParts.join('\n');
@@ -358,6 +363,7 @@
                         body: JSON.stringify({
                             chat_id: chatId,
                             text: text,
+                            parse_mode: "MarkdownV2",
                             reply_markup: replyMarkup
                         })
                     });
