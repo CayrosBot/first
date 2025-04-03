@@ -202,24 +202,23 @@
             document.getElementById('user-name-display').textContent = formData.name || 'Не указано';
             document.getElementById('wallet-address-display').textContent = formData.walletAddress || 'Не указано';
             document.getElementById('phone-number-display').textContent = formData.phoneNumber || 'Не указано';
-            document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано'; // Банк получателя
-            document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано'; // Номер карты
-            document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано'; // Получатель
+            document.getElementById('bank-name-display').textContent = formData.bankName || 'Не указано';
+            document.getElementById('card-number-display').textContent = formData.cardNumber || 'Не указано';
+            document.getElementById('recipient-name-display').textContent = formData.recipientName || 'Не указано';
             document.getElementById('token-amount-display').textContent = `${formData[tokenAmountKey] || 0} ${tokenName}`;
             document.getElementById('total-cost-display').textContent = formData.totalCost || 'Не рассчитано';
             // Скрываем ненужные поля
-            document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
-            document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
-            document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block'; // Только для продажи
+            document.getElementById('bankField').style.display = isBuyOperation ? 'none' : 'block';
+            document.getElementById('cardField').style.display = isBuyOperation ? 'none' : 'block';
+            document.getElementById('recipientField').style.display = isBuyOperation ? 'none' : 'block';
             // Поле "Номер телефона" всегда видимо
             document.getElementById('phoneField').style.display = 'block';
-            // Обновляем ссылку "Назад" в зависимости от предыдущей страницы
+            // Обновляем ссылку "Назад"
             const backLink = document.getElementById('backLink');
-            backLink.href = formData.backPage || 'index.html'; // По умолчанию ведет на главную страницу
+            backLink.href = formData.backPage || 'index.html';
         } else {
-            // Если данные не найдены, показываем сообщение об ошибке
             alert('Произошла ошибка при получении данных.');
-            window.location.href = 'index.html'; // Переходим на главную страницу
+            window.location.href = 'index.html';
         }
 
         // Функция получения конфигурации с Firebase
@@ -239,9 +238,21 @@
 
                 // Обработчик кнопки "Отправить"
                 document.getElementById('submitButton').addEventListener('click', async function (event) {
-                    event.preventDefault(); // Предотвращаем стандартное поведение кнопки
-
+                    event.preventDefault();
+                    
                     try {
+                        // Получаем formData заново внутри обработчика
+                        const currentFormData = JSON.parse(localStorage.getItem('formData'));
+                        if (!currentFormData) {
+                            throw new Error('Данные формы не найдены');
+                        }
+                        
+                        // Определяем тип операции и токена заново
+                        let currentTokenName = "CAYROS";
+                        if (currentFormData.solanaAmount !== undefined) {
+                            currentTokenName = "SOLANA";
+                        }
+                        
                         // Собираем данные из DOM
                         const dataToSend = {
                             name: document.getElementById('user-name-display').textContent.trim() || 'Не указано',
@@ -252,8 +263,8 @@
                             recipientName: document.getElementById('recipient-name-display')?.textContent.trim() || 'Не указано',
                             tokenAmount: document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано',
                             totalCost: document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана',
-                            operationType: formData.backPage.includes('buy') ? 'покупка' : 'продажа',
-                            tokenName: tokenName // CAYROS или SOLANA
+                            operationType: currentFormData.backPage && currentFormData.backPage.includes('buy') ? 'покупка' : 'продажа',
+                            tokenName: currentTokenName
                         };
 
                         // Формируем текст сообщения с указанием типа операции и токена
@@ -311,7 +322,7 @@
                         submitButton.style.backgroundColor = '#cccccc';
                     } catch (error) {
                         console.error('Ошибка при подготовке данных:', error);
-                        alert('Произошла ошибка при отправке данных.');
+                        alert('Произошла ошибка при отправке данных: ' + error.message);
                     }
                 });
 
