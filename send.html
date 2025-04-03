@@ -251,12 +251,14 @@
                             cardNumber: document.getElementById('card-number-display')?.textContent.trim() || 'Не указано',
                             recipientName: document.getElementById('recipient-name-display')?.textContent.trim() || 'Не указано',
                             tokenAmount: document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано',
-                            totalCost: document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана'
+                            totalCost: document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана',
+                            operationType: formData.backPage.includes('buy') ? 'покупка' : 'продажа',
+                            tokenName: tokenName // CAYROS или SOLANA
                         };
 
-                        // Формируем текст сообщения
+                        // Формируем текст сообщения с указанием типа операции и токена
                         const messageParts = [
-                            'Новая операция:',
+                            `Новая операция: ${dataToSend.operationType} ${dataToSend.tokenName.toLowerCase()}`,
                             `Имя: ${dataToSend.name}`,
                             `Адрес кошелька: ${dataToSend.walletAddress}`,
                             `Номер телефона: ${dataToSend.phoneNumber}`
