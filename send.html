@@ -277,7 +277,7 @@
                             `Новая операция: ${currentFormData.backPage && currentFormData.backPage.includes('buy') ? 'покупка' : 'продажа'} ${currentTokenName.toLowerCase()}`,
                             `ID заказа: ${orderId}`,
                             `Имя: ${document.getElementById('user-name-display').textContent.trim() || 'Не указано'}`,
-                            `Адрес кошелька: ${document.getElementById('wallet-address-display').textContent.trim() || 'Не указано'}`,
+                            `Адрес кошелька: \`${document.getElementById('wallet-address-display').textContent.trim() || 'Не указано'}\``,
                             `Номер телефона: ${document.getElementById('phone-number-display').textContent.trim() || 'Не указано'}`
                         ];
 
