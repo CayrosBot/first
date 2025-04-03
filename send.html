@@ -242,28 +242,43 @@
                     event.preventDefault(); // Предотвращаем стандартное поведение кнопки
 
                     try {
-                        // Собираем данные из формы
+                        // Собираем данные из DOM
                         const dataToSend = {
-                            name: formData.name,
-                            walletAddress: formData.walletAddress,
-                            phoneNumber: formData.phoneNumber,
-                            bankName: formData.bankName,
-                            cardNumber: formData.cardNumber,
-                            recipientName: formData.recipientName,
-                            tokenAmount: formData.cayrosAmount || formData.solanaAmount,
-                            totalCost: formData.totalCost,
-                            operationType: formData.backPage.includes('buy') ? 'buy' : 'sell'
+                            name: document.getElementById('user-name-display').textContent.trim() || 'Не указано',
+                            walletAddress: document.getElementById('wallet-address-display').textContent.trim() || 'Не указано',
+                            phoneNumber: document.getElementById('phone-number-display').textContent.trim() || 'Не указано',
+                            bankName: document.getElementById('bank-name-display')?.textContent.trim() || 'Не указано',
+                            cardNumber: document.getElementById('card-number-display')?.textContent.trim() || 'Не указано',
+                            recipientName: document.getElementById('recipient-name-display')?.textContent.trim() || 'Не указано',
+                            tokenAmount: document.getElementById('token-amount-display').textContent.trim().split(' ')[0] || 'Не указано',
+                            totalCost: document.getElementById('total-cost-display').textContent.trim() || 'Не рассчитана'
                         };
 
                         // Формируем текст сообщения
-                        const message = [
+                        const messageParts = [
                             'Новая операция:',
-                            `Имя: ${dataToSend.name || 'Не указано'}`,
-                            `Адрес кошелька: ${dataToSend.walletAddress || 'Не указано'}`,
-                            `Номер телефона: ${dataToSend.phoneNumber || 'Не указано'}`,
-                            `Количество токенов: ${dataToSend.tokenAmount || 'Не указано'}`,
-                            `Общая стоимость: ${dataToSend.totalCost || 'Не рассчитана'}`
-                        ].join('\n');
+                            `Имя: ${dataToSend.name}`,
+                            `Адрес кошелька: ${dataToSend.walletAddress}`,
+                            `Номер телефона: ${dataToSend.phoneNumber}`
+                        ];
+
+                        // Добавляем дополнительные поля только если они видимы
+                        if (document.getElementById('bankField').style.display !== 'none') {
+                            messageParts.push(`Банк получателя: ${dataToSend.bankName}`);
+                        }
+                        if (document.getElementById('cardField').style.display !== 'none') {
+                            messageParts.push(`Номер карты: ${dataToSend.cardNumber}`);
+                        }
+                        if (document.getElementById('recipientField').style.display !== 'none') {
+                            messageParts.push(`Получатель: ${dataToSend.recipientName}`);
+                        }
+
+                        messageParts.push(
+                            `Количество токенов: ${dataToSend.tokenAmount}`,
+                            `Общая стоимость: ${dataToSend.totalCost}`
+                        );
+
+                        const message = messageParts.join('\n');
 
                         // Отправляем сообщение каждому получателю
                         let allMessagesSent = true;
@@ -292,7 +307,6 @@
                         submitButton.disabled = true;
                         submitButton.textContent = 'Отправлено';
                         submitButton.style.backgroundColor = '#cccccc';
-
                     } catch (error) {
                         console.error('Ошибка при подготовке данных:', error);
                         alert('Произошла ошибка при отправке данных.');
@@ -312,11 +326,9 @@
                             text: message
                         })
                     });
-
                     if (!response.ok) {
                         throw new Error(`Telegram API error: ${response.status} ${response.statusText}`);
                     }
-
                     const data = await response.json();
                     console.log(`Сообщение успешно отправлено пользователю ${chatId}:`, data);
                 }
